@@ -1,4 +1,4 @@
-group 'com.felipecosta.microservice'
+group 'com.felipecosta.microservicegit '
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -21,4 +21,11 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.sparkjava:spark-core:2.3"
+    compile 'com.beust:klaxon:0.24'
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile "junit:junit:4.12"
+    testCompile "com.nhaarman:mockito-kotlin:0.5.1"
 }
