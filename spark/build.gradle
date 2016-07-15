@@ -1,4 +1,4 @@
-group 'com.felipecosta.microservicegit '
+group 'com.felipecosta.microservice'
 version '1.0-SNAPSHOT'
 
 buildscript {
