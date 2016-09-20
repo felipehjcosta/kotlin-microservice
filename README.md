@@ -1,6 +1,6 @@
 # kotlin-microservice
 
-This repository contains some samples of microservices made with the Kotlin language.
+This repository contains a microservice example made with the Kotlin language.
 
 
 License
