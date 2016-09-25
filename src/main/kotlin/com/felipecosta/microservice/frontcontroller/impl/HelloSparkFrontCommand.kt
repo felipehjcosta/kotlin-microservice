@@ -6,6 +6,6 @@ import spark.Response
 
 class HelloSparkFrontCommand(request: Request, response: Response) : SparkFrontCommand(request, response) {
     override fun process() {
-        response.body("Hello World form Spark Front Command")
+        render(template = "views/hello_world.html")
     }
 }

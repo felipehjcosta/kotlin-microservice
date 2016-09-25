@@ -1,11 +1,12 @@
 package com.felipecosta.microservice.frontcontroller.impl
 
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.felipecosta.microservice.utils.mock
 import org.junit.Test
+import org.mockito.Matchers
+import org.mockito.Mockito.verify
 import spark.Request
 import spark.Response
+import kotlin.test.assertEquals
 
 class HelloSparkFrontCommandTest {
 
@@ -18,12 +19,13 @@ class HelloSparkFrontCommandTest {
     @org.junit.Before
     fun setUp() {
         helloSparkFrontCommand = HelloSparkFrontCommand(request, response)
+        helloSparkFrontCommand?.init()
     }
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsHelloWorldMessage() {
         helloSparkFrontCommand?.process()
 
-        verify(response).body(eq("Hello World form Spark Front Command"))
+        assertEquals("Hello World form Spark Front Command", helloSparkFrontCommand?.output)
     }
 }

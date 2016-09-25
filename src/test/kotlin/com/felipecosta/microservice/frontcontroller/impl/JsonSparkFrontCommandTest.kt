@@ -1,12 +1,13 @@
 package com.felipecosta.microservice.frontcontroller.impl
 
 import com.beust.klaxon.*
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.felipecosta.microservice.utils.mock
+import com.felipecosta.microservice.utils.whenever
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentCaptor
+import org.mockito.Mockito.verify
 import spark.QueryParamsMap
 import spark.Request
 import spark.Response
@@ -28,7 +29,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsUrl() {
-        com.nhaarman.mockito_kotlin.whenever(request.url()).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
+        whenever(request.url()).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
 
         jsonSparkFrontCommand?.process()
         val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
@@ -41,7 +42,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsHost() {
-        com.nhaarman.mockito_kotlin.whenever(request.host()).thenReturn("127.0.0.1:4567")
+        whenever(request.host()).thenReturn("127.0.0.1:4567")
 
         jsonSparkFrontCommand?.process()
         val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
@@ -54,7 +55,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsUserAgent() {
-        com.nhaarman.mockito_kotlin.whenever(request.userAgent()).thenReturn("Mozilla/5.0")
+        whenever(request.userAgent()).thenReturn("Mozilla/5.0")
 
         jsonSparkFrontCommand?.process()
         val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
@@ -68,8 +69,8 @@ class JsonSparkFrontCommandTest {
     @Test
     fun GivenOneQueryParamWithOneParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
         val queryMap: QueryParamsMap = mock()
-        com.nhaarman.mockito_kotlin.whenever(request.queryMap()).thenReturn(queryMap)
-        com.nhaarman.mockito_kotlin.whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search")))
+        whenever(request.queryMap()).thenReturn(queryMap)
+        whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search")))
 
         jsonSparkFrontCommand?.process()
         val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
@@ -84,8 +85,8 @@ class JsonSparkFrontCommandTest {
     @Test
     fun GivenOneQueryParamWithTwoParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
         val queryMap: QueryParamsMap = mock()
-        com.nhaarman.mockito_kotlin.whenever(request.queryMap()).thenReturn(queryMap)
-        com.nhaarman.mockito_kotlin.whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
+        whenever(request.queryMap()).thenReturn(queryMap)
+        whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
 
         jsonSparkFrontCommand?.process()
         val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
@@ -99,7 +100,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun GivenNullQueryParamWhenProcessThenAssertResponseBodyNotContainQueryParams() {
-        com.nhaarman.mockito_kotlin.whenever(request.queryMap()).thenReturn(null)
+        whenever(request.queryMap()).thenReturn(null)
 
         jsonSparkFrontCommand?.process()
         val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
