@@ -7,3 +7,5 @@ script:
     - ./gradlew test jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+deploy:
+  provider: azure_web_apps
