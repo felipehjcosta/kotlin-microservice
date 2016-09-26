@@ -23,6 +23,7 @@ local.properties
 
 # Gradle:
 */.gradle/
+.gradle/
 */.idea/gradle.xml
 */.idea/libraries
 
