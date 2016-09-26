@@ -15,13 +15,14 @@ class JsonSparkFrontCommand(request: Request, response: Response) : SparkFrontCo
                     "url" to request.url(),
                     "host" to request.host(),
                     "user-agent" to request.userAgent(),
-                    "query-params" to request.queryMap()?.let { queryMap -> array(queryMap.toMap().map {it->
-
-                        return@map obj(it.key to JsonArray(it.value.map { it }))
-                    }) }
+                    "query-params" to request.queryMap()?.let { queryMap ->
+                        array(queryMap.toMap().map { it ->
+                            return@map obj(it.key to JsonArray(it.value.map { it }))
+                        })
+                    }
             )
         }
 
-        response.body(jsonBody.toJsonString())
+        render(text = jsonBody.toJsonString())
     }
 }

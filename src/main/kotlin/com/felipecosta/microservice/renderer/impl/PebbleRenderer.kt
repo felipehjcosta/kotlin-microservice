@@ -5,7 +5,7 @@ import com.mitchellbosecke.pebble.PebbleEngine
 import java.io.StringWriter
 
 class PebbleRenderer(val pebbleEngine: PebbleEngine) : Renderer {
-    override fun render(outputObject: Any, path: String): Any {
+    override fun render(outputObject: Any, path: String): String {
         val compiledTemplate = pebbleEngine.getTemplate(path)
 
         val writer = StringWriter()

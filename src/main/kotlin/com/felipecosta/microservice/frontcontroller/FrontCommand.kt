@@ -8,5 +8,5 @@ interface FrontCommand {
 
     fun init(renderer: Renderer = DefaultRenderer())
 
-    val output: Any
+    val output: String
 }

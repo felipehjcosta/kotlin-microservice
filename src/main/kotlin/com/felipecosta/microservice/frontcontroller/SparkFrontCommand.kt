@@ -8,14 +8,14 @@ abstract class SparkFrontCommand(val request: Request, val response: Response) :
 
     private var renderer: Renderer? = null
 
-    override var output: Any = ""
+    override var output: String = ""
 
     override fun init(renderer: Renderer) {
         this.renderer = renderer
     }
 
-    fun render(output: Any = emptyMap<String, Any>(), template: String) {
-        this.output = renderer?.render(output, template) ?: ""
+    fun render(output: Any = emptyMap<String, Any>(), template: String = "", text: String = "") {
+        this.output = if (text.isNotBlank()) text else renderer?.render(output, template) ?: ""
     }
 
 }

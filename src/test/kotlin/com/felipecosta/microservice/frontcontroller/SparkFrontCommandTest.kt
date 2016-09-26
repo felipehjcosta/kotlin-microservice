@@ -48,4 +48,12 @@ class SparkFrontCommandTest {
         val actualOutput = sparkFrontCommand.output
         assertEquals(expectedOutput, actualOutput)
     }
+
+    @Test
+    fun name4() {
+        val expectedOutput = "{\"value:\" \"Hello\"}"
+        sparkFrontCommand.render(text = "{\"value:\" \"Hello\"}")
+        val actualOutput = sparkFrontCommand.output
+        assertEquals(expectedOutput, actualOutput)
+    }
 }

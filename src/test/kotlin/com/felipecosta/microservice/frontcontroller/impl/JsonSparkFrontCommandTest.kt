@@ -6,8 +6,6 @@ import com.felipecosta.microservice.utils.whenever
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
-import org.mockito.Mockito.verify
 import spark.QueryParamsMap
 import spark.Request
 import spark.Response
@@ -32,11 +30,8 @@ class JsonSparkFrontCommandTest {
         whenever(request.url()).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
 
         jsonSparkFrontCommand?.process()
-        val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
 
-        verify(response).body(argumentCaptor.capture())
-
-        val responseBody = parse(argumentCaptor.value)
+        val responseBody = parse(jsonSparkFrontCommand?.output)
         assertEquals("http://127.0.0.1:4567/hello-front-controller-json", responseBody.string("url"))
     }
 
@@ -45,11 +40,8 @@ class JsonSparkFrontCommandTest {
         whenever(request.host()).thenReturn("127.0.0.1:4567")
 
         jsonSparkFrontCommand?.process()
-        val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
 
-        verify(response).body(argumentCaptor.capture())
-
-        val responseBody = parse(argumentCaptor.value)
+        val responseBody = parse(jsonSparkFrontCommand?.output)
         assertEquals("127.0.0.1:4567", responseBody.string("host"))
     }
 
@@ -58,11 +50,8 @@ class JsonSparkFrontCommandTest {
         whenever(request.userAgent()).thenReturn("Mozilla/5.0")
 
         jsonSparkFrontCommand?.process()
-        val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
 
-        verify(response).body(argumentCaptor.capture())
-
-        val responseBody = parse(argumentCaptor.value)
+        val responseBody = parse(jsonSparkFrontCommand?.output)
         assertEquals("Mozilla/5.0", responseBody.string("user-agent"))
     }
 
@@ -73,11 +62,8 @@ class JsonSparkFrontCommandTest {
         whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search")))
 
         jsonSparkFrontCommand?.process()
-        val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
 
-        verify(response).body(argumentCaptor.capture())
-
-        val responseBody = parse(argumentCaptor.value)
+        val responseBody = parse(jsonSparkFrontCommand?.output)
         val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search"), searchQuery.toList())
     }
@@ -89,11 +75,8 @@ class JsonSparkFrontCommandTest {
         whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
 
         jsonSparkFrontCommand?.process()
-        val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
 
-        verify(response).body(argumentCaptor.capture())
-
-        val responseBody = parse(argumentCaptor.value)
+        val responseBody = parse(jsonSparkFrontCommand?.output)
         val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search", "awesome search"), searchQuery.toList())
     }
@@ -103,19 +86,15 @@ class JsonSparkFrontCommandTest {
         whenever(request.queryMap()).thenReturn(null)
 
         jsonSparkFrontCommand?.process()
-        val argumentCaptor = ArgumentCaptor.forClass(String::class.java)
 
-        verify(response).body(argumentCaptor.capture())
-
-        val responseBody = parse(argumentCaptor.value)
+        val responseBody = parse(jsonSparkFrontCommand?.output)
         assertNull(responseBody.array<com.beust.klaxon.JsonObject>("query-params"))
     }
 
-    private fun parse(json: String): JsonObject {
-        val byteArray = json.toByteArray()
+    private fun parse(json: String?): JsonObject {
+        val byteArray = json!!.toByteArray()
         val inputStream = ByteInputStream(byteArray, byteArray.size)
         return Parser().parse(inputStream)!! as JsonObject
     }
-
 
 }
