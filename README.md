@@ -2,6 +2,7 @@
 
 This repository contains a microservice example made with the Kotlin language.
 
+[![Build Status](https://travis-ci.org/fcostaa/kotlin-microservice.svg?branch=master)](https://travis-ci.org/fcostaa/kotlin-microservice)
 
 License
 -------
