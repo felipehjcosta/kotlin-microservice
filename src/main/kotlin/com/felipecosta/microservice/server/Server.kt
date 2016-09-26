@@ -24,6 +24,7 @@ class Server {
         val action = action
         Spark.get(routePath.path) { request, response ->
             val frontCommand: FrontCommand = action(request, response)
+            frontCommand.init()
             frontCommand.process()
             frontCommand.output
         }
