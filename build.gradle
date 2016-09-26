@@ -19,6 +19,14 @@ repositories {
     jcenter()
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.sparkjava:spark-core:2.3"
