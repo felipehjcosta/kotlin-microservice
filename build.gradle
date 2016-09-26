@@ -26,7 +26,6 @@ jacocoTestReport {
     }
 }
 
-
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.sparkjava:spark-core:2.3"
@@ -38,4 +37,26 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "junit:junit:4.12"
     compile "org.mockito:mockito-core:1.10.19"
+}
+
+task coverage(dependsOn: 'jacocoTestReport') << {
+    def reports = new File(project.buildDir, '/reports/jacoco/test/html')
+    def index = new File(reports, 'index.html').getText('UTF-8')
+    def footer = '<div class="footer">'
+    def result = new StringBuilder(index.substring(0, index.indexOf(footer)))
+
+    reports.eachDirMatch({ !new File(it).name.startsWith(".") }) { dir ->
+        def moduleIndex = new File(dir, 'index.source.html')
+        def content = moduleIndex.getText('UTF-8')
+                .replaceAll('\\.\\./\\.resources', '.resources')
+                .replaceAll('href="', "href=\"${dir.name}/")
+        result.append(content.substring(content.indexOf('<h1>'), content.indexOf(footer)))
+    }
+    result.append(index.substring(index.indexOf(footer)))
+
+    def output = new File(reports, 'index.source.html')
+
+    output.delete()
+    output << result.toString()
+    println("open $output.path")
 }
