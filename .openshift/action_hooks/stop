@@ -1,0 +1,7 @@
+#!/bin/bash
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+ 
+if [[ -n `ps -A | grep java` ]]; then
+    pkill -SIGTERM java
+fi
+exit 0
