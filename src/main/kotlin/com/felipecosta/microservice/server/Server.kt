@@ -7,6 +7,11 @@ import spark.Response
 import spark.Spark
 
 class Server {
+
+    init {
+        Spark.port(8080)
+    }
+
     operator fun GetHandlerWithRenderer.unaryPlus() {
         val routePath = get.getPath
         val action = get.action
