@@ -9,7 +9,7 @@ class DefaultRendererTest {
 
     val obj: Any = mock()
 
-    var defaultRenderer: DefaultRenderer? = null
+    lateinit var defaultRenderer: DefaultRenderer
 
     @Before
     fun setUp() {
@@ -19,7 +19,7 @@ class DefaultRendererTest {
     @Test
     fun name() {
         val expectedOutput = "test output"
-        val actualOutput = defaultRenderer!!.render(obj, "views/test.html")
+        val actualOutput = defaultRenderer.render(obj, "views/test.html")
         assertEquals(expectedOutput, actualOutput)
     }
 }

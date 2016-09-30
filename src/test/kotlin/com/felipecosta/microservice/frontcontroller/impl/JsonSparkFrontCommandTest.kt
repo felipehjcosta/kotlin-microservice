@@ -18,7 +18,7 @@ class JsonSparkFrontCommandTest {
 
     val response: Response = mock()
 
-    var jsonSparkFrontCommand: JsonSparkFrontCommand? = null
+    lateinit var jsonSparkFrontCommand: JsonSparkFrontCommand
 
     @Before
     fun setUp() {
@@ -29,9 +29,9 @@ class JsonSparkFrontCommandTest {
     fun whenProcessThenAssertResponseBodyContainsUrl() {
         whenever(request.url()).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
 
-        jsonSparkFrontCommand?.process()
+        jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand?.output)
+        val responseBody = parse(jsonSparkFrontCommand.output)
         assertEquals("http://127.0.0.1:4567/hello-front-controller-json", responseBody.string("url"))
     }
 
@@ -39,9 +39,9 @@ class JsonSparkFrontCommandTest {
     fun whenProcessThenAssertResponseBodyContainsHost() {
         whenever(request.host()).thenReturn("127.0.0.1:4567")
 
-        jsonSparkFrontCommand?.process()
+        jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand?.output)
+        val responseBody = parse(jsonSparkFrontCommand.output)
         assertEquals("127.0.0.1:4567", responseBody.string("host"))
     }
 
@@ -49,9 +49,9 @@ class JsonSparkFrontCommandTest {
     fun whenProcessThenAssertResponseBodyContainsUserAgent() {
         whenever(request.userAgent()).thenReturn("Mozilla/5.0")
 
-        jsonSparkFrontCommand?.process()
+        jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand?.output)
+        val responseBody = parse(jsonSparkFrontCommand.output)
         assertEquals("Mozilla/5.0", responseBody.string("user-agent"))
     }
 
@@ -61,9 +61,9 @@ class JsonSparkFrontCommandTest {
         whenever(request.queryMap()).thenReturn(queryMap)
         whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search")))
 
-        jsonSparkFrontCommand?.process()
+        jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand?.output)
+        val responseBody = parse(jsonSparkFrontCommand.output)
         val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search"), searchQuery.toList())
     }
@@ -74,9 +74,9 @@ class JsonSparkFrontCommandTest {
         whenever(request.queryMap()).thenReturn(queryMap)
         whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
 
-        jsonSparkFrontCommand?.process()
+        jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand?.output)
+        val responseBody = parse(jsonSparkFrontCommand.output)
         val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search", "awesome search"), searchQuery.toList())
     }
@@ -85,9 +85,9 @@ class JsonSparkFrontCommandTest {
     fun GivenNullQueryParamWhenProcessThenAssertResponseBodyNotContainQueryParams() {
         whenever(request.queryMap()).thenReturn(null)
 
-        jsonSparkFrontCommand?.process()
+        jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand?.output)
+        val responseBody = parse(jsonSparkFrontCommand.output)
         assertNull(responseBody.array<com.beust.klaxon.JsonObject>("query-params"))
     }
 

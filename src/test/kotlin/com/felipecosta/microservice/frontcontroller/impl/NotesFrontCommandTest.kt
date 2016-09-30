@@ -17,7 +17,7 @@ class NotesFrontCommandTest {
 
     val response: Response = mock()
 
-    var notesFrontCommand: NotesFrontCommand? = null
+    lateinit var notesFrontCommand: NotesFrontCommand
 
     @Before
     fun setUp() {
@@ -30,10 +30,10 @@ class NotesFrontCommandTest {
         whenever(renderer.render(NotesFrontCommand.Output("My First Website", "My Interesting Content"), "views/notes.html")).
                 thenReturn(expectedOutput)
 
-        notesFrontCommand?.init(renderer)
+        notesFrontCommand.init(renderer)
 
-        notesFrontCommand?.process()
+        notesFrontCommand.process()
 
-        assertEquals(expectedOutput, notesFrontCommand?.output)
+        assertEquals(expectedOutput, notesFrontCommand.output)
     }
 }

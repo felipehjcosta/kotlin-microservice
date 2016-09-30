@@ -17,7 +17,7 @@ class PebbleRendererTest {
 
     var pebbleTemplate: PebbleTemplate = mock()
 
-    var pebbleRenderer: PebbleRenderer? = null
+    lateinit var pebbleRenderer: PebbleRenderer
 
     @Before
     fun setUp() {
@@ -34,7 +34,7 @@ class PebbleRendererTest {
             stringWriter.append("awesome text")
         }
 
-        val output = pebbleRenderer?.render(outputObject, "index.html")
+        val output = pebbleRenderer.render(outputObject, "index.html")
 
         assertEquals("awesome text", output)
     }
@@ -49,7 +49,7 @@ class PebbleRendererTest {
             stringWriter.append("awesome text")
         }
 
-        val output = pebbleRenderer?.render(outputMap, "index.html")
+        val output = pebbleRenderer.render(outputMap, "index.html")
 
         assertEquals("awesome text", output)
     }
@@ -64,7 +64,7 @@ class PebbleRendererTest {
             stringWriter.append("awesome text")
         }
 
-        val output = pebbleRenderer?.render(outputObject, "index.html")
+        val output = pebbleRenderer.render(outputObject, "index.html")
 
         assertEquals("awesome text", output)
     }
