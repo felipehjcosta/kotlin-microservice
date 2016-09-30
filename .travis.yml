@@ -7,13 +7,13 @@ script:
 - "./gradlew clean build jacocoTestReport"
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-deploy:
-  skip_cleanup: true
-  provider: openshift
-  user: felipe.h.j.costa@gmail.com
-  password:
-    secure: pcC8N7SBcNrc1wME0UEAz0/bR9V2RSKwW7f24VyyNfpsbCqF7nbvvqf5e3PSPH1qm+0t92ICXLovZcd6pCoZJ9P8uQxUK9ODIW+rMHDj1W/Juc8d0FKJ91w7zNUaNLA2MeInNEeS5IHRjKYtR++ilbSLD8lL4egO/CyUQ34BpK37oPY5mJt3+P1VMlPviY8XsY/GMcW6Lk8Oa30Rkwnzza7/FiCI3vbG3yaOho4CXS4huUXejsh94doHtxFpKIIZ3xnu4zGoD2lgAJaZiN8DPZY0X5D7hGdnaju0VlMVFh+YkpWRKBoS5CycJ14MvEXKuVhxD9OW6WNt2ct1ynWVxnXrJvWlh3uXDaVbErOcONXxvDQICa9nUvS07UGnssRn/Ti1Bui8r+6n25i35HZLqxxCh7G8du2LwPlOLoJaAoLQjpkvh1p8pLz6wuWb7Go7Wo+ywS5ckzch74HV0UGA+pBygUdJhNd5rX+Rcy0tfWXpLKujecvuphkWPmTe33bY4zOwPyat3CRrOJAEco5o9Q1ftrY/TeBJ0GYoW7PRYCYeFVN8HuoOg3ByVIhLvKZp9jhYHaHijyoiAP4cXOp/UnXAIdGi/ojcW8EAoGrGgajIwrW3nIcistSVmt7xLa7PKHNfA3G4OvI8RBS+lG9lLeCP8bQZ2sTwwwGAfEweRPw=
-  app: kotlinmicroservice
-  domain: fcosta
-  on:
-    repo: fcostaa/kotlin-microservice
+# deploy:
+#   skip_cleanup: true
+#   provider: openshift
+#   user: felipe.h.j.costa@gmail.com
+#   password:
+#     secure: pcC8N7SBcNrc1wME0UEAz0/bR9V2RSKwW7f24VyyNfpsbCqF7nbvvqf5e3PSPH1qm+0t92ICXLovZcd6pCoZJ9P8uQxUK9ODIW+rMHDj1W/Juc8d0FKJ91w7zNUaNLA2MeInNEeS5IHRjKYtR++ilbSLD8lL4egO/CyUQ34BpK37oPY5mJt3+P1VMlPviY8XsY/GMcW6Lk8Oa30Rkwnzza7/FiCI3vbG3yaOho4CXS4huUXejsh94doHtxFpKIIZ3xnu4zGoD2lgAJaZiN8DPZY0X5D7hGdnaju0VlMVFh+YkpWRKBoS5CycJ14MvEXKuVhxD9OW6WNt2ct1ynWVxnXrJvWlh3uXDaVbErOcONXxvDQICa9nUvS07UGnssRn/Ti1Bui8r+6n25i35HZLqxxCh7G8du2LwPlOLoJaAoLQjpkvh1p8pLz6wuWb7Go7Wo+ywS5ckzch74HV0UGA+pBygUdJhNd5rX+Rcy0tfWXpLKujecvuphkWPmTe33bY4zOwPyat3CRrOJAEco5o9Q1ftrY/TeBJ0GYoW7PRYCYeFVN8HuoOg3ByVIhLvKZp9jhYHaHijyoiAP4cXOp/UnXAIdGi/ojcW8EAoGrGgajIwrW3nIcistSVmt7xLa7PKHNfA3G4OvI8RBS+lG9lLeCP8bQZ2sTwwwGAfEweRPw=
+#   app: kotlinmicroservice
+#   domain: fcosta
+#   on:
+#     repo: fcostaa/kotlin-microservice
