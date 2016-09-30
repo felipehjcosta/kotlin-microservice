@@ -22,7 +22,7 @@ repositories {
 jar {
     manifest {
         attributes 'Implementation-Version': version,
-                'Main-Class': "com.felipecosta.microservice.MainKt"
+                'Main-Class': "com.felipecosta.microservice.BootstrapKt"
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
