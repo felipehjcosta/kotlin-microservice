@@ -8,8 +8,12 @@ import spark.Spark
 
 class Server {
 
+    private val IP_ADDRESS = if (System.getenv("OPENSHIFT_DIY_IP") != null) System.getenv("OPENSHIFT_DIY_IP") else "localhost"
+    private val PORT = if (System.getenv("OPENSHIFT_DIY_PORT") != null) Integer.parseInt(System.getenv("OPENSHIFT_DIY_PORT")) else 8080
+
     init {
-        Spark.port(8080)
+        Spark.ipAddress(IP_ADDRESS)
+        Spark.port(PORT)
     }
 
     operator fun GetHandlerWithRenderer.unaryPlus() {
