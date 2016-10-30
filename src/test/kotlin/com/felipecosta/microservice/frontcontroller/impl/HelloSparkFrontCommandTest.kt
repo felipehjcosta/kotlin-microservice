@@ -24,6 +24,6 @@ class HelloSparkFrontCommandTest {
     fun whenProcessThenAssertResponseBodyContainsHelloWorldMessage() {
         helloSparkFrontCommand.process()
 
-        assertEquals("Hello World form Spark with Kotlin", helloSparkFrontCommand?.output)
+        assertEquals("Hello World form Spark with Kotlin", helloSparkFrontCommand.output)
     }
 }
