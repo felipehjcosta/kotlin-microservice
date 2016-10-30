@@ -1,6 +1,6 @@
-package com.felipecosta.microservice.renderer.impl
+package com.felipecosta.microservice.server.renderer.impl
 
-import com.felipecosta.microservice.renderer.Renderer
+import com.felipecosta.microservice.server.renderer.Renderer
 import com.mitchellbosecke.pebble.PebbleEngine
 import java.io.StringWriter
 

@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.renderer
+package com.felipecosta.microservice.server.renderer
 
 interface Renderer {
     fun render(outputObject: Any, path: String): String

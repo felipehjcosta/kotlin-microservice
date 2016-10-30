@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.renderer.impl
+package com.felipecosta.microservice.server.renderer.impl
 
 import com.felipecosta.microservice.utils.mock
 import com.felipecosta.microservice.utils.whenever

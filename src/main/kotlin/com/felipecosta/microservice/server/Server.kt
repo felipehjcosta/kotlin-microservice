@@ -1,7 +1,7 @@
 package com.felipecosta.microservice.server
 
-import com.felipecosta.microservice.frontcontroller.FrontCommand
-import com.felipecosta.microservice.renderer.Renderer
+import com.felipecosta.microservice.server.frontcontroller.FrontCommand
+import com.felipecosta.microservice.server.renderer.Renderer
 import spark.Request
 import spark.Response
 import spark.Spark
@@ -28,7 +28,7 @@ class Server {
         }
     }
 
-    operator fun GetHandler<out FrontCommand>.unaryPlus() {
+    operator fun GetHandler<FrontCommand>.unaryPlus() {
         val routePath = getPath
         val action = action
         Spark.get(routePath.path) { request, response ->
@@ -56,12 +56,12 @@ class GetPath(val path: String) {
 
 infix fun <T : FrontCommand> GetPath.to(action: (request: Request, response: Response) -> T) = GetHandler(this, action)
 
-class GetHandler<T : FrontCommand>(val getPath: GetPath, val action: (Request, Response) -> T) {
+class GetHandler<out T : FrontCommand>(val getPath: GetPath, val action: (Request, Response) -> T) {
 
 }
 
 infix fun <T : FrontCommand> GetHandler<T>.with(renderer: Renderer) = GetHandlerWithRenderer(this, renderer)
 
-class GetHandlerWithRenderer(val get: GetHandler<out FrontCommand>, val renderer: Renderer) {
+class GetHandlerWithRenderer(val get: GetHandler<FrontCommand>, val renderer: Renderer) {
 
 }

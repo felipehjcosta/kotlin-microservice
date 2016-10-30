@@ -1,6 +1,6 @@
-package com.felipecosta.microservice.frontcontroller
+package com.felipecosta.microservice.server.frontcontroller
 
-import com.felipecosta.microservice.renderer.Renderer
+import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.utils.mock
 import com.felipecosta.microservice.utils.whenever
 import org.junit.Assert.assertEquals
