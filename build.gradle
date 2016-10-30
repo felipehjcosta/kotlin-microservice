@@ -34,12 +34,24 @@ jacocoTestReport {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
+sourceSets {
+    main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+}
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.sparkjava:spark-core:2.3"
     compile "com.beust:klaxon:0.24"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile "com.mitchellbosecke:pebble:2.1.0"
+
+    compile 'com.google.dagger:dagger:2.4'
+    kapt 'com.google.dagger:dagger-compiler:2.4'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
