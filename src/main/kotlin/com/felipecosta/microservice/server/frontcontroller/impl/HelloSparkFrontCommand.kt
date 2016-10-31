@@ -4,7 +4,7 @@ import com.felipecosta.microservice.server.frontcontroller.SparkFrontCommand
 import spark.Request
 import spark.Response
 
-class HelloSparkFrontCommand(request: Request, response: Response) : SparkFrontCommand(request, response) {
+class HelloSparkFrontCommand() : SparkFrontCommand() {
     override fun process() {
         render(template = "views/hello_world.html")
     }

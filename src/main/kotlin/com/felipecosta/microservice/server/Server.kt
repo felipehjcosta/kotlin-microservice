@@ -2,8 +2,6 @@ package com.felipecosta.microservice.server
 
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
-import spark.Request
-import spark.Response
 import spark.Spark
 
 class Server {
@@ -21,8 +19,8 @@ class Server {
         val action = get.action
         val renderer = renderer
         Spark.get(routePath.path) { request, response ->
-            val frontCommand: FrontCommand = action(request, response)
-            frontCommand.init(renderer)
+            val frontCommand: FrontCommand = action()
+            frontCommand.init(request, response, renderer)
             frontCommand.process()
             frontCommand.output
         }
@@ -32,8 +30,8 @@ class Server {
         val routePath = getPath
         val action = action
         Spark.get(routePath.path) { request, response ->
-            val frontCommand: FrontCommand = action(request, response)
-            frontCommand.init()
+            val frontCommand: FrontCommand = action()
+            frontCommand.init(request, response)
             frontCommand.process()
             frontCommand.output
         }
@@ -54,9 +52,9 @@ class GetPath(val path: String) {
 
 }
 
-infix fun <T : FrontCommand> GetPath.to(action: (request: Request, response: Response) -> T) = GetHandler(this, action)
+infix fun <T : FrontCommand> GetPath.to(action: () -> T) = GetHandler(this, action)
 
-class GetHandler<out T : FrontCommand>(val getPath: GetPath, val action: (Request, Response) -> T) {
+class GetHandler<out T : FrontCommand>(val getPath: GetPath, val action: () -> T) {
 
 }
 

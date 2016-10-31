@@ -22,7 +22,8 @@ class JsonSparkFrontCommandTest {
 
     @Before
     fun setUp() {
-        jsonSparkFrontCommand = JsonSparkFrontCommand(request, response)
+        jsonSparkFrontCommand = JsonSparkFrontCommand()
+        jsonSparkFrontCommand.init(request, response)
     }
 
     @Test

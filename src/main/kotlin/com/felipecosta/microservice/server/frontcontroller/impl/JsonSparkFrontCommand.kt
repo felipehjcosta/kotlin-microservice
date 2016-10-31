@@ -6,7 +6,7 @@ import com.felipecosta.microservice.server.frontcontroller.SparkFrontCommand
 import spark.Request
 import spark.Response
 
-class JsonSparkFrontCommand(request: Request, response: Response) : SparkFrontCommand(request, response) {
+class JsonSparkFrontCommand() : SparkFrontCommand() {
 
     override fun process() {
 

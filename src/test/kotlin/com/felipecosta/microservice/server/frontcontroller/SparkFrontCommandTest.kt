@@ -6,11 +6,16 @@ import com.felipecosta.microservice.utils.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Matchers
-import org.mockito.Matchers.eq
 import org.mockito.Mockito
+import org.mockito.Mockito.verifyZeroInteractions
+import spark.Request
+import spark.Response
 
 class SparkFrontCommandTest {
+
+    val request: Request = mock()
+
+    val response: Response = mock()
 
     val renderer: Renderer = mock()
 
@@ -18,21 +23,12 @@ class SparkFrontCommandTest {
 
     @Before
     fun setUp() {
+        sparkFrontCommand.init(request, response)
     }
 
     @Test
-    fun name() {
-        sparkFrontCommand.init()
-
-        val expectedOutput = "Hello World form Spark Front Command"
-        sparkFrontCommand.render(template = "views/hello_world_test.html")
-        val actualOutput = sparkFrontCommand.output
-        assertEquals(expectedOutput, actualOutput)
-    }
-
-    @Test
-    fun name2() {
-        sparkFrontCommand.init(renderer)
+    fun whenRenderWithTemplateThenVerifyOutput() {
+        sparkFrontCommand.init(request, response, renderer)
         whenever(renderer.render(emptyMap<String, Any>(), "views/hello_world_test.html")).thenReturn("Awesome return")
 
         val expectedOutput = "Awesome return"
@@ -42,18 +38,18 @@ class SparkFrontCommandTest {
     }
 
     @Test
-    fun name3() {
-        val expectedOutput = ""
-        sparkFrontCommand.render(template = "views/hello_world_test.html")
+    fun whenRenderWithTextThenVerifyOutput() {
+        val expectedOutput = "{\"value:\" \"Hello\"}"
+        sparkFrontCommand.render(text = "{\"value:\" \"Hello\"}")
         val actualOutput = sparkFrontCommand.output
         assertEquals(expectedOutput, actualOutput)
     }
 
     @Test
-    fun name4() {
-        val expectedOutput = "{\"value:\" \"Hello\"}"
+    fun givenMockRendererWhenRenderWithTextThenVerifyOutput() {
+        sparkFrontCommand.init(request, response, renderer)
+
         sparkFrontCommand.render(text = "{\"value:\" \"Hello\"}")
-        val actualOutput = sparkFrontCommand.output
-        assertEquals(expectedOutput, actualOutput)
+        verifyZeroInteractions(renderer)
     }
 }

@@ -21,16 +21,16 @@ class NotesFrontCommandTest {
 
     @Before
     fun setUp() {
-        notesFrontCommand = NotesFrontCommand(request, response)
+        notesFrontCommand = NotesFrontCommand()
     }
 
     @Test
-    fun name() {
+    fun givenOutputObjectWhenProcessThenVerifyRenderedOutput() {
         val expectedOutput = "Awesome output"
         whenever(renderer.render(NotesFrontCommand.Output("My First Website", "My Interesting Content"), "views/notes.html")).
                 thenReturn(expectedOutput)
 
-        notesFrontCommand.init(renderer)
+        notesFrontCommand.init(request, response, renderer)
 
         notesFrontCommand.process()
 

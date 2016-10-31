@@ -17,7 +17,7 @@ class DefaultRendererTest {
     }
 
     @Test
-    fun name() {
+    fun givenObjectWhenRenderThenVerifyOutputText() {
         val expectedOutput = "test output"
         val actualOutput = defaultRenderer.render(obj, "views/test.html")
         assertEquals(expectedOutput, actualOutput)

@@ -16,8 +16,8 @@ class HelloSparkFrontCommandTest {
 
     @org.junit.Before
     fun setUp() {
-        helloSparkFrontCommand = HelloSparkFrontCommand(request, response)
-        helloSparkFrontCommand.init()
+        helloSparkFrontCommand = HelloSparkFrontCommand()
+        helloSparkFrontCommand.init(request, response)
     }
 
     @Test
