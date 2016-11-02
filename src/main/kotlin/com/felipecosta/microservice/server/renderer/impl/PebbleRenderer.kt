@@ -20,10 +20,8 @@ class PebbleRenderer(val pebbleEngine: PebbleEngine) : Renderer {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun transformOutputObjectIntoMap(outputObject: Any): Map<String, Any> {
-        return when (outputObject) {
-            is Map<*, *> -> outputObject as Map<String, Any>
-            else -> mapOf(outputObject.javaClass.simpleName.toLowerCase() to outputObject)
-        }
+    private fun transformOutputObjectIntoMap(outputObject: Any): Map<String, Any> = when (outputObject) {
+        is Map<*, *> -> outputObject as Map<String, Any>
+        else -> mapOf(outputObject.javaClass.simpleName.toLowerCase() to outputObject)
     }
 }
