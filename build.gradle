@@ -32,6 +32,19 @@ jacocoTestReport {
         xml.enabled true
         html.enabled true
     }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*Module.*', // Modules for Dagger.
+                    '**/*Dagger*.*', // Dagger auto-generated code.
+                    '**/*MembersInjector*.*', // Dagger auto-generated code.
+                    '**/*_Provide*Factory*.*',
+                    '**/*_Factory.*', //Dagger auto-generated code
+                    '**/*$*$*.*'
+            ])
+        })
+    }
 }
 
 kapt {
