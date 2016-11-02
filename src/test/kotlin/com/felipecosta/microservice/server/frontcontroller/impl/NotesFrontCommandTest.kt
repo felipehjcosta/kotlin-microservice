@@ -27,7 +27,7 @@ class NotesFrontCommandTest {
     @Test
     fun givenOutputObjectWhenProcessThenVerifyRenderedOutput() {
         val expectedOutput = "Awesome output"
-        whenever(renderer.render(NotesFrontCommand.Output("My First Website", "My Interesting Content"), "views/notes.html")).
+        whenever(renderer.render(Output("My First Website", "My Interesting Content"), "views/notes.html")).
                 thenReturn(expectedOutput)
 
         notesFrontCommand.init(request, response, renderer)
