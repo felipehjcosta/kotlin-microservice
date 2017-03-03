@@ -15,11 +15,11 @@ after_success:
 
 deploy:
   provider: openshift
-  user: felipe.h.j.costa@gmail.com
+  user: $OPENSHIFT_USER
   password:
-    secure: mm3bB0X7oPzesnJ2AgYDi6jMSQkpoEQsiZQJ6/B3LUysWOu1CQPUOXsJCoLhVhhAFqqZA10TNk4fs88CQSR3nUuXvqosxok+VgmFTghxqan0oBgaEjtZMAB6wevsPuAohTAEFu3PXlIHKO55iALXB1feXFlllMqZIbx9W/mv9r5d3UrAKJVLX3mUxiyIMqbZxd0IwhdvHB7p7w3qR4rQc8cyCupeg64PW26cM7l8TVlY40hDbsRRulWwsCHdFWuR+dxZ0jn4993foAMKNCEoge21E8NI7dSrHs8N62k0rNz9CT0lkuwmaygzI/9dhUzCXraZqlEp1z5LcoVhTpkwju189BW4mzfGIreaEwyZgNh/S3a+tk6zUovEloTf2Z9PvBHW9fPLiOxenM4xi2RYp8VlNH2EtAjEpe6TMAJtOCvf8k5h0blfDg9lZSW16w+H13nk90w2JqDISSoXVDscSw16W5UYpoHJb3RCsFhk3nTIpwUnkSGZubAj3V9qN3d4vMMUuWBFPayVvy2dA4BOzNkAxM0nVGmnEWI7hs8P3m+Zql78TbCYRKffAdrRq9I+E7QJzh7JUCFll2eY2gDnxFC2hx7Ureb+8GxEyluKxA+sdq7ES4WKy5SZYoCiWBlBz9zYmLxvnJPIYU39sYRTp03MVZ+xmv6pRzyMp36UNXs=
+    secure: $OPENSHIFT_PASSWORD
   app: kotlinmicroservice
-  domain: fcosta
+  domain: $OPENSHIFT_DOMAIN
   on:
     repo: fcostaa/kotlin-microservice
     
