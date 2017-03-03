@@ -11,4 +11,4 @@ export PATH=${JAVA_HOME}/bin:${PATH}
  
 cd $OPENSHIFT_REPO_DIR
 
-./gradlew clean jar
+./gradlew clean jar --info
