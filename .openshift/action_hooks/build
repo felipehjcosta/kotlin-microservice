@@ -11,4 +11,4 @@ export PATH=${JAVA_HOME}/bin:${PATH}
  
 cd $OPENSHIFT_REPO_DIR
 
-./gradlew --no-daemon --stacktrace --info -Dorg.gradle.bindaddress=$OPENSHIFT_DIY_IP clean jar
+./gradlew --stop && ./gradlew --no-daemon --stacktrace --info -Dorg.gradle.bindaddress=$OPENSHIFT_DIY_IP clean jar
