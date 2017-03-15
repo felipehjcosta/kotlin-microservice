@@ -17,7 +17,7 @@ after_success:
 - eval "$(ssh-agent)"
 - ssh-add
 - export SSHPASS=$DEPLOY_PASS
-- sshpass -e scp build/libs/ROOT.war $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- sshpass -e scp -i build/libs/ROOT.war $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
