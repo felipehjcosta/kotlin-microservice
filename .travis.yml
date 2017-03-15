@@ -19,8 +19,8 @@ after_success:
 - scp build/libs/ROOT.war $DEPLOY_HOST:$DEPLOY_PATH
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_5c31a1050f8e_key -iv $encrypted_5c31a1050f8e_iv
-- in id_rsa.enc -out ~/.ssh/id_rsa -d
+- openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
+  -in id_rsa.enc -out ~\/.ssh/id_rsa -d
 
 cache:
   directories:
