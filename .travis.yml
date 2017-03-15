@@ -1,6 +1,6 @@
 language: java
 
-sudo: false
+sudo: required
 
 install: true
 
@@ -12,6 +12,7 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+- sudo apt-get -y install sshpass
 - chmod 600 ~/.ssh/id_rsa
 - eval "$(ssh-agent)"
 - ssh-add
