@@ -12,12 +12,13 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-#- sudo apt-get -y install sshpass
-#- chmod 600 ~/.ssh/id_rsa
-#- eval "$(ssh-agent)"
-#- ssh-add
-#- export SSHPASS=$DEPLOY_PASS
-#- sshpass scp -i ~/.ssh/id_rsa build/libs/spark-*.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- sudo apt-get -y install sshpass
+- chmod 600 ~/.ssh/id_rsa
+- eval "$(ssh-agent)"
+- ssh-add
+- export SSHPASS=$DEPLOY_PASS
+- sshpass scp -i ~/.ssh/id_rsa build/libs/spark-*.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- sudo gem install net-ssh -v 2.9.2
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
