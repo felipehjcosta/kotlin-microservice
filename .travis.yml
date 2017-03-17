@@ -1,5 +1,8 @@
 language: java
 
+rvm:
+  - 1.9.3
+
 sudo: required
 
 install: true
@@ -22,7 +25,7 @@ after_success:
 before_install:
 - openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
-- rvm 1.9.3 do gem install net-ssh -v 2.9.2
+- gem install net-ssh -v 2.9.2
 
 cache:
   directories:
