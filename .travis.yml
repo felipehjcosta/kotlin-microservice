@@ -18,11 +18,11 @@ after_success:
 - ssh-add
 - export SSHPASS=$DEPLOY_PASS
 - sshpass scp -i ~/.ssh/id_rsa build/libs/spark-*.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-- sudo gem install net-ssh -v 2.9.2
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- rvm 1.9.3 do gem install net-ssh -v 2.9.2
 
 cache:
   directories:
