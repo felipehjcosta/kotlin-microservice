@@ -1,4 +1,6 @@
 language: java
+rvm:
+- 2.1
 
 sudo: required
 
