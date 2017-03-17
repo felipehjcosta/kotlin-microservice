@@ -7,7 +7,7 @@
         <filter-class>spark.servlet.SparkFilter</filter-class>
         <init-param>
             <param-name>applicationClass</param-name>
-            <param-value>com.felipecosta.microservice.BootstrapKt</param-value>
+            <param-value>com.felipecosta.microservice.BootstrapApplicationKt</param-value>
         </init-param>
     </filter>
 
