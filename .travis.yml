@@ -4,6 +4,9 @@ sudo: required
 
 install: true
 
+rvm:
+- 1.9.3
+
 jdk:
 - oraclejdk8
 
