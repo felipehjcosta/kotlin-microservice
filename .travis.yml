@@ -4,9 +4,6 @@ sudo: required
 
 install: true
 
-rvm:
-- 1.9.3
-
 jdk:
 - oraclejdk8
 
@@ -19,6 +16,9 @@ after_success:
 cache:
   directories:
   - "$HOME/.gradle"
+
+before_deploy:
+- rvm use ruby-1.9.3-p551
 
 deploy:
   provider: openshift
