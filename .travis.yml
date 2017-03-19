@@ -1,14 +1,6 @@
 language: java
 
-before_install:
-- rvm install ruby-1.9.3-p551
-- rvm --default use ruby-1.9.3-p551
-- ruby -v
-- gem install httpclient -v 2.4.0
-- gem install net-ssh -v 2.9.2
-- gem install rhc
-
-sudo: required
+sudo: false
 
 install: true
 
