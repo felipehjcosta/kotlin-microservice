@@ -1,5 +1,10 @@
 language: java
 
+before_script:
+- rvm install ruby-1.9.3-p551
+- rvm --default use ruby-1.9.3-p551
+- ruby -v
+
 sudo: required
 
 install: true
@@ -16,11 +21,6 @@ after_success:
 cache:
   directories:
   - "$HOME/.gradle"
-
-before_deploy:
-- rvm install ruby-1.9.3-p551
-- rvm --default use ruby-1.9.3-p551
-- ruby -v
 
 deploy:
   provider: openshift
