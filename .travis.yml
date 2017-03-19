@@ -1,6 +1,6 @@
 language: java
 
-before_script:
+before_install:
 - rvm install ruby-1.9.3-p551
 - rvm --default use ruby-1.9.3-p551
 - ruby -v
