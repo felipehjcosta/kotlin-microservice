@@ -8,10 +8,15 @@ jdk:
 - oraclejdk8
 
 script:
-- "./gradlew clean test jacocoTestReport"
+- "./gradlew clean test jacocoTestReport jar"
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+- sudo apt-get -y install sshpass
+- openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- sshpass scp -i ~/id_rsa_dpl build/libs/spark-*.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 
 cache:
   directories:
@@ -26,3 +31,10 @@ deploy:
   domain: fcosta
   on:
     repo: fcostaa/kotlin-microservice
+
+env:
+  global:
+  - secure: a8OtEEr68/OZOjUKNiwDxj0mBJAQtN9BoYmCDlTGv5qYTwK/1fsISVRAujpSLgEtKeUlVtTYu4BQusGHsO2RibiAmh+c+vGK+szivBgIM5/vIMwksx5uks1uN8DwDPF2pOkGdDkl5H6FMEzk7Ta3EHW7Vq9TBQhUY/y9FjMIueFMTVhHlyjFDgtUkHe6KE/ljSIAbAS13uecROdwaXG2iyXkg9XUrTh5DijnTLgTtLdf7UjS09ivcF3noiutdzVJgD6XiZYaTUaBLh+qUs8wN+9mAWchFXjK7T3QIFSi7mxs6wXBFKWPGr4BKUEKXg3zKCu5tSBJbg839Oc7divv7BYK/CJedaqNyTla3aNdmcqPsAhJcYpaa8ICnker2loWNoq0I+2mecDkoOLxtgoiAEBkw+vA0MAwOJ5es+fK/7zeAt9Z1hWYTzpp5ow2lDDd66yISDA9wN4i3LJ1Bt+mD1P5+ROkrH/A4GLkUJKmunFhwiLLUHcm8i7DJuoMGOEtqsS9FEn62gVxy/sSQaAttPc7lLTVq966dZQEzouVPa/QePRe+G1Lt/7uc+d8jWLzpDAYcDYlB4ujJ/47doe0o8k9i3Zbs5wQzTfi+0ahz+PGws9JI334wlEzWp15v5SPsCv+6cFbEmYoHHD7ZwhL8vgbCEXHMPZrYpvo5mbKoyU=
+  - secure: V1nidtp8cEzdjFb+JoXeD+GoxZVpmjGtK0WOMUNKIbQ2JjhdT5jislBIX8jm7pgvJu4Zk87YUB6yAy133Esw9N8GDm58biwUzT7DnJ2+T4zOLnARIoU5OlnaCv7/eCnWZFE06eOT2h+IiSKZ1r0y48wJiI18VG1HfZSYdV2lIl8AT6ecHIJ6aMAM7tgHxTVdbCzAkrQN91arTR0Ly/iuTF0qxg8vb4B7eI7Blo7zHenndRcAWcX4px0I/EDiROerA9mNolEkiskOBOf5/0tH89OVobw0/mlIYKdmp9zppf9IezeIyXkthwgsG5qeqb+VoJwfZyTVDejxD6Tqgegeuzo73+UeLnttjTjSkhyHUuoHqDH3+59yHCH0PTrSbVz0/dhixjtsOKnv9Ych8CjU+OnEyhSazb/94phcLhjSSPniUz3m0mvV5YR5cB/HTTIci1d78jVLQDeoJNpGxf+SSIepvK1M3NY8MHUGCrCwYVV3fVNXq/prXMNcF4Gjl6cwlWfQ62FoaY8+7t6GnwzIfVmVBvSIgvviO6SeMWgSTvYzofqL6KOtZ5n9/X6cI80a+WK8yRZdMyW/EcwBiP9PPvUS8Zc5IYXvCabKSBP2xfU0O3qdJSKl4v2sNX3TOac5u3v7w6VLcTfoMiazJye7JBxJUfyZXKz1+TEHVfEWhO4=
+  - secure: HOwh92J4Cxy2f12u9/x9+llbNigIP6+nqmBIAg1jgMTSuXTtsUbM1KPDGMVEMRCsqAG9VcZktzB2M7zo+XDXNSsx/uHqpQOAVL5bDUfMXNooeuzbkMimF55oyOL9oXSugB6rut5bn30L8yQiWZlq9LMIKB9bWbLN1WQBh/yyJ+AWnQjD24MSa7GGMNsxiiyAx8Y5VlIMxvHKkilc2sG7Me25ZoK5UZG8Mk64qyI7Sz7xsy4olu3vrGWmgjN0ChKyEC1B9Zvxb55Pdv2Nnw+MwHxLfvzgI28C2nrvH7MxykcKolWED/HAfakJGY/vLuJeUNnoGxNJshqifBEQQehEftLpJ3jHfJI5HGtnMVrSXafKA2XIZXqH74qrQSZsgvtxFSq4GGBtn0y9z+2gePe8/tdnNO+zbiEW+ZyK7jpwdsotzkmJvh8nVALV+rwY+jx0KQKr/+6N37277LLwRrMRvFae3uMioV5U4hzdi6LPgNkRdapOuINh3oJ1v/2Alt7hbfLwsauw/FCZ6lfxihq+gnmU+BV+GkAbzux39kvIRrb8H7FYJJdgIpZl7N5Wv54HjajThtPTaNQ8qb+4VtC51ir6szirBFq7ohdBFcn8BhU1GF7q9H8dixNgY0bzT/n/3rXZnR/P8mAV+xaahmoMjXh8C01hy+KTe1C5BANzuaY=
+
