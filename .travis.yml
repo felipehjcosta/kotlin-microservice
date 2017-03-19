@@ -22,7 +22,7 @@ deploy:
   user: felipe.h.j.costa@gmail.com
   password:
     secure: a456/l8zJZJv3hZoPcIxiE8stl2s/pSH288aRE1ahQy7bt3JBA6oG9+9LOuTYteGcuOEJfe/FetcJwXvIwcvEwW5z8ExGpFN09JFxF4TrqyTwZ34T5eeM44UCABXqUgU+rue7ODiChasQrs1nfueOlOvIcXO92eW0v4Irp5kln7g9xsnR1cUF7c2rmIeJJXhvJeyithaqdJuhrCC9GnFvj4HHpLLwk2JBHPcbnsOyw30u8nN/fMNz50vfMyffUoAC8mPTDuhLH2xN0Y7zng8/cjdod0GSSgBegpE85RHAVUOSJo505T6d3wFZAhKbGoGBV7ZjKgwHN79FvR0EsQPwHUKKYqsPymWo3zEETS1g9Jg3lPDrQrR37xwe/CR3shc1TeA1sA+PJpuReehb8LcPml7B+IeJ3x2qo3fDvTv6o0EO2hamz4E/79aLzNNGowc4Z+TVkFfWWj2oijuTuRgP9c+8f/aBtkYVnfybIYvPgYUUZvn6S9db/G2r4E4tcr+OktOCuUIMdJorwAWXuI99deGtiztqHFXUBDQ5kToKPtuCPi58emXErXlIlaecAXNUBTe+yRGnDXjVqcf6fBHXCe5HiV3TRLiteaaivggY9mQtYHOM6jzSu1TEKYjmth+2p54rhNb0/7rz0zFaT19qDtZTl4+vE2qEyAlsLZFy20=
-  app: kotlin-microservice
+  app: kotlinmicroservice
   domain: fcosta
   on:
     repo: fcostaa/kotlin-microservice
