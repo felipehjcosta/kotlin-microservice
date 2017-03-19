@@ -12,11 +12,12 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- apt-get -y install sshpass
+- eval "$(ssh-agent)"
+- ssh-add
+- export SSHPASS=$DEPLOY_PASS
 - openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
-- chmod 600 ~/.ssh/id_rsa
-- sshpass scp -i ~/id_rsa_dpl build/libs/spark-*.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- scp -i ~/id_rsa_dpl build/libs/spark-*.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 
 cache:
   directories:
