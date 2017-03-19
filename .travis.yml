@@ -3,9 +3,12 @@ language: java
 sudo: false
 
 addons:
+  ssh_known_hosts:
+  - kotlinmicroservice-fcosta.rhcloud.com
   apt:
     packages:
     - sshpass
+
 
 install: true
 
