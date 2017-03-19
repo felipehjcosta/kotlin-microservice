@@ -20,7 +20,10 @@ after_success:
 - openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
   -in id_rsa.enc -out ~/id_rsa_dpl -d
 - chmod 600 ~/id_rsa_dpl
-- sshpass scp -i ~/id_rsa_dpl build/libs/spark-0.1.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- eval "$(ssh-agent)"
+- ssh-add
+- export SSHPASS=$DEPLOY_PASS
+- scp -i ~/id_rsa_dpl build/libs/spark-0.1.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 
 cache:
   directories:
