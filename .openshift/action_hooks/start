@@ -10,4 +10,9 @@ export JAVA_HOME=/etc/alternatives/java_sdk_1.8.0
 export PATH=${JAVA_HOME}/bin:${PATH}
  
 cd $OPENSHIFT_REPO_DIR && cd ../dependencies
+
+if [[ -n `ps -A | grep java` ]]; then
+	pkill -SIGTERM java
+fi
+
 java -jar spark-*.jar &
