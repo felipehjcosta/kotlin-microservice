@@ -1,6 +1,6 @@
 package com.felipecosta.microservice.server.renderer.impl
 
-import com.felipecosta.microservice.utils.mock
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals

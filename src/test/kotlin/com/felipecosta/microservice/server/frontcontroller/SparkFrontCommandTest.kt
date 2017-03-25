@@ -1,8 +1,8 @@
 package com.felipecosta.microservice.server.frontcontroller
 
 import com.felipecosta.microservice.server.renderer.Renderer
-import com.felipecosta.microservice.utils.mock
-import com.felipecosta.microservice.utils.whenever
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

@@ -2,7 +2,7 @@ package com.felipecosta.microservice.app.movies.frontcontroller
 
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.app.movies.domain.GetMoviesUseCase
-import com.felipecosta.microservice.utils.mock
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Before
 import org.junit.Test
 import org.mockito.BDDMockito.given

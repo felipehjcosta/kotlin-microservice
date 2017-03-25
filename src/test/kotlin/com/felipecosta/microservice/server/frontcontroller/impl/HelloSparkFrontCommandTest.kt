@@ -1,6 +1,6 @@
 package com.felipecosta.microservice.server.frontcontroller.impl
 
-import com.felipecosta.microservice.utils.mock
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
 import spark.Request
 import spark.Response

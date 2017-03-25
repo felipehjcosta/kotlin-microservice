@@ -1,7 +1,7 @@
 package com.felipecosta.microservice.server.renderer.impl
 
-import com.felipecosta.microservice.utils.mock
-import com.felipecosta.microservice.utils.whenever
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import com.mitchellbosecke.pebble.PebbleEngine
 import com.mitchellbosecke.pebble.template.PebbleTemplate
 import org.junit.Before
