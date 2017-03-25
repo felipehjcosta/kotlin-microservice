@@ -20,12 +20,12 @@ fun main(args: Array<String>) {
         +(map get "/json" to ::JsonSparkFrontCommand)
         +(map get "/notes" to ::NotesFrontCommand with PebbleRenderer(pebbleEngine))
         +(map get "/api/movies" to {
-            val moviesFrontCommand = MoviesFrontCommand()
-            val moviesComponent = DaggerMoviesComponent.builder().
-                    applicationComponent(applicationComponent).
-                    build()
-            moviesComponent.inject(moviesFrontCommand)
-            moviesFrontCommand
+            MoviesFrontCommand().apply {
+                val moviesComponent = DaggerMoviesComponent.builder().
+                        applicationComponent(applicationComponent).
+                        build()
+                moviesComponent.inject(this)
+            }
         })
     }
 

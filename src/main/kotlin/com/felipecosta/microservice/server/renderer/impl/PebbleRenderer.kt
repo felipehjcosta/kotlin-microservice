@@ -5,19 +5,19 @@ import com.mitchellbosecke.pebble.PebbleEngine
 import java.io.StringWriter
 
 class PebbleRenderer(val pebbleEngine: PebbleEngine) : Renderer {
-    override fun render(outputObject: Any, path: String): String {
-        val compiledTemplate = pebbleEngine.getTemplate(path)
+    override fun render(outputObject: Any, path: String) =
+            with(StringWriter()) {
+                val compiledTemplate = pebbleEngine.getTemplate(path)
+                val context = transformOutputObjectIntoMap(outputObject)
 
-        val writer = StringWriter()
-        val context = transformOutputObjectIntoMap(outputObject)
+                if (context.isEmpty()) {
+                    compiledTemplate.evaluate(this)
+                } else {
+                    compiledTemplate.evaluate(this, context)
+                }
 
-        if (context.isEmpty()) {
-            compiledTemplate.evaluate(writer)
-        } else {
-            compiledTemplate.evaluate(writer, context)
-        }
-        return writer.toString()
-    }
+                toString()
+            }
 
     @Suppress("UNCHECKED_CAST")
     private fun transformOutputObjectIntoMap(outputObject: Any): Map<String, Any> = when (outputObject) {

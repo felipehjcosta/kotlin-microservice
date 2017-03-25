@@ -4,7 +4,7 @@ import com.felipecosta.microservice.server.renderer.Renderer
 import spark.Request
 import spark.Response
 
-abstract class SparkFrontCommand() : FrontCommand {
+abstract class SparkFrontCommand : FrontCommand {
 
     private lateinit var renderer: Renderer
 
