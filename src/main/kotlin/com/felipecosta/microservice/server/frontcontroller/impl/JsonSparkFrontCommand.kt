@@ -3,10 +3,8 @@ package com.felipecosta.microservice.server.frontcontroller.impl
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.json
 import com.felipecosta.microservice.server.frontcontroller.SparkFrontCommand
-import spark.Request
-import spark.Response
 
-class JsonSparkFrontCommand() : SparkFrontCommand() {
+class JsonSparkFrontCommand : SparkFrontCommand() {
 
     override fun process() {
 
