@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.server.frontcontroller.impl
+package com.felipecosta.microservice.app.notes.frontcontroller
 
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.renderer.Renderer
