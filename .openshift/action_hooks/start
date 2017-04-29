@@ -15,4 +15,4 @@ if [[ -n `ps -A | grep java` ]]; then
 	pkill -SIGTERM java
 fi
 
-java -jar spark-*.jar &
+java -jar app-*.jar &
