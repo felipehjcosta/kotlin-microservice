@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.server.frontcontroller.impl
+package com.felipecosta.microservice.app.helloworld.frontcontroller
 
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
