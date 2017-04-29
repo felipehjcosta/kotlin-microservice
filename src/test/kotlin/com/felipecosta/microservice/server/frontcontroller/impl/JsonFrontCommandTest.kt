@@ -10,18 +10,16 @@ import org.junit.Test
 import spark.Response
 import kotlin.test.assertEquals
 
-class JsonSparkFrontCommandTest {
+class JsonFrontCommandTest {
 
     val request: Request = mock()
 
-    val response: Response = mock()
-
-    lateinit var jsonSparkFrontCommand: JsonSparkFrontCommand
+    lateinit var jsonSparkFrontCommand: JsonFrontCommand
 
     @Before
     fun setUp() {
-        jsonSparkFrontCommand = JsonSparkFrontCommand()
-        jsonSparkFrontCommand.init(request, response)
+        jsonSparkFrontCommand = JsonFrontCommand()
+        jsonSparkFrontCommand.init(request)
     }
 
     @Test

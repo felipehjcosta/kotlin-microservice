@@ -9,47 +9,44 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.verifyZeroInteractions
-import spark.Response
 
-class SparkFrontCommandTest {
+class FrontCommandTest {
 
     val request: Request = mock()
 
-    val response: Response = mock()
-
     val renderer: Renderer = mock()
 
-    val sparkFrontCommand: SparkFrontCommand = mock(Mockito.CALLS_REAL_METHODS)
+    val frontCommand: FrontCommand = mock(Mockito.CALLS_REAL_METHODS)
 
     @Before
     fun setUp() {
-        sparkFrontCommand.init(request, response)
+        frontCommand.init(request)
     }
 
     @Test
     fun whenRenderWithTemplateThenVerifyOutput() {
-        sparkFrontCommand.init(request, response, renderer)
+        frontCommand.init(request, renderer)
         whenever(renderer.render(emptyMap<String, Any>(), "views/hello_world_test.html")).thenReturn("Awesome return")
 
         val expectedOutput = "Awesome return"
-        sparkFrontCommand.render(template = "views/hello_world_test.html")
-        val actualOutput = sparkFrontCommand.output
+        frontCommand.render(template = "views/hello_world_test.html")
+        val actualOutput = frontCommand.output
         assertEquals(expectedOutput, actualOutput)
     }
 
     @Test
     fun whenRenderWithTextThenVerifyOutput() {
         val expectedOutput = "{\"value:\" \"Hello\"}"
-        sparkFrontCommand.render(text = "{\"value:\" \"Hello\"}")
-        val actualOutput = sparkFrontCommand.output
+        frontCommand.render(text = "{\"value:\" \"Hello\"}")
+        val actualOutput = frontCommand.output
         assertEquals(expectedOutput, actualOutput)
     }
 
     @Test
     fun givenMockRendererWhenRenderWithTextThenVerifyOutput() {
-        sparkFrontCommand.init(request, response, renderer)
+        frontCommand.init(request, renderer)
 
-        sparkFrontCommand.render(text = "{\"value:\" \"Hello\"}")
+        frontCommand.render(text = "{\"value:\" \"Hello\"}")
         verifyZeroInteractions(renderer)
     }
 }

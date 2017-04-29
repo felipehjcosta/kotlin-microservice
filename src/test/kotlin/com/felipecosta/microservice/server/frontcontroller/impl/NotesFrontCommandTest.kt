@@ -7,15 +7,12 @@ import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import spark.Response
 
 class NotesFrontCommandTest {
 
     val renderer: Renderer = mock()
 
     val request: Request = mock()
-
-    val response: Response = mock()
 
     lateinit var notesFrontCommand: NotesFrontCommand
 
@@ -30,7 +27,7 @@ class NotesFrontCommandTest {
         whenever(renderer.render(Output("My First Website", "My Interesting Content"), "views/notes.html")).
                 thenReturn(expectedOutput)
 
-        notesFrontCommand.init(request, response, renderer)
+        notesFrontCommand.init(request, renderer)
 
         notesFrontCommand.process()
 

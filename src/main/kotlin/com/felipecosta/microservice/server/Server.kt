@@ -18,9 +18,9 @@ class Server {
         val routePath = get.getPath
         val action = get.action
         val renderer = renderer
-        Spark.get(routePath.path) { request, response ->
+        Spark.get(routePath.path) { request, _ ->
             val frontCommand: FrontCommand = action()
-            frontCommand.init(Request(request), response, renderer)
+            frontCommand.init(Request(request), renderer)
             frontCommand.process()
             frontCommand.output
         }
@@ -29,9 +29,9 @@ class Server {
     operator fun GetHandler<FrontCommand>.unaryPlus() {
         val routePath = getPath
         val action = action
-        Spark.get(routePath.path) { request, response ->
+        Spark.get(routePath.path) { request, _ ->
             val frontCommand: FrontCommand = action()
-            frontCommand.init(Request(request), response)
+            frontCommand.init(Request(request))
             frontCommand.process()
             frontCommand.output
         }

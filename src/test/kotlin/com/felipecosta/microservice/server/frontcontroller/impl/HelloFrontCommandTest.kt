@@ -3,21 +3,18 @@ package com.felipecosta.microservice.server.frontcontroller.impl
 import com.felipecosta.microservice.server.Request
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
-import spark.Response
 import kotlin.test.assertEquals
 
-class HelloSparkFrontCommandTest {
+class HelloFrontCommandTest {
 
     val request: Request = mock()
 
-    val response: Response = mock()
-
-    lateinit var helloSparkFrontCommand: HelloSparkFrontCommand
+    lateinit var helloSparkFrontCommand: HelloFrontCommand
 
     @org.junit.Before
     fun setUp() {
-        helloSparkFrontCommand = HelloSparkFrontCommand()
-        helloSparkFrontCommand.init(request, response)
+        helloSparkFrontCommand = HelloFrontCommand()
+        helloSparkFrontCommand.init(request)
     }
 
     @Test

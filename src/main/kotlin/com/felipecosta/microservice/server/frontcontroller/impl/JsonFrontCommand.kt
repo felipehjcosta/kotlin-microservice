@@ -2,9 +2,9 @@ package com.felipecosta.microservice.server.frontcontroller.impl
 
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.json
-import com.felipecosta.microservice.server.frontcontroller.SparkFrontCommand
+import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
-class JsonSparkFrontCommand : SparkFrontCommand() {
+class JsonFrontCommand : FrontCommand() {
 
     override fun process() {
 
