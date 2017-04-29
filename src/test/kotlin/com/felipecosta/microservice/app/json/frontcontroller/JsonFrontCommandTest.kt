@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.server.frontcontroller.impl
+package com.felipecosta.microservice.app.json.frontcontroller
 
 import com.beust.klaxon.*
 import com.felipecosta.microservice.server.Request
@@ -7,7 +7,6 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
 import org.junit.Before
 import org.junit.Test
-import spark.Response
 import kotlin.test.assertEquals
 
 class JsonFrontCommandTest {

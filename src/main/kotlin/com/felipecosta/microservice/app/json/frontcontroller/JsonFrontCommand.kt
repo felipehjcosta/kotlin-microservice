@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.server.frontcontroller.impl
+package com.felipecosta.microservice.app.json.frontcontroller
 
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.json
