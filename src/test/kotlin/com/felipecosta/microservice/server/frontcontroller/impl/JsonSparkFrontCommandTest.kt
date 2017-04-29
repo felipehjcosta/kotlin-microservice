@@ -1,16 +1,14 @@
 package com.felipecosta.microservice.server.frontcontroller.impl
 
 import com.beust.klaxon.*
+import com.felipecosta.microservice.server.Request
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
 import org.junit.Before
 import org.junit.Test
-import spark.QueryParamsMap
-import spark.Request
 import spark.Response
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class JsonSparkFrontCommandTest {
 
@@ -28,7 +26,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsUrl() {
-        whenever(request.url()).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
+        whenever(request.url).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
 
         jsonSparkFrontCommand.process()
 
@@ -38,7 +36,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsHost() {
-        whenever(request.host()).thenReturn("127.0.0.1:4567")
+        whenever(request.host).thenReturn("127.0.0.1:4567")
 
         jsonSparkFrontCommand.process()
 
@@ -48,7 +46,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsUserAgent() {
-        whenever(request.userAgent()).thenReturn("Mozilla/5.0")
+        whenever(request.userAgent).thenReturn("Mozilla/5.0")
 
         jsonSparkFrontCommand.process()
 
@@ -58,9 +56,7 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithOneParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        val queryMap: QueryParamsMap = mock()
-        whenever(request.queryMap()).thenReturn(queryMap)
-        whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search")))
+        whenever(request.params).thenReturn(mapOf("q" to arrayOf("search")))
 
         jsonSparkFrontCommand.process()
 
@@ -71,25 +67,13 @@ class JsonSparkFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithTwoParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        val queryMap: QueryParamsMap = mock()
-        whenever(request.queryMap()).thenReturn(queryMap)
-        whenever(queryMap.toMap()).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
+        whenever(request.params).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
 
         jsonSparkFrontCommand.process()
 
         val responseBody = parse(jsonSparkFrontCommand.output)
         val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search", "awesome search"), searchQuery.toList())
-    }
-
-    @Test
-    fun GivenNullQueryParamWhenProcessThenAssertResponseBodyNotContainQueryParams() {
-        whenever(request.queryMap()).thenReturn(null)
-
-        jsonSparkFrontCommand.process()
-
-        val responseBody = parse(jsonSparkFrontCommand.output)
-        assertNull(responseBody.array<com.beust.klaxon.JsonObject>("query-params"))
     }
 
     private fun parse(json: String?): JsonObject {

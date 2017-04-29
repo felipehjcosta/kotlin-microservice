@@ -1,12 +1,12 @@
 package com.felipecosta.microservice.server.frontcontroller.impl
 
+import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import spark.Request
 import spark.Response
 
 class NotesFrontCommandTest {

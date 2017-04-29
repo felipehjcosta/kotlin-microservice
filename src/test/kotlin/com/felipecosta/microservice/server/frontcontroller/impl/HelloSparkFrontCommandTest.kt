@@ -1,8 +1,8 @@
 package com.felipecosta.microservice.server.frontcontroller.impl
 
+import com.felipecosta.microservice.server.Request
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
-import spark.Request
 import spark.Response
 import kotlin.test.assertEquals
 

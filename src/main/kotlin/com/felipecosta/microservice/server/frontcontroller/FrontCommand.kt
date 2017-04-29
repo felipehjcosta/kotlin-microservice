@@ -1,8 +1,8 @@
 package com.felipecosta.microservice.server.frontcontroller
 
+import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
-import spark.Request
 import spark.Response
 
 interface FrontCommand {

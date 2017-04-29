@@ -1,5 +1,6 @@
 package com.felipecosta.microservice.server.frontcontroller
 
+import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
@@ -8,7 +9,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.verifyZeroInteractions
-import spark.Request
 import spark.Response
 
 class SparkFrontCommandTest {

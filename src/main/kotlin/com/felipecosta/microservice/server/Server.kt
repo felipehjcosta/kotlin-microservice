@@ -20,7 +20,7 @@ class Server {
         val renderer = renderer
         Spark.get(routePath.path) { request, response ->
             val frontCommand: FrontCommand = action()
-            frontCommand.init(request, response, renderer)
+            frontCommand.init(Request(request), response, renderer)
             frontCommand.process()
             frontCommand.output
         }
@@ -31,7 +31,7 @@ class Server {
         val action = action
         Spark.get(routePath.path) { request, response ->
             val frontCommand: FrontCommand = action()
-            frontCommand.init(request, response)
+            frontCommand.init(Request(request), response)
             frontCommand.process()
             frontCommand.output
         }

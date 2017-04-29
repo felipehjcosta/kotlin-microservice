@@ -10,10 +10,10 @@ class JsonSparkFrontCommand : SparkFrontCommand() {
 
         val jsonBody = json {
             obj(
-                    "url" to request.url(),
-                    "host" to request.host(),
-                    "user-agent" to request.userAgent(),
-                    "query-params" to request.queryMap()?.let { queryMap ->
+                    "url" to request.url,
+                    "host" to request.host,
+                    "user-agent" to request.userAgent,
+                    "query-params" to request.params?.let { queryMap ->
                         array(queryMap.toMap().map { it ->
                             return@map obj(it.key to JsonArray(it.value.map { it }))
                         })
