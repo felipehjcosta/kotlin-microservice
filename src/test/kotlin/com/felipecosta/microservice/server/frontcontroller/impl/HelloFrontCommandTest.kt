@@ -13,8 +13,7 @@ class HelloFrontCommandTest {
 
     @org.junit.Before
     fun setUp() {
-        helloSparkFrontCommand = HelloFrontCommand()
-        helloSparkFrontCommand.init(request)
+        helloSparkFrontCommand = HelloFrontCommand().apply { init(request) }
     }
 
     @Test

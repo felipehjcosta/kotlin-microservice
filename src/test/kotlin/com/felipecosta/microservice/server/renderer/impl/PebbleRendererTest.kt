@@ -1,9 +1,9 @@
 package com.felipecosta.microservice.server.renderer.impl
 
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import com.mitchellbosecke.pebble.PebbleEngine
 import com.mitchellbosecke.pebble.template.PebbleTemplate
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Matchers.any
@@ -69,8 +69,6 @@ class PebbleRendererTest {
         assertEquals("awesome text", output)
     }
 
-    class OutputObject(val title: String, val content: String) {
-
-    }
+    class OutputObject(val title: String, val content: String)
 
 }

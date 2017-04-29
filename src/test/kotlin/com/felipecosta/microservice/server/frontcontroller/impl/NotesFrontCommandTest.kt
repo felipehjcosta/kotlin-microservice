@@ -27,9 +27,10 @@ class NotesFrontCommandTest {
         whenever(renderer.render(Output("My First Website", "My Interesting Content"), "views/notes.html")).
                 thenReturn(expectedOutput)
 
-        notesFrontCommand.init(request, renderer)
-
-        notesFrontCommand.process()
+        notesFrontCommand.apply {
+            init(request, renderer)
+            notesFrontCommand.process()
+        }
 
         assertEquals(expectedOutput, notesFrontCommand.output)
     }
