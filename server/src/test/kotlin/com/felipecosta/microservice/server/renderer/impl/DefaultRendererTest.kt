@@ -1,25 +1,20 @@
 package com.felipecosta.microservice.server.renderer.impl
 
-import com.nhaarman.mockito_kotlin.mock
-import org.junit.Before
-import org.junit.Test
-import kotlin.test.assertEquals
-
 class DefaultRendererTest {
 
-    val obj: Any = mock()
+    val obj: Any = com.nhaarman.mockito_kotlin.mock()
 
     lateinit var defaultRenderer: DefaultRenderer
 
-    @Before
+    @org.junit.Before
     fun setUp() {
         defaultRenderer = DefaultRenderer()
     }
 
-    @Test
+    @org.junit.Test
     fun givenObjectWhenRenderThenVerifyOutputText() {
         val expectedOutput = "test output"
         val actualOutput = defaultRenderer.render(obj, "views/test.html")
-        assertEquals(expectedOutput, actualOutput)
+        kotlin.test.assertEquals(expectedOutput, actualOutput)
     }
 }

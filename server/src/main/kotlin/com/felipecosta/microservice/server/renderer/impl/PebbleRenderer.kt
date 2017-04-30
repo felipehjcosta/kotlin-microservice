@@ -1,10 +1,9 @@
 package com.felipecosta.microservice.server.renderer.impl
 
 import com.felipecosta.microservice.server.renderer.Renderer
-import com.mitchellbosecke.pebble.PebbleEngine
 import java.io.StringWriter
 
-class PebbleRenderer(val pebbleEngine: PebbleEngine) : Renderer {
+class PebbleRenderer(val pebbleEngine: com.mitchellbosecke.pebble.PebbleEngine) : Renderer {
     override fun render(outputObject: Any, path: String) =
             with(StringWriter()) {
                 val compiledTemplate = pebbleEngine.getTemplate(path)
