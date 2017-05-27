@@ -2,57 +2,27 @@ package com.felipecosta.microservice.server
 
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
+import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
 
-class Server {
+class Server(internal var serverHandler: ServerHandler = EmptyServerHandler()) {
 
-    private val IP_ADDRESS = if (System.getenv("OPENSHIFT_DIY_IP") != null) System.getenv("OPENSHIFT_DIY_IP") else "localhost"
-    private val PORT = if (System.getenv("OPENSHIFT_DIY_PORT") != null) Integer.parseInt(System.getenv("OPENSHIFT_DIY_PORT")) else 8080
-
-    init {
-        spark.Spark.ipAddress(IP_ADDRESS)
-        spark.Spark.port(PORT)
+    fun handler(body: Server.() -> ServerHandler) {
+        apply { serverHandler = body() }
     }
 
-    operator fun GetHandlerWithRenderer.unaryPlus() {
-        val routePath = get.getPath
-        val action = get.action
-        val renderer = renderer
-        spark.Spark.get(routePath.path) { request, _ ->
-            val frontCommand: FrontCommand = action()
-            frontCommand.init(Request(request), renderer)
-            frontCommand.process()
-            frontCommand.output
-        }
-    }
-
-    operator fun GetHandler<FrontCommand>.unaryPlus() {
-        val routePath = getPath
-        val action = action
-        spark.Spark.get(routePath.path) { request, _ ->
-            val frontCommand: FrontCommand = action()
-            frontCommand.init(Request(request))
-            frontCommand.process()
-            frontCommand.output
-        }
-    }
+    operator fun GetHandler<FrontCommand>.unaryPlus() = serverHandler.get(this)
 }
 
-inline fun <O> server(body: Server.() -> O): Server {
-    val server = Server()
-    server.body()
-    return server
-}
+inline fun <O> server(body: Server.() -> O): Server = Server().apply { body() }
 
 object map
 
-infix fun map.get(path: String) = GetPath(path)
+infix fun map.get(path: String) = Path(path)
 
-class GetPath(val path: String)
+data class Path(internal val path: String)
 
-infix fun <T : FrontCommand> GetPath.to(action: () -> T) = GetHandler(this, action)
+infix fun <T : FrontCommand> Path.to(action: () -> T) = GetHandler(this, action)
 
-class GetHandler<out T : FrontCommand>(val getPath: GetPath, val action: () -> T)
+data class GetHandler<out T : FrontCommand>(internal val path: Path, internal val action: () -> T, internal var renderer: Renderer = DefaultRenderer())
 
-infix fun <T : FrontCommand> GetHandler<T>.with(renderer: Renderer) = GetHandlerWithRenderer(this, renderer)
-
-class GetHandlerWithRenderer(val get: GetHandler<FrontCommand>, val renderer: Renderer)
+infix fun <T : FrontCommand> GetHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }

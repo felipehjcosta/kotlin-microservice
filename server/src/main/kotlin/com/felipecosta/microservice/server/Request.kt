@@ -1,13 +1,11 @@
 package com.felipecosta.microservice.server
 
-class Request(wrappedRequest: spark.Request) {
+interface Request {
+    val params: Map<String, Array<String>>
 
-    val params: Map<String, Array<String>> by lazy { wrappedRequest.queryMap().toMap() }
+    val url: String
 
-    val url: String  by lazy { wrappedRequest.url() }
+    val host: String
 
-    val host: String  by lazy { wrappedRequest.host() }
-
-    val userAgent: String  by lazy { wrappedRequest.userAgent() }
-
+    val userAgent: String
 }
