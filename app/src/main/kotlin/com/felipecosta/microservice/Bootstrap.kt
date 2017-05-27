@@ -16,6 +16,9 @@ fun main(args: Array<String>) {
     val applicationComponent = DaggerApplicationComponent.builder().build()
 
     server {
+
+        handler { SparkServerHandler() }
+
         +(map get "/" to ::HelloFrontCommand)
         +(map get "/json" to ::JsonFrontCommand)
         +(map get "/notes" to ::NotesFrontCommand with PebbleRenderer(pebbleEngine))
