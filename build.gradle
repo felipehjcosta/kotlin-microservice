@@ -4,8 +4,68 @@ buildscript {
     repositories {
         jcenter()
     }
-    
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+
+allprojects {
+    apply plugin: 'base'
+    apply plugin: 'jacoco'
+
+    repositories {
+        jcenter()
+    }
+
+    jacoco {
+        toolVersion = '0.7.9'
+    }
+}
+
+subprojects {
+    apply plugin: 'kotlin'
+
+    dependencies {
+        testCompile 'junit:junit:4.12'
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
+        }
+
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
+    }
+}
+
+task jacocoRootReport(type: JacocoReport) {
+    dependsOn = subprojects.test
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*Module.*', // Modules for Dagger.
+                    '**/*Dagger*.*', // Dagger auto-generated code.
+                    '**/*MembersInjector*.*', // Dagger auto-generated code.
+                    '**/*_Provide*Factory*.*',
+                    '**/*_Factory.*', //Dagger auto-generated code
+                    '**/*$*$*.*'
+            ])
+        })
     }
 }
