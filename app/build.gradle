@@ -17,11 +17,9 @@ sourceSets {
 
 dependencies {
     compile project(':server')
+    compile project(':server-spark-adapter')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "com.sparkjava:spark-core:2.3"
-    compile "com.beust:klaxon:0.24"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compile "com.mitchellbosecke:pebble:2.1.0"
 
     compile 'com.google.dagger:dagger:2.4'
     kapt 'com.google.dagger:dagger-compiler:2.4'

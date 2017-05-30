@@ -19,10 +19,10 @@ object map
 
 infix fun map.get(path: String) = Path(path)
 
-data class Path(internal val path: String)
+data class Path(val path: String)
 
 infix fun <T : FrontCommand> Path.to(action: () -> T) = GetHandler(this, action)
 
-data class GetHandler<out T : FrontCommand>(internal val path: Path, internal val action: () -> T, internal var renderer: Renderer = DefaultRenderer())
+data class GetHandler<out T : FrontCommand>(val path: Path, val action: () -> T, var renderer: Renderer = DefaultRenderer())
 
 infix fun <T : FrontCommand> GetHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }
