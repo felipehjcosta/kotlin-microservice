@@ -12,8 +12,12 @@ buildscript {
 
 
 allprojects {
-    apply plugin: 'base'
+    apply plugin: 'kotlin'
     apply plugin: 'jacoco'
+
+    dependencies {
+        testCompile 'junit:junit:4.12'
+    }
 
     repositories {
         jcenter()
@@ -21,14 +25,6 @@ allprojects {
 
     jacoco {
         toolVersion = '0.7.9'
-    }
-}
-
-subprojects {
-    apply plugin: 'kotlin'
-
-    dependencies {
-        testCompile 'junit:junit:4.12'
     }
 
     jacocoTestReport {
