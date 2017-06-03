@@ -16,7 +16,7 @@ jdk:
 - oraclejdk8
 
 script:
-- "./gradlew clean test jacocoTestReport jar"
+- "./gradlew test jacocoTestReport jar"
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
@@ -28,9 +28,13 @@ after_success:
 - export SSHPASS=$DEPLOY_PASS
 - scp -i ~/id_rsa_dpl app/build/libs/app-0.1.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-  - "$HOME/.gradle"
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 deploy:
   skip_cleanup: true
