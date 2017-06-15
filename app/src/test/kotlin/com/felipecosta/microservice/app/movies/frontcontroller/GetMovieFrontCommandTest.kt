@@ -22,7 +22,7 @@ class GetMovieFrontCommandTest {
             override val queryParams: Map<String, Array<String>>
                 get() = TODO("not implemented")
             override val routeParams: Map<String, String>
-                get() = mapOf("id" to "1")
+                get() = mapOf(":id" to "1")
             override val url: String
                 get() = TODO("not implemented")
             override val host: String
