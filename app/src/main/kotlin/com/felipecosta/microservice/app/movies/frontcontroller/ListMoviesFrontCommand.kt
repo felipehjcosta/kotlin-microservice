@@ -5,7 +5,7 @@ import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import javax.inject.Inject
 
-class MoviesFrontCommand : FrontCommand() {
+class ListMoviesFrontCommand : FrontCommand() {
 
     @Inject
     lateinit var moviesRepository: MoviesRepository

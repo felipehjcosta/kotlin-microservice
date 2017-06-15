@@ -8,33 +8,33 @@ import org.junit.Test
 import org.mockito.BDDMockito.given
 import kotlin.test.assertEquals
 
-class MoviesFrontCommandTest {
+class ListMoviesFrontCommandTest {
 
-    lateinit var moviesFrontCommand: MoviesFrontCommand
+    lateinit var listMoviesFrontCommand: ListMoviesFrontCommand
 
     val moviesRepository: MoviesRepository = mock()
 
     @Before
     fun setUp() {
-        moviesFrontCommand = MoviesFrontCommand()
-        moviesFrontCommand.moviesRepository = moviesRepository
+        listMoviesFrontCommand = ListMoviesFrontCommand()
+        listMoviesFrontCommand.moviesRepository = moviesRepository
     }
 
     @Test
     fun givenEmptyMovieListWhenProcessThenRenderEmptyJsonList() {
         given(moviesRepository.findAll()).willReturn(emptyList())
 
-        moviesFrontCommand.process()
+        listMoviesFrontCommand.process()
 
-        assertEquals("""{"response":[]}""", moviesFrontCommand.output)
+        assertEquals("""{"response":[]}""", listMoviesFrontCommand.output)
     }
 
     @Test
     fun givenSingleMovieListWhenProcessThenRenderSingleMovieJsonList() {
         given(moviesRepository.findAll()).willReturn(listOf(Movie("Awesome movie", 0)))
 
-        moviesFrontCommand.process()
+        listMoviesFrontCommand.process()
 
-        assertEquals("""{"response":[{"name":"Awesome movie"}]}""", moviesFrontCommand.output)
+        assertEquals("""{"response":[{"name":"Awesome movie"}]}""", listMoviesFrontCommand.output)
     }
 }
