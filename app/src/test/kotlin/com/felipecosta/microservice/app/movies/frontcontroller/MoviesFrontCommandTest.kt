@@ -26,7 +26,7 @@ class MoviesFrontCommandTest {
 
         moviesFrontCommand.process()
 
-        assertEquals("[]", moviesFrontCommand.output)
+        assertEquals("""{"response":[]}""", moviesFrontCommand.output)
     }
 
     @Test
@@ -35,6 +35,6 @@ class MoviesFrontCommandTest {
 
         moviesFrontCommand.process()
 
-        assertEquals("[{\"name\":\"Awesome movie\"}]", moviesFrontCommand.output)
+        assertEquals("""{"response":[{"name":"Awesome movie"}]}""", moviesFrontCommand.output)
     }
 }

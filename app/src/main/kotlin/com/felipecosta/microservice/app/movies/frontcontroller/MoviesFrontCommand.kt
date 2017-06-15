@@ -14,7 +14,7 @@ class MoviesFrontCommand : FrontCommand() {
         val movies = moviesRepository.findAll()
 
         val jsonBody = json {
-            array(movies.map { obj("name" to it.name) })
+            obj("response" to array(movies.map { obj("name" to it.name) }))
         }
 
         render(text = jsonBody.toJsonString())
