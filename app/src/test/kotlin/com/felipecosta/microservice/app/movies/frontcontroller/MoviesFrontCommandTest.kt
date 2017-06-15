@@ -31,7 +31,7 @@ class MoviesFrontCommandTest {
 
     @Test
     fun givenSingleMovieListWhenProcessThenRenderSingleMovieJsonList() {
-        given(getMoviesUseCase.execute()).willReturn(listOf(Movie("Awesome movie")))
+        given(getMoviesUseCase.execute()).willReturn(listOf(Movie("Awesome movie", 0)))
 
         moviesFrontCommand.process()
 
