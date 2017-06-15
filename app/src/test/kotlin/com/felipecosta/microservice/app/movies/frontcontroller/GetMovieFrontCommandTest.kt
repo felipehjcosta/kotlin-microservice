@@ -37,7 +37,7 @@ class GetMovieFrontCommandTest {
 
         frontCommand.process()
 
-        assertEquals("""{"response":{"name":"Awesome movie"}}""", frontCommand.output)
+        assertEquals("""{"response":{"name":"Awesome movie","id":1}}""", frontCommand.output)
     }
 
     @Test

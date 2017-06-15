@@ -31,10 +31,10 @@ class ListMoviesFrontCommandTest {
 
     @Test
     fun givenSingleMovieListWhenProcessThenRenderSingleMovieJsonList() {
-        given(moviesRepository.findAll()).willReturn(listOf(Movie("Awesome movie", 0)))
+        given(moviesRepository.findAll()).willReturn(listOf(Movie("Awesome movie", 1)))
 
         listMoviesFrontCommand.process()
 
-        assertEquals("""{"response":[{"name":"Awesome movie"}]}""", listMoviesFrontCommand.output)
+        assertEquals("""{"response":[{"name":"Awesome movie","id":1}]}""", listMoviesFrontCommand.output)
     }
 }

@@ -15,7 +15,9 @@ class GetMovieFrontCommand : FrontCommand() {
 
         val jsonBody = json {
             obj("response" to if (movie != null) {
-                with(movie) { obj("name" to name) }
+                with(movie) {
+                    obj("name" to name, "id" to id)
+                }
             } else {
                 null
             })
