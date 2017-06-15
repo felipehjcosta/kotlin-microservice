@@ -1,8 +1,9 @@
 package com.felipecosta.microservice.server
 
-class SparkRequestAdapter(wrappedRequest: spark.Request) : Request {
+class SparkRequestAdapter(private val wrappedRequest: spark.Request) : Request {
+    override val queryParams: Map<String, Array<String>> by lazy { wrappedRequest.queryMap().toMap() }
 
-    override val params: Map<String, Array<String>> by lazy { wrappedRequest.queryMap().toMap() }
+    override val routeParams: Map<String, String> by lazy { wrappedRequest.params() }
 
     override val url: String  by lazy { wrappedRequest.url() }
 

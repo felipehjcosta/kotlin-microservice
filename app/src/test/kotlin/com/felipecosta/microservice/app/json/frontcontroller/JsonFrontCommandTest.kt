@@ -52,7 +52,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithOneParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        whenever(request.params).thenReturn(mapOf("q" to arrayOf("search")))
+        whenever(request.queryParams).thenReturn(mapOf("q" to arrayOf("search")))
 
         jsonSparkFrontCommand.process()
 
@@ -63,7 +63,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithTwoParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        whenever(request.params).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
+        whenever(request.queryParams).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
 
         jsonSparkFrontCommand.process()
 

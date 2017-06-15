@@ -1,7 +1,9 @@
 package com.felipecosta.microservice.server
 
 interface Request {
-    val params: Map<String, Array<String>>
+    val queryParams: Map<String, Array<String>>
+
+    val routeParams: Map<String, String>
 
     val url: String
 

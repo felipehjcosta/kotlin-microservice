@@ -33,11 +33,18 @@ class SparkRequestAdapterTest {
     }
 
     @Test
-    fun givenWrappedParamsItShouldAssertSameParams() {
+    fun givenWrappedQueryParamsItShouldAssertSameParams() {
         val mockQueryMap = mock<QueryParamsMap>()
         whenever(mockQueryMap.toMap()).thenReturn(emptyMap())
         whenever(mockSparkRequest.queryMap()).thenReturn(mockQueryMap)
 
-        assertEquals(emptyMap(), sparkRequestAdapter.params)
+        assertEquals(emptyMap(), sparkRequestAdapter.queryParams)
+    }
+
+    @Test
+    fun givenWrappedRouteParamsItShouldAssertSameParams() {
+        whenever(mockSparkRequest.params()).thenReturn(emptyMap())
+
+        assertEquals(emptyMap(), sparkRequestAdapter.routeParams)
     }
 }
