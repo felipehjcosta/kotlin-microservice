@@ -1,7 +1,7 @@
 package com.felipecosta.microservice.app.movies.frontcontroller
 
+import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
-import com.felipecosta.microservice.app.movies.domain.GetMoviesUseCase
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Before
 import org.junit.Test
@@ -12,17 +12,17 @@ class MoviesFrontCommandTest {
 
     lateinit var moviesFrontCommand: MoviesFrontCommand
 
-    val getMoviesUseCase: GetMoviesUseCase = mock()
+    val moviesRepository: MoviesRepository = mock()
 
     @Before
     fun setUp() {
         moviesFrontCommand = MoviesFrontCommand()
-        moviesFrontCommand.getMoviesUseCase = getMoviesUseCase
+        moviesFrontCommand.moviesRepository = moviesRepository
     }
 
     @Test
     fun givenEmptyMovieListWhenProcessThenRenderEmptyJsonList() {
-        given(getMoviesUseCase.execute()).willReturn(emptyList())
+        given(moviesRepository.findAll()).willReturn(emptyList())
 
         moviesFrontCommand.process()
 
@@ -31,7 +31,7 @@ class MoviesFrontCommandTest {
 
     @Test
     fun givenSingleMovieListWhenProcessThenRenderSingleMovieJsonList() {
-        given(getMoviesUseCase.execute()).willReturn(listOf(Movie("Awesome movie", 0)))
+        given(moviesRepository.findAll()).willReturn(listOf(Movie("Awesome movie", 0)))
 
         moviesFrontCommand.process()
 
