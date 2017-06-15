@@ -23,6 +23,8 @@ class GetMovieFrontCommandTest {
                 get() = TODO("not implemented")
             override val routeParams: Map<String, String>
                 get() = mapOf(":id" to "1")
+            override val body: String
+                get() = TODO("not implemented")
             override val url: String
                 get() = TODO("not implemented")
             override val host: String
@@ -45,6 +47,8 @@ class GetMovieFrontCommandTest {
                 get() = TODO("not implemented")
             override val routeParams: Map<String, String>
                 get() = mapOf(":id" to "1")
+            override val body: String
+                get() = TODO("not implemented")
             override val url: String
                 get() = TODO("not implemented")
             override val host: String

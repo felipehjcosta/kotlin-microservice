@@ -5,6 +5,8 @@ class SparkRequestAdapter(private val wrappedRequest: spark.Request) : Request {
 
     override val routeParams: Map<String, String> by lazy { wrappedRequest.params() }
 
+    override val body: String by lazy { wrappedRequest.body() }
+
     override val url: String  by lazy { wrappedRequest.url() }
 
     override val host: String  by lazy { wrappedRequest.host() }

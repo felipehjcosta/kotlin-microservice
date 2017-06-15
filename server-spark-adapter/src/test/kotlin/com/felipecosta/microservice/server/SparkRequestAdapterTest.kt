@@ -33,6 +33,13 @@ class SparkRequestAdapterTest {
     }
 
     @Test
+    fun givenWrappedBodyUserAgentItShouldAssertSameUserAgent() {
+        whenever(mockSparkRequest.body()).thenReturn("{}")
+
+        assertEquals("{}", sparkRequestAdapter.body)
+    }
+
+    @Test
     fun givenWrappedQueryParamsItShouldAssertSameParams() {
         val mockQueryMap = mock<QueryParamsMap>()
         whenever(mockQueryMap.toMap()).thenReturn(emptyMap())

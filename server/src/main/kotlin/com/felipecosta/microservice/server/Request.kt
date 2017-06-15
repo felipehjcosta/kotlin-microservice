@@ -5,6 +5,8 @@ interface Request {
 
     val routeParams: Map<String, String>
 
+    val body: String
+
     val url: String
 
     val host: String
