@@ -13,10 +13,22 @@ class SparkServerHandler : ServerHandler {
     }
 
     override fun get(getHandler: GetHandler<FrontCommand>) {
-        val routePath = getHandler.path
+        val routePath = getHandler.getPath
         val action = getHandler.action
         val renderer = getHandler.renderer
         spark.Spark.get(routePath.path) { request, _ ->
+            val frontCommand: FrontCommand = action()
+            frontCommand.init(SparkRequestAdapter(request), renderer)
+            frontCommand.process()
+            frontCommand.output
+        }
+    }
+
+    override fun post(postHandler: PostHandler<FrontCommand>) {
+        val routePath = postHandler.postPath
+        val action = postHandler.action
+        val renderer = postHandler.renderer
+        spark.Spark.post(routePath.path) { request, _ ->
             val frontCommand: FrontCommand = action()
             frontCommand.init(SparkRequestAdapter(request), renderer)
             frontCommand.process()

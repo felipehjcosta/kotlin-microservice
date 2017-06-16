@@ -16,7 +16,7 @@ class SparkServerHandlerTest {
             }
         }
         SparkServerHandler().apply {
-            get(GetHandler(Path("/"), { stubFrontCommand }))
+            get(GetHandler(GetPath("/"), { stubFrontCommand }))
         }
 
         spark.Spark.awaitInitialization()
@@ -25,6 +25,31 @@ class SparkServerHandlerTest {
             readTimeout = 2000
             connectTimeout = 2000
             requestMethod = "GET"
+        }
+        val response = urlConnection.inputStream.reader().use { it.readText() }
+
+        assertEquals("SparkServerHandler Integration Test", response)
+
+        spark.Spark.stop()
+    }
+
+    @Test
+    fun givenHandlerWhenPostItShouldAssertResponse() {
+        val stubFrontCommand = object : FrontCommand() {
+            override fun process() {
+                render(text = "SparkServerHandler Integration Test")
+            }
+        }
+        SparkServerHandler().apply {
+            post(PostHandler(PostPath("/"), { stubFrontCommand }))
+        }
+
+        spark.Spark.awaitInitialization()
+
+        val urlConnection = (URL("http://localhost:8080").openConnection() as HttpURLConnection).apply {
+            readTimeout = 2000
+            connectTimeout = 2000
+            requestMethod = "POST"
         }
         val response = urlConnection.inputStream.reader().use { it.readText() }
 

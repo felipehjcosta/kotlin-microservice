@@ -11,7 +11,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ServerTest {
+class ServerGetActionTest {
 
     val getHandlerCaptor = argumentCaptor<GetHandler<FrontCommand>>()
 
@@ -40,7 +40,7 @@ class ServerTest {
     }
 
     @Test
-    fun givenServerWithGetItShouldAssertHandlerGet() {
+    fun givenServerWithVerbItShouldAssertHandler() {
         server {
 
             handler { mockServerHandler }
@@ -54,7 +54,7 @@ class ServerTest {
     }
 
     @Test
-    fun givenServerWithGetItShouldAssertHandlerGetPath() {
+    fun givenServerWithVerbItShouldAssertHandlerPath() {
         server {
 
             handler { mockServerHandler }
@@ -64,11 +64,11 @@ class ServerTest {
 
         verify(mockServerHandler).get(getHandlerCaptor.capture())
 
-        assertEquals(Path("/"), getHandlerCaptor.firstValue.path)
+        assertEquals(GetPath("/"), getHandlerCaptor.firstValue.getPath)
     }
 
     @Test
-    fun givenServerWithGetItShouldAssertHandlerGetFrontCommand() {
+    fun givenServerWithVerbItShouldAssertHandlerFrontCommand() {
         server {
 
             handler { mockServerHandler }
@@ -82,7 +82,7 @@ class ServerTest {
     }
 
     @Test
-    fun givenServerWithGetItShouldAssertHandlerGetDefaultRenderer() {
+    fun givenServerWithVerbItShouldAssertHandlerDefaultRenderer() {
         server {
 
             handler { mockServerHandler }
@@ -96,7 +96,7 @@ class ServerTest {
     }
 
     @Test
-    fun givenServerWithGetItShouldAssertHandlerGetCustomRenderer() {
+    fun givenServerWithVerbItShouldAssertHandlerCustomRenderer() {
         server {
 
             handler { mockServerHandler }
@@ -110,7 +110,7 @@ class ServerTest {
     }
 
     @Test
-    fun givenServerWithMultipleGetsItShouldAssertHandlerMultipleGets() {
+    fun givenServerWithMultipleVerbsItShouldAssertHandlerMultipleTimes() {
         server {
 
             handler { mockServerHandler }

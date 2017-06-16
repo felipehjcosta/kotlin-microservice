@@ -4,4 +4,6 @@ import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
 interface ServerHandler {
     fun get(getHandler: GetHandler<FrontCommand>)
+
+    fun post(postHandler: PostHandler<FrontCommand>)
 }
