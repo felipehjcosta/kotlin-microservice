@@ -13,7 +13,7 @@ class JsonFrontCommand : FrontCommand() {
                     "url" to request.url,
                     "host" to request.host,
                     "user-agent" to request.userAgent,
-                    "query-params" to request.queryParams?.let { queryMap ->
+                    "query-params" to request.queryParams.let { queryMap ->
                         array(queryMap.toMap().map { it ->
                             return@map obj(it.key to JsonArray(it.value.map { it }))
                         })
