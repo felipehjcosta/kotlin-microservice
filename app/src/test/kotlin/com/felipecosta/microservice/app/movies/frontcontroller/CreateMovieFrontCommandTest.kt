@@ -19,7 +19,7 @@ class CreateMovieFrontCommandTest {
     }
 
     @Test
-    fun givenJsonBody() {
+    fun givenJsonBodyThenReturnCreatedMovie() {
         frontCommand.init(object : Request by NotImplementedRequest() {
             override val body: String = """{"name":"New movie"}"""
         })
