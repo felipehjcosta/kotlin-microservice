@@ -1,5 +1,6 @@
 package com.felipecosta.microservice.server.frontcontroller
 
+import com.felipecosta.microservice.server.HttpStatus
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
 import com.felipecosta.microservice.server.renderer.Renderer
@@ -9,7 +10,7 @@ abstract class FrontCommand {
 
     private lateinit var renderer: Renderer
 
-    var response = Response("", 200)
+    var response = Response("", HttpStatus.OK)
 
     protected lateinit var request: Request
 

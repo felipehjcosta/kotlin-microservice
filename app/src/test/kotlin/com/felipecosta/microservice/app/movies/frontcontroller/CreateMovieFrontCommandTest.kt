@@ -3,6 +3,7 @@ package com.felipecosta.microservice.app.movies.frontcontroller
 import com.felipecosta.microservice.app.NotImplementedRequest
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
+import com.felipecosta.microservice.server.HttpStatus
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
 import com.nhaarman.mockito_kotlin.eq
@@ -29,7 +30,7 @@ class CreateMovieFrontCommandTest {
 
         frontCommand.process()
 
-        assertEquals(Response("""{"response":{"name":"New movie","id":1}}""", 201), frontCommand.response)
+        assertEquals(Response("""{"response":{"name":"New movie","id":1}}""", HttpStatus.CREATED), frontCommand.response)
     }
 
 
