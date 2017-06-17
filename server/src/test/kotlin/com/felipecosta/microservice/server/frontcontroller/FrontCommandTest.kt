@@ -1,6 +1,7 @@
 package com.felipecosta.microservice.server.frontcontroller
 
 import com.felipecosta.microservice.server.Request
+import com.felipecosta.microservice.server.Response
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
@@ -20,26 +21,26 @@ class FrontCommandTest {
     }
 
     @org.junit.Test
-    fun whenRenderWithTemplateThenVerifyOutput() {
+    fun whenRenderWithTemplateThenVerifyResponse() {
         frontCommand.init(request, renderer)
         com.nhaarman.mockito_kotlin.whenever(renderer.render(emptyMap<String, Any>(), "views/hello_world_test.html")).thenReturn("Awesome return")
 
-        val expectedOutput = "Awesome return"
+        val expectedResponse = Response("Awesome return", 200)
         frontCommand.render(template = "views/hello_world_test.html")
-        val actualOutput = frontCommand.output
-        assertEquals(expectedOutput, actualOutput)
+        val actualResponse = frontCommand.response
+        assertEquals(expectedResponse, actualResponse)
     }
 
     @org.junit.Test
-    fun whenRenderWithTextThenVerifyOutput() {
-        val expectedOutput = "{\"value:\" \"Hello\"}"
+    fun whenRenderWithTextThenVerifyResponse() {
+        val expectedResponse = Response("{\"value:\" \"Hello\"}", 200)
         frontCommand.render(text = "{\"value:\" \"Hello\"}")
-        val actualOutput = frontCommand.output
-        assertEquals(expectedOutput, actualOutput)
+        val actualResponse = frontCommand.response
+        assertEquals(expectedResponse, actualResponse)
     }
 
     @org.junit.Test
-    fun givenMockRendererWhenRenderWithTextThenVerifyOutput() {
+    fun givenMockRendererWhenRenderWithTextThenVerifyResponse() {
         frontCommand.init(request, renderer)
 
         frontCommand.render(text = "{\"value:\" \"Hello\"}")

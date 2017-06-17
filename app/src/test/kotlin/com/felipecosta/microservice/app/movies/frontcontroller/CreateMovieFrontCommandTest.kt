@@ -4,6 +4,7 @@ import com.felipecosta.microservice.app.NotImplementedRequest
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Request
+import com.felipecosta.microservice.server.Response
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
@@ -19,7 +20,7 @@ class CreateMovieFrontCommandTest {
     }
 
     @Test
-    fun givenJsonBodyThenReturnCreatedMovie() {
+    fun givenJsonBodyThenAssertResponseWithCreatedMovie() {
         frontCommand.init(object : Request by NotImplementedRequest() {
             override val body: String = """{"name":"New movie"}"""
         })
@@ -28,7 +29,7 @@ class CreateMovieFrontCommandTest {
 
         frontCommand.process()
 
-        assertEquals("""{"response":{"name":"New movie","id":1}}""", frontCommand.output)
+        assertEquals(Response("""{"response":{"name":"New movie","id":1}}""", 200), frontCommand.response)
     }
 
 

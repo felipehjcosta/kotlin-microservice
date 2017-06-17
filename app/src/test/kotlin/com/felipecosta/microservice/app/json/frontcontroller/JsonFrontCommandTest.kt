@@ -21,12 +21,14 @@ class JsonFrontCommandTest {
     }
 
     @Test
-    fun whenProcessThenAssertResponseBodyContainsUrl() {
+    fun whenProcessThenAssertResponseWithUrl() {
         whenever(request.url).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
 
         jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand.output)
+        val response = jsonSparkFrontCommand.response
+        val responseBody = parse(response.body)
+        assertEquals(200, response.code)
         assertEquals("http://127.0.0.1:4567/hello-front-controller-json", responseBody.string("url"))
     }
 
@@ -36,7 +38,9 @@ class JsonFrontCommandTest {
 
         jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand.output)
+        val response = jsonSparkFrontCommand.response
+        val responseBody = parse(response.body)
+        assertEquals(200, response.code)
         assertEquals("127.0.0.1:4567", responseBody.string("host"))
     }
 
@@ -46,7 +50,9 @@ class JsonFrontCommandTest {
 
         jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand.output)
+        val response = jsonSparkFrontCommand.response
+        val responseBody = parse(response.body)
+        assertEquals(200, response.code)
         assertEquals("Mozilla/5.0", responseBody.string("user-agent"))
     }
 
@@ -56,8 +62,10 @@ class JsonFrontCommandTest {
 
         jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand.output)
-        val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
+        val response = jsonSparkFrontCommand.response
+        val responseBody = parse(response.body)
+        assertEquals(200, response.code)
+        val searchQuery = responseBody.array<JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search"), searchQuery.toList())
     }
 
@@ -67,8 +75,10 @@ class JsonFrontCommandTest {
 
         jsonSparkFrontCommand.process()
 
-        val responseBody = parse(jsonSparkFrontCommand.output)
-        val searchQuery = responseBody.array<com.beust.klaxon.JsonObject>("query-params")!![0]["q"] as JsonArray<*>
+        val response = jsonSparkFrontCommand.response
+        val responseBody = parse(response.body)
+        assertEquals(200, response.code)
+        val searchQuery = responseBody.array<JsonObject>("query-params")!![0]["q"] as JsonArray<*>
         assertEquals(listOf("search", "awesome search"), searchQuery.toList())
     }
 

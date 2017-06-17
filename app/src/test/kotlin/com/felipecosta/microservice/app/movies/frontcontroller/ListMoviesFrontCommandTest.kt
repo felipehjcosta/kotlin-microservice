@@ -2,6 +2,7 @@ package com.felipecosta.microservice.app.movies.frontcontroller
 
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
+import com.felipecosta.microservice.server.Response
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Before
 import org.junit.Test
@@ -21,20 +22,20 @@ class ListMoviesFrontCommandTest {
     }
 
     @Test
-    fun givenEmptyMovieListWhenProcessThenRenderEmptyJsonList() {
+    fun givenEmptyMovieListWhenProcessThenAssertResponseWithEmptyJsonList() {
         given(moviesRepository.findAll()).willReturn(emptyList())
 
         listMoviesFrontCommand.process()
 
-        assertEquals("""{"response":[]}""", listMoviesFrontCommand.output)
+        assertEquals(Response("""{"response":[]}""", 200), listMoviesFrontCommand.response)
     }
 
     @Test
-    fun givenSingleMovieListWhenProcessThenRenderSingleMovieJsonList() {
+    fun givenSingleMovieListWhenProcessThenAssertResponseWithSingleMovieJsonList() {
         given(moviesRepository.findAll()).willReturn(listOf(Movie("Awesome movie", 1)))
 
         listMoviesFrontCommand.process()
 
-        assertEquals("""{"response":[{"name":"Awesome movie","id":1}]}""", listMoviesFrontCommand.output)
+        assertEquals(Response("""{"response":[{"name":"Awesome movie","id":1}]}""", 200), listMoviesFrontCommand.response)
     }
 }

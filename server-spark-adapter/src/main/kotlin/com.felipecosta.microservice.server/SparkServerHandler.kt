@@ -16,11 +16,13 @@ class SparkServerHandler : ServerHandler {
         val routePath = getHandler.getPath
         val action = getHandler.action
         val renderer = getHandler.renderer
-        spark.Spark.get(routePath.path) { request, _ ->
+        spark.Spark.get(routePath.path) { request, response ->
             val frontCommand: FrontCommand = action()
             frontCommand.init(SparkRequestAdapter(request), renderer)
             frontCommand.process()
-            frontCommand.output
+            val commandResponse = frontCommand.response
+            response.status(commandResponse.code)
+            commandResponse.body
         }
     }
 
@@ -28,11 +30,13 @@ class SparkServerHandler : ServerHandler {
         val routePath = postHandler.postPath
         val action = postHandler.action
         val renderer = postHandler.renderer
-        spark.Spark.post(routePath.path) { request, _ ->
+        spark.Spark.post(routePath.path) { request, response ->
             val frontCommand: FrontCommand = action()
             frontCommand.init(SparkRequestAdapter(request), renderer)
             frontCommand.process()
-            frontCommand.output
+            val commandResponse = frontCommand.response
+            response.status(commandResponse.code)
+            commandResponse.body
         }
     }
 
@@ -40,11 +44,13 @@ class SparkServerHandler : ServerHandler {
         val routePath = putHandler.putPath
         val action = putHandler.action
         val renderer = putHandler.renderer
-        spark.Spark.put(routePath.path) { request, _ ->
+        spark.Spark.put(routePath.path) { request, response ->
             val frontCommand: FrontCommand = action()
             frontCommand.init(SparkRequestAdapter(request), renderer)
             frontCommand.process()
-            frontCommand.output
+            val commandResponse = frontCommand.response
+            response.status(commandResponse.code)
+            commandResponse.body
         }
     }
 }

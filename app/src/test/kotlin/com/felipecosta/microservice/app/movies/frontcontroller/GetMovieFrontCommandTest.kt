@@ -3,6 +3,7 @@ package com.felipecosta.microservice.app.movies.frontcontroller
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Request
+import com.felipecosta.microservice.server.Response
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
@@ -17,7 +18,7 @@ class GetMovieFrontCommandTest {
     }
 
     @Test
-    fun givenIdWhenProcessThenRenderSingleMovie() {
+    fun givenIdWhenProcessThenAssertResponseWithSingleMovie() {
         frontCommand.init(object : Request {
             override val queryParams: Map<String, Array<String>>
                 get() = TODO("not implemented")
@@ -37,11 +38,11 @@ class GetMovieFrontCommandTest {
 
         frontCommand.process()
 
-        assertEquals("""{"response":{"name":"Awesome movie","id":1}}""", frontCommand.output)
+        assertEquals(Response("""{"response":{"name":"Awesome movie","id":1}}""", 200), frontCommand.response)
     }
 
     @Test
-    fun givenInvalidIdWhenProcessThenRenderEmpty() {
+    fun givenInvalidIdWhenProcessThenAssertResponseWithNull() {
         frontCommand.init(object : Request {
             override val queryParams: Map<String, Array<String>>
                 get() = TODO("not implemented")
@@ -61,6 +62,6 @@ class GetMovieFrontCommandTest {
 
         frontCommand.process()
 
-        assertEquals("""{"response":null}""", frontCommand.output)
+        assertEquals(Response("""{"response":null}""", 200), frontCommand.response)
     }
 }
