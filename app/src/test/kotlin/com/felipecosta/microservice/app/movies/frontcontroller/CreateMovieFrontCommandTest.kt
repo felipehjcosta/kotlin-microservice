@@ -29,7 +29,7 @@ class CreateMovieFrontCommandTest {
 
         frontCommand.process()
 
-        assertEquals(Response("""{"response":{"name":"New movie","id":1}}""", 200), frontCommand.response)
+        assertEquals(Response("""{"response":{"name":"New movie","id":1}}""", 201), frontCommand.response)
     }
 
 

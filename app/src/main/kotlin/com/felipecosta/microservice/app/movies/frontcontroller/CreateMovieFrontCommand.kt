@@ -26,7 +26,7 @@ class CreateMovieFrontCommand : FrontCommand() {
             })
         }
 
-        render(text = jsonBody.toJsonString())
+        render(text = jsonBody.toJsonString(), code = 201)
 
     }
 }
