@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class SparkServerHandlerTest {
 
-    @Test(timeout = 1000L)
+    @Test(timeout = 5000L)
     fun givenHandlerWhenGetItShouldAssertResponse() {
         val stubFrontCommand = object : FrontCommand() {
             override fun process() {
@@ -33,7 +33,7 @@ class SparkServerHandlerTest {
         spark.Spark.stop()
     }
 
-    @Test(timeout = 1000L)
+    @Test(timeout = 5000L)
     fun givenHandlerWhenPostItShouldAssertResponse() {
         val stubFrontCommand = object : FrontCommand() {
             override fun process() {
@@ -58,7 +58,7 @@ class SparkServerHandlerTest {
         spark.Spark.stop()
     }
 
-    @Test(timeout = 1000L)
+    @Test(timeout = 5000L)
     fun givenHandlerWhenPutItShouldAssertResponse() {
         val stubFrontCommand = object : FrontCommand() {
             override fun process() {
