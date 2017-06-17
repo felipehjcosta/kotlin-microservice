@@ -1,10 +1,7 @@
 package com.felipecosta.microservice.app.movies.di
 
 import com.felipecosta.microservice.app.core.di.ApplicationComponent
-import com.felipecosta.microservice.app.movies.frontcontroller.CreateMovieFrontCommand
-import com.felipecosta.microservice.app.movies.frontcontroller.GetMovieFrontCommand
-import com.felipecosta.microservice.app.movies.frontcontroller.ListMoviesFrontCommand
-import com.felipecosta.microservice.app.movies.frontcontroller.UpdateMovieFrontCommand
+import com.felipecosta.microservice.app.movies.frontcontroller.*
 import dagger.Component
 
 @MoviesScope
@@ -17,4 +14,6 @@ interface MoviesComponent {
     fun inject(createMovieFrontCommand: CreateMovieFrontCommand)
 
     fun inject(updateMovieFrontCommand: UpdateMovieFrontCommand)
+
+    fun inject(deleteMovieFrontCommand: DeleteMovieFrontCommand)
 }

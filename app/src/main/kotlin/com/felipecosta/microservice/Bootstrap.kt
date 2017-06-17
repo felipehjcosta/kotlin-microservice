@@ -4,10 +4,7 @@ import com.felipecosta.microservice.app.core.di.DaggerApplicationComponent
 import com.felipecosta.microservice.app.helloworld.frontcontroller.HelloFrontCommand
 import com.felipecosta.microservice.app.json.frontcontroller.JsonFrontCommand
 import com.felipecosta.microservice.app.movies.di.DaggerMoviesComponent
-import com.felipecosta.microservice.app.movies.frontcontroller.CreateMovieFrontCommand
-import com.felipecosta.microservice.app.movies.frontcontroller.GetMovieFrontCommand
-import com.felipecosta.microservice.app.movies.frontcontroller.ListMoviesFrontCommand
-import com.felipecosta.microservice.app.movies.frontcontroller.UpdateMovieFrontCommand
+import com.felipecosta.microservice.app.movies.frontcontroller.*
 import com.felipecosta.microservice.app.notes.frontcontroller.NotesFrontCommand
 import com.felipecosta.microservice.server.*
 import com.felipecosta.microservice.server.renderer.impl.PebbleRenderer
@@ -56,6 +53,15 @@ fun main(args: Array<String>) {
 
         +(map put "/api/movies/:id" to {
             UpdateMovieFrontCommand().apply {
+                val moviesComponent = DaggerMoviesComponent.builder().
+                        applicationComponent(applicationComponent).
+                        build()
+                moviesComponent.inject(this)
+            }
+        })
+
+        +(map delete  "/api/movies/:id" to {
+            DeleteMovieFrontCommand().apply {
                 val moviesComponent = DaggerMoviesComponent.builder().
                         applicationComponent(applicationComponent).
                         build()
