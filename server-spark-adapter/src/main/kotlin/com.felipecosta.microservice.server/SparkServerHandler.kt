@@ -35,4 +35,16 @@ class SparkServerHandler : ServerHandler {
             frontCommand.output
         }
     }
+
+    override fun put(putHandler: PutHandler<FrontCommand>) {
+        val routePath = putHandler.putPath
+        val action = putHandler.action
+        val renderer = putHandler.renderer
+        spark.Spark.put(routePath.path) { request, _ ->
+            val frontCommand: FrontCommand = action()
+            frontCommand.init(SparkRequestAdapter(request), renderer)
+            frontCommand.process()
+            frontCommand.output
+        }
+    }
 }

@@ -6,4 +6,6 @@ interface ServerHandler {
     fun get(getHandler: GetHandler<FrontCommand>)
 
     fun post(postHandler: PostHandler<FrontCommand>)
+
+    fun put(putHandler: PutHandler<FrontCommand>)
 }
