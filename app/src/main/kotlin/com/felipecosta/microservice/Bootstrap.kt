@@ -7,6 +7,7 @@ import com.felipecosta.microservice.app.movies.di.DaggerMoviesComponent
 import com.felipecosta.microservice.app.movies.frontcontroller.CreateMovieFrontCommand
 import com.felipecosta.microservice.app.movies.frontcontroller.GetMovieFrontCommand
 import com.felipecosta.microservice.app.movies.frontcontroller.ListMoviesFrontCommand
+import com.felipecosta.microservice.app.movies.frontcontroller.UpdateMovieFrontCommand
 import com.felipecosta.microservice.app.notes.frontcontroller.NotesFrontCommand
 import com.felipecosta.microservice.server.*
 import com.felipecosta.microservice.server.renderer.impl.PebbleRenderer
@@ -46,6 +47,15 @@ fun main(args: Array<String>) {
 
         +(map post "/api/movies" to {
             CreateMovieFrontCommand().apply {
+                val moviesComponent = DaggerMoviesComponent.builder().
+                        applicationComponent(applicationComponent).
+                        build()
+                moviesComponent.inject(this)
+            }
+        })
+
+        +(map put "/api/movies/:id" to {
+            UpdateMovieFrontCommand().apply {
                 val moviesComponent = DaggerMoviesComponent.builder().
                         applicationComponent(applicationComponent).
                         build()
