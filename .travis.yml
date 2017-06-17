@@ -16,7 +16,7 @@ jdk:
 - oraclejdk8
 
 script:
-- "./gradlew test jacocoTestReport jar"
+- "./gradlew clean test jacocoTestReport jar"
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
