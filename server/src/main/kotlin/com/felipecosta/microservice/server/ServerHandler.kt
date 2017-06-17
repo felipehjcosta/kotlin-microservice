@@ -8,4 +8,6 @@ interface ServerHandler {
     fun post(postHandler: PostHandler<FrontCommand>)
 
     fun put(putHandler: PutHandler<FrontCommand>)
+
+    fun delete(deleteHandler: DeleteHandler<FrontCommand>)
 }

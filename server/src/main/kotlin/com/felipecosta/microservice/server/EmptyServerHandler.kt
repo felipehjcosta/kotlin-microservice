@@ -11,4 +11,7 @@ class EmptyServerHandler : ServerHandler {
 
     override fun put(putHandler: PutHandler<FrontCommand>) {
     }
+
+    override fun delete(deleteHandler: DeleteHandler<FrontCommand>) {
+    }
 }

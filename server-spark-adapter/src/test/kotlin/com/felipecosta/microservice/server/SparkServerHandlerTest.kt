@@ -82,4 +82,29 @@ class SparkServerHandlerTest {
 
         spark.Spark.stop()
     }
+
+    @Test(timeout = 5000L)
+    fun givenHandlerWhenDeleteItShouldAssertResponse() {
+        val stubFrontCommand = object : FrontCommand() {
+            override fun process() {
+                render(text = "SparkServerHandler Integration Test")
+            }
+        }
+        SparkServerHandler().apply {
+            delete(DeleteHandler(DeletePath("/"), { stubFrontCommand }))
+        }
+
+        spark.Spark.awaitInitialization()
+
+        val urlConnection = (URL("http://localhost:8080").openConnection() as HttpURLConnection).apply {
+            readTimeout = 2000
+            connectTimeout = 2000
+            requestMethod = "DELETE"
+        }
+        val response = urlConnection.inputStream.reader().use { it.readText() }
+
+        assertEquals("SparkServerHandler Integration Test", response)
+
+        spark.Spark.stop()
+    }
 }

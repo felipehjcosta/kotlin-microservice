@@ -15,6 +15,8 @@ class Server(internal var serverHandler: ServerHandler = EmptyServerHandler()) {
     operator fun PostHandler<FrontCommand>.unaryPlus() = serverHandler.post(this)
 
     operator fun PutHandler<FrontCommand>.unaryPlus() = serverHandler.put(this)
+
+    operator fun DeleteHandler<FrontCommand>.unaryPlus() = serverHandler.delete(this)
 }
 
 inline fun <O> server(body: Server.() -> O): Server = Server().apply { body() }
@@ -53,3 +55,14 @@ infix fun <T : FrontCommand> PutPath.to(action: () -> T) = PutHandler(this, acti
 data class PutHandler<out T : FrontCommand>(val putPath: PutPath, val action: () -> T, var renderer: Renderer = DefaultRenderer())
 
 infix fun <T : FrontCommand> PutHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }
+
+
+infix fun map.delete(path: String) = DeletePath(path)
+
+data class DeletePath(val path: String)
+
+infix fun <T : FrontCommand> DeletePath.to(action: () -> T) = DeleteHandler(this, action)
+
+data class DeleteHandler<out T : FrontCommand>(val deletePath: DeletePath, val action: () -> T, var renderer: Renderer = DefaultRenderer())
+
+infix fun <T : FrontCommand> DeleteHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }

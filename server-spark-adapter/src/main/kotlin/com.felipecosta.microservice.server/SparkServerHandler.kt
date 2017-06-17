@@ -53,4 +53,18 @@ class SparkServerHandler : ServerHandler {
             commandResponse.body
         }
     }
+
+    override fun delete(deleteHandler: DeleteHandler<FrontCommand>) {
+        val routePath = deleteHandler.deletePath
+        val action = deleteHandler.action
+        val renderer = deleteHandler.renderer
+        spark.Spark.delete(routePath.path) { request, response ->
+            val frontCommand: FrontCommand = action()
+            frontCommand.init(SparkRequestAdapter(request), renderer)
+            frontCommand.process()
+            val commandResponse = frontCommand.response
+            response.status(commandResponse.code)
+            commandResponse.body
+        }
+    }
 }
