@@ -2,10 +2,7 @@ package com.felipecosta.microservice.server
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
@@ -19,6 +16,9 @@ class SpringBootServerRestController {
 
     @PutMapping("**")
     fun handlePut(request: HttpServletRequest) = handlePath(PutPath(request.pathInfo))
+
+    @DeleteMapping("**")
+    fun handleDelete(request: HttpServletRequest) = handlePath(DeletePath(request.pathInfo))
 
     private fun handlePath(actionHandler: ActionHandler): Any? = with(ServerUrlMappings[actionHandler]) {
         when (this) {

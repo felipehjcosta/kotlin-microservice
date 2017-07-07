@@ -84,4 +84,22 @@ class SpringBootServerRestControllerTest {
                 .andExpect(status().isOk)
                 .andExpect(content().string("put response"))
     }
+
+    @Test(timeout = 5000L)
+    fun givenRegisteredDeletePathWhenPerformDeleteThenAssertDeleteResponse() {
+        val stubFrontCommand = object : FrontCommand() {
+            override fun process() {
+                render(text = "delete response")
+            }
+        }
+
+        ServerUrlMappings[DeletePath("/")] = {
+            stubFrontCommand.process()
+            stubFrontCommand.response
+        }
+
+        mvc.perform(MockMvcRequestBuilders.delete("/"))
+                .andExpect(status().isOk)
+                .andExpect(content().string("delete response"))
+    }
 }
