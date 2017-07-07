@@ -66,4 +66,22 @@ class SpringBootServerRestControllerTest {
                 .andExpect(status().isOk)
                 .andExpect(content().string("post response"))
     }
+
+    @Test(timeout = 5000L)
+    fun givenRegisteredPutPathWhenPerformPutThenAssertPutResponse() {
+        val stubFrontCommand = object : FrontCommand() {
+            override fun process() {
+                render(text = "put response")
+            }
+        }
+
+        ServerUrlMappings[PutPath("/")] = {
+            stubFrontCommand.process()
+            stubFrontCommand.response
+        }
+
+        mvc.perform(MockMvcRequestBuilders.put("/"))
+                .andExpect(status().isOk)
+                .andExpect(content().string("put response"))
+    }
 }
