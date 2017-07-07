@@ -27,12 +27,12 @@ class SpringBootServerRestControllerTest {
     }
 
     @Test(timeout = 5000L)
-    fun givenNotRegisteredPathWhenHandlerThenItReturnsNotFound() {
+    fun givenNotRegisteredGetPathWhenPerformGetThenAssertNotFound() {
         mvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().isNotFound)
     }
 
     @Test(timeout = 5000L)
-    fun givenRegisteredGetPathWhenHandlerThenItHandlesPath() {
+    fun givenRegisteredGetPathWhenPerformGetThenAssertGetResponse() {
         val stubFrontCommand = object : FrontCommand() {
             override fun process() {
                 render(text = "Hello World")
