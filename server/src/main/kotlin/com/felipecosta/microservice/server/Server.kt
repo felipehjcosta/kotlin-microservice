@@ -23,7 +23,7 @@ inline fun <O> server(body: Server.() -> O): Server = Server().apply { body() }
 
 object map
 
-abstract class ActionHandler(val path: String)
+sealed class ActionHandler(val path: String)
 
 infix fun map.get(path: String) = GetPath(path)
 
