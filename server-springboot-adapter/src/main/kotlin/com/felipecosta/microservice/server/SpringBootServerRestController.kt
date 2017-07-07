@@ -2,15 +2,15 @@ package com.felipecosta.microservice.server
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
 class SpringBootServerRestController {
 
-    @RequestMapping("**")
-    fun handler(request: HttpServletRequest): Any? {
+    @GetMapping("**")
+    fun handleGet(request: HttpServletRequest): Any? {
         val path = request.pathInfo
 
         val action = ServerUrlMappings[GetPath(path)]
