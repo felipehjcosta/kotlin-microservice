@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-class SpringBootServerRestController {
+class ServerRestController {
 
     @GetMapping("**")
     fun handleGet(request: HttpServletRequest) = handlePath(GetPath(request.pathInfo))

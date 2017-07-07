@@ -14,9 +14,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @RunWith(SpringRunner::class)
-@WebMvcTest(SpringBootServerRestController::class)
-@ContextConfiguration(classes = arrayOf(SpringBootServerRestController::class))
-class SpringBootServerRestControllerTest {
+@WebMvcTest(ServerRestController::class)
+@ContextConfiguration(classes = arrayOf(ServerRestController::class))
+class ServerRestControllerTest {
 
     @Autowired
     lateinit var mvc: MockMvc
