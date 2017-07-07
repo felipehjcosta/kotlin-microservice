@@ -1,11 +1,11 @@
 package com.felipecosta.microservice.server
 
 object ServerUrlMappings {
-    private val mapping = mutableMapOf<String, () -> Response>()
+    private val mapping = mutableMapOf<ActionHandler, () -> Response>()
 
-    operator fun get(key: String) = mapping[key]
+    operator fun get(key: ActionHandler) = mapping[key]
 
-    operator fun set(key: String, value: () -> Response) {
+    operator fun set(key: ActionHandler, value: () -> Response) {
         mapping[key] = value
     }
 

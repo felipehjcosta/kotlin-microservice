@@ -37,7 +37,7 @@ class SpringBootServerRestControllerTest {
             }
         }
 
-        ServerUrlMappings["/"] = {
+        ServerUrlMappings[GetPath("/")] = {
             stubFrontCommand.process()
             stubFrontCommand.response
         }

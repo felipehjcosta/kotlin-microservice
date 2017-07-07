@@ -13,7 +13,7 @@ class SpringBootServerRestController {
     fun handler(request: HttpServletRequest): Any? {
         val path = request.pathInfo
 
-        val action = ServerUrlMappings[path]
+        val action = ServerUrlMappings[GetPath(path)]
         if (action == null) {
             return ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
         } else {

@@ -23,10 +23,11 @@ inline fun <O> server(body: Server.() -> O): Server = Server().apply { body() }
 
 object map
 
+abstract class ActionHandler(val path: String)
 
 infix fun map.get(path: String) = GetPath(path)
 
-data class GetPath(val path: String)
+data class GetPath(val getPath: String) : ActionHandler(getPath)
 
 infix fun <T : FrontCommand> GetPath.to(action: () -> T) = GetHandler(this, action)
 
@@ -37,7 +38,7 @@ infix fun <T : FrontCommand> GetHandler<T>.with(newRenderer: Renderer) = this.ap
 
 infix fun map.post(path: String) = PostPath(path)
 
-data class PostPath(val path: String)
+data class PostPath(val postPath: String) : ActionHandler(postPath)
 
 infix fun <T : FrontCommand> PostPath.to(action: () -> T) = PostHandler(this, action)
 
@@ -48,7 +49,7 @@ infix fun <T : FrontCommand> PostHandler<T>.with(newRenderer: Renderer) = this.a
 
 infix fun map.put(path: String) = PutPath(path)
 
-data class PutPath(val path: String)
+data class PutPath(val putPath: String) : ActionHandler(putPath)
 
 infix fun <T : FrontCommand> PutPath.to(action: () -> T) = PutHandler(this, action)
 
@@ -59,7 +60,7 @@ infix fun <T : FrontCommand> PutHandler<T>.with(newRenderer: Renderer) = this.ap
 
 infix fun map.delete(path: String) = DeletePath(path)
 
-data class DeletePath(val path: String)
+data class DeletePath(val deletePath: String) : ActionHandler(deletePath)
 
 infix fun <T : FrontCommand> DeletePath.to(action: () -> T) = DeleteHandler(this, action)
 
