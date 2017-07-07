@@ -12,35 +12,18 @@ import javax.servlet.http.HttpServletRequest
 class SpringBootServerRestController {
 
     @GetMapping("**")
-    fun handleGet(request: HttpServletRequest): Any? {
-        val path = request.pathInfo
-
-        val action = ServerUrlMappings[GetPath(path)]
-        if (action == null) {
-            return ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
-        } else {
-            return with(action.invoke()) { ResponseEntity<Any>(this.body, HttpStatus.valueOf(this.code)) }
-        }
-    }
+    fun handleGet(request: HttpServletRequest) = handlePath(GetPath(request.pathInfo))
 
     @PostMapping("**")
-    fun handlePost(request: HttpServletRequest): Any? {
-        val action = ServerUrlMappings[PostPath(request.pathInfo)]
-        if (action == null) {
-            return ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
-        } else {
-            return with(action.invoke()) { ResponseEntity<Any>(this.body, HttpStatus.valueOf(this.code)) }
-        }
-    }
-
+    fun handlePost(request: HttpServletRequest) = handlePath(PostPath(request.pathInfo))
 
     @PutMapping("**")
-    fun handlePut(request: HttpServletRequest): Any? {
-        val action = ServerUrlMappings[PutPath(request.pathInfo)]
-        if (action == null) {
-            return ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
-        } else {
-            return with(action.invoke()) { ResponseEntity<Any>(this.body, HttpStatus.valueOf(this.code)) }
+    fun handlePut(request: HttpServletRequest) = handlePath(PutPath(request.pathInfo))
+
+    private fun handlePath(actionHandler: ActionHandler): Any? = with(ServerUrlMappings[actionHandler]) {
+        when (this) {
+            null -> ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
+            else -> with(this.invoke()) { ResponseEntity<Any>(this.body, HttpStatus.valueOf(this.code)) }
         }
     }
 }
