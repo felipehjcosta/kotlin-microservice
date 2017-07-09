@@ -33,7 +33,7 @@ class SparkRequestAdapterTest {
     }
 
     @Test
-    fun givenWrappedBodyUserAgentItShouldAssertSameUserAgent() {
+    fun givenWrappedBodyItShouldAssertSameBody() {
         whenever(mockSparkRequest.body()).thenReturn("{}")
 
         assertEquals("{}", sparkRequestAdapter.body)
