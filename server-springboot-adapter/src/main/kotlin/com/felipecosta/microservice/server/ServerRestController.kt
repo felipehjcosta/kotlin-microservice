@@ -9,21 +9,24 @@ import javax.servlet.http.HttpServletRequest
 class ServerRestController {
 
     @GetMapping("**")
-    fun handleGet(request: HttpServletRequest) = handlePath(GetPath(request.pathInfo))
+    fun handleGet(request: HttpServletRequest) = handlePath(request, GetPath(request.pathInfo))
 
     @PostMapping("**")
-    fun handlePost(request: HttpServletRequest) = handlePath(PostPath(request.pathInfo))
+    fun handlePost(request: HttpServletRequest) = handlePath(request, PostPath(request.pathInfo))
 
     @PutMapping("**")
-    fun handlePut(request: HttpServletRequest) = handlePath(PutPath(request.pathInfo))
+    fun handlePut(request: HttpServletRequest) = handlePath(request, PutPath(request.pathInfo))
 
     @DeleteMapping("**")
-    fun handleDelete(request: HttpServletRequest) = handlePath(DeletePath(request.pathInfo))
+    fun handleDelete(request: HttpServletRequest) = handlePath(request, DeletePath(request.pathInfo))
 
-    private fun handlePath(actionHandler: ActionHandler): Any? = with(ServerUrlMappings[actionHandler]) {
-        when (this) {
-            null -> ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
-            else -> with(this.invoke()) { ResponseEntity<Any>(this.body, HttpStatus.valueOf(this.code)) }
-        }
-    }
+    private fun handlePath(request: HttpServletRequest, actionHandler: ActionHandler): Any? =
+            with(ServerUrlMappings[actionHandler]) {
+                when (this) {
+                    null -> ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
+                    else -> with(this(SpringBootRequestAdapter(request))) {
+                        ResponseEntity<Any>(this.body, HttpStatus.valueOf(this.code))
+                    }
+                }
+            }
 }
