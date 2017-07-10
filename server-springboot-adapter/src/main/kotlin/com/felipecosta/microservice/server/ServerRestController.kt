@@ -2,7 +2,9 @@ package com.felipecosta.microservice.server
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.util.AntPathMatcher
 import org.springframework.web.bind.annotation.*
+import java.util.regex.Pattern
 import javax.servlet.http.HttpServletRequest
 
 @RestController
@@ -21,7 +23,7 @@ class ServerRestController {
     fun handleDelete(request: HttpServletRequest) = handlePath(request, DeletePath(request.pathInfo))
 
     private fun handlePath(request: HttpServletRequest, actionHandler: ActionHandler): Any? =
-            with(ServerUrlMappings[actionHandler]) {
+            with(ServerUrlMappings.firstOrNull { matchPath(it.path, actionHandler.path) }) {
                 when (this) {
                     null -> ResponseEntity<Any?>(null, HttpStatus.NOT_FOUND)
                     else -> with(this(SpringBootRequestAdapter(request))) {
@@ -29,4 +31,23 @@ class ServerRestController {
                     }
                 }
             }
+
+    private fun matchPath(registeredPath: String, requestpath: String) = with(AntPathMatcher()) {
+        match(normalizePath(registeredPath), requestpath)
+    }
+
+    private fun normalizePath(path: String): String {
+        val pattern = Pattern.compile("(:\\w+)|(\\w+)|(/)")
+        val matcher = pattern.matcher(path)
+        val builder = StringBuilder()
+        while (matcher.find()) {
+            val variable = matcher.group(0)
+            if (variable.startsWith(":")) {
+                builder.append("{${variable.replace(":", "")}}")
+            } else {
+                builder.append(variable)
+            }
+        }
+        return builder.toString()
+    }
 }

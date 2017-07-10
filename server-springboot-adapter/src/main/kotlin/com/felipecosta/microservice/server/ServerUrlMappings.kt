@@ -9,5 +9,7 @@ internal object ServerUrlMappings {
         mapping[key] = value
     }
 
+    fun firstOrNull(predicate: (ActionHandler) -> Boolean) = mapping.asSequence().filter { predicate(it.key) }.firstOrNull()?.value
+
     fun clear() = mapping.clear()
 }
