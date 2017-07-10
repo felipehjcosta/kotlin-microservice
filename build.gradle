@@ -17,6 +17,9 @@ allprojects {
 
     dependencies {
         testCompile 'junit:junit:4.12'
+        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+        testCompile 'com.nhaarman:mockito-kotlin:1.3.0'
     }
 
     repositories {
