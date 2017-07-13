@@ -4,12 +4,12 @@ This repository contains a microservice example written in Kotlin.
 
 [![Build Status](https://travis-ci.org/fcostaa/kotlin-microservice.svg?branch=master)](https://travis-ci.org/fcostaa/kotlin-microservice) [![codecov](https://codecov.io/gh/fcostaa/kotlin-microservice/branch/master/graph/badge.svg)](https://codecov.io/gh/fcostaa/kotlin-microservice) [![codebeat badge](https://codebeat.co/badges/b5a0014a-b81f-4124-ab46-3e1a7197e4dd)](https://codebeat.co/projects/github-com-fcostaa-kotlin-microservice-master)
 
-How to access latest version
+How to access the latest version
 -------
 Go to this [link](http://kotlinmicroservice-fcosta.rhcloud.com).
 
 
-How to run
+How to run locally
 -------
 Download the project and run the following command:
 ```
