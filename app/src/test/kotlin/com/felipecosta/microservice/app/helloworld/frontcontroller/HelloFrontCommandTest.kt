@@ -21,6 +21,6 @@ class HelloFrontCommandTest {
     fun whenProcessThenAssertResponse() {
         helloSparkFrontCommand.process()
 
-        assertEquals(Response("Hello World form server with Kotlin", 200), helloSparkFrontCommand.response)
+        assertEquals(Response("Hello World from a server written Kotlin.", 200), helloSparkFrontCommand.response)
     }
 }
