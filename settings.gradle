@@ -1,1 +1,1 @@
-include ':app', ':server', ':server-spark-adapter', ':server-springboot-adapter'
+include ':app', ':server', ':server-spark-adapter'
