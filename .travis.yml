@@ -27,6 +27,7 @@ after_success:
 - ssh-add
 - export SSHPASS=$DEPLOY_PASS
 - scp -i ~/id_rsa_dpl app/build/libs/app-0.1.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- ssh-agent -k
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
