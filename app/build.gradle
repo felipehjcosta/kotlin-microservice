@@ -9,6 +9,7 @@ jar {
                 'Main-Class': "com.felipecosta.microservice.BootstrapKt"
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveName = "${jar.baseName}.${jar.extension}"
 }
 
 sourceSets {
