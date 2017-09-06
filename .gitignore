@@ -33,7 +33,7 @@ local.properties
 ## Plugin-specific files:
 
 # IntelliJ
-/out/
+out/
 /classes
 
 # mpeltonen/sbt-idea plugin
