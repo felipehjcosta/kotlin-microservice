@@ -4,7 +4,7 @@ import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
 class SparkServerHandler : ServerHandler {
 
-    private val IP_ADDRESS = if (System.getenv("OPENSHIFT_DIY_IP") != null) System.getenv("OPENSHIFT_DIY_IP") else "localhost"
+    private val IP_ADDRESS = if (System.getenv("OPENSHIFT_DIY_IP") != null) System.getenv("OPENSHIFT_DIY_IP") else "0.0.0.0"
     private val PORT = if (System.getenv("OPENSHIFT_DIY_PORT") != null) Integer.parseInt(System.getenv("OPENSHIFT_DIY_PORT")) else 8080
 
     init {
