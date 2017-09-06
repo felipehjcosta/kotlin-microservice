@@ -4,12 +4,10 @@ import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
 class SparkServerHandler : ServerHandler {
 
-    private val IP_ADDRESS = if (System.getenv("OPENSHIFT_DIY_IP") != null) System.getenv("OPENSHIFT_DIY_IP") else "0.0.0.0"
-    private val PORT = if (System.getenv("OPENSHIFT_DIY_PORT") != null) Integer.parseInt(System.getenv("OPENSHIFT_DIY_PORT")) else 8080
+    private val port = if (System.getenv("PORT") != null) Integer.parseInt(System.getenv("PORT")) else 8080
 
     init {
-        spark.Spark.ipAddress(IP_ADDRESS)
-        spark.Spark.port(PORT)
+        spark.Spark.port(port)
     }
 
     override fun get(getHandler: GetHandler<FrontCommand>) {
