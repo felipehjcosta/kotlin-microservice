@@ -2,14 +2,6 @@ language: java
 
 sudo: false
 
-addons:
-  ssh_known_hosts:
-  - kotlinmicroservice-fcosta.rhcloud.com
-  apt:
-    packages:
-    - sshpass
-
-
 install: true
 
 jdk:
@@ -20,36 +12,13 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- openssl aes-256-cbc -K $encrypted_b4f0cf043b2b_key -iv $encrypted_b4f0cf043b2b_iv
-  -in id_rsa.enc -out ~/id_rsa_dpl -d
-- chmod 600 ~/id_rsa_dpl
-- eval "$(ssh-agent)"
-- ssh-add
-- export SSHPASS=$DEPLOY_PASS
-- scp -i ~/id_rsa_dpl app/build/libs/app.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-- ssh-agent -k
+- test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
 
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
-deploy:
-  skip_cleanup: true
-  provider: openshift
-  user: felipe.h.j.costa@gmail.com
-  password:
-      secure: HdGnNIO+Y32ua7lmBCTSEhJVRTrHc6ovRPL0Mxr2m1c1J+TGZ5HurnxtGhckptXMFWgwj22RniJgXoo3T0oWx0jLHOr3Wk5elvIKRpTDy51U184DIkmiXaUOpOIyZYJZ2BI1B8kq9MDvGqfbvQjWgpkJ5p37EZ3rx7o5diFNJtmN6LlK/tLpR7G7fBBzk5b+GmLRuM0BwTmP0QYYsdyvTliT5gf79OkHEpIr1Ers1QkpkqBf5FI4OnDnsbHpMhDHK5eUGqYqI+VMO0aWzdNHibws+mLzWxGxxT+PCHmKwdrB0bf9txCTu+d1PgH2+V15gbrnnMM+uM4v+x/mOVrxIvDpiYZ3AqdPuGKzfTR8imvCAaUOT3MpNbssfHbjgiZcwkRvtoRpvHWcYkR2eUkpTn4txmqarMrki7mwEfVEySWDXFAnruQW00q5t2/LQ1V6X1aFUJk+aa6XLkK6USz/hAmIX5ADd5qVY2nIApitbldBiG6x/uc6YkU7WNi5PCiqZ+0BSvotNnfb3r+lfLi8ZyiRJ3jKtPDm1hefev36Gotskge1NG4MNXTudF/dwq38+PkrybZOI2A1y9dkxB61wja/hdSfNOCaB0Y+7rMI09KW+9v9Z/+hS/qODXelrKgwRa9hPQW1NmBMCDNwQehwVmAqtF2YQx3ayUHZUeuel8g=
-  app: kotlinmicroservice
-  domain: fcosta
-  on:
-    repo: fcostaa/kotlin-microservice
-
-env:
-  global:
-  - secure: UGHsmp4d93JVKXwweJkszNmbrW40uIsCQp87atvFttW83jA43JWMBz9cDa/uzHd+Uzy7KSXHe3CaknBWJ8ttNm02GzZWjzIbR3rfAifPcf7cR8faddsR0AkVmVQnHj+QG8Yfb6yCR3TT4b3HVVwJc5oU8p65k3ixBkdZAmvqWa7GKjjKqh8aXQP4wOVe53sHf/Pxen68yjgPzaXjf0pLcfDcXvy7r027sWynyRic95BHPVjTlyMI2OOZ6kvnspTHJhNcjz5UGE1H3j7cclvUTez4ZYAEtg4nOFWVvjsaDZgQ1tMcqsTtmLz9D07ov4gmWXpluRVfwCuwaWf5oaoPQ3QLTO0uM4nM/vzErrnlCQ40LD/JEsAm36h4DYTcFKRPQRp8sdNWmwV++y8U6CQH/WIchnSHPAGdr17tz+R9UESWZAOsPClHCyu8EDudK/Mir+TjYRdRMAmhTltjsIBZWiCNj9MwX8sMrfSpRNdjUCJDkL/BuZl7AWycCtB8Bb+RiF9ukucHf04P9tl82aQeLhfdngKYJP/7Ln2sPsL+jFQ7PBIAa0pmWiflvFsOKBczeJANif4NgEjeYlUuCDOXlQYVhMcmG4EqlSKXRRQ4qTAHb34I86SccxBI0p6VcPHK+491+2o9QwJdwmlqDltEv/E1KhUfRgYWqobu4BndMgQ=
-  - secure: g3AwPyEe6rA0Vqc6D31dR0r0rikknxSmQ0wPyFJFLmzhTjmaUvrtEyAifD7cXWyDryFTi6WqTfNCsLdJ0EzyH0g4bUwcrwKNUp94CQBn4poiUv/HpLVymlDBeOh5FrAf2jdnYcgYnUPHRMKvELEIl1bFg7tBoKbBPy0lv9IHz9DL2m9BDsWZ5w8JrwFvAJx9sp0UCsRi6eOKuFyvQyvfhTUcV8BXyS+2M/nso0jOrpjfI/ZZe/33AEEYOSIyrT3kyf20zhEK1w3IFKgXRLSDqTonJ0CKQCBR29cDSS+8kfz7PLcuJuEUpT5l+UGSsjr/aPZGX9hi0aSMWjCWDsgmHG3zbcVjiyYX2Ao8/m2RI5yX8o6zJ1Gl5pi2miKy0gA5fRiMeQ/PauhK/L6TWMS59tv6hsWoFSI06fEIVuuffUA/x9xaQ4RHOrJhXLkLBXtSK7YgBjpKwEhiDJ/hOxDvN9sy2tMr7Un0hGRT5eZ4a6dPCu6FwOiNHP49L05NmlqJZoOZDI7j+9G5+5SkjSJ4MtJvCsqVXggEUefmlkCsz4EpIQIZh0xm0uXwW0JL+j+7cZSKHTXaFtNnsGYPL2iJAs0AZlim57yB9c6RwezyYDbJB0RZ4W1x7Bb9Yt6VBBQEDaQAww6qpAOvxHvzPDY9fnjyihWMdMyyI868UUgGz2U=
-  - secure: Q9na0DJXjbOLdaR4KnIjUei7g4bndjbjyjD8w0x5oPmjKHc6qI42M0SyIyt60efONWfKf2ZPKf0XWjdDMq5Qp/BdLJUGK+Skx1J+Tg9H0pmTabxycDJFIraLYkp1wMLQW3LECp34BL52E7kOxC97H9c9tLOaCjgv8oNazEioU8i9a6sRG0dCvwEWwP8DeWCr2VvHeXLdrxT4Q/98UaL09M8pSjvfNM65Z9CJ/UIdvvDEhIwtbHpK5La3DLEW0cL/7q92emia0HJk3rErSsRuG5V4xaT0hbxxtv3vNuGDSo6XPKr8I7hDR9gtxQMHL/6C7thMw1nb5ycKRZMM5YPgddyFpy1w0AkmuBzz6DvlKDpZwCpNuRuqHVNC2BY4Xrsw5ZNNdQldA5KPGdTyJr/bsn/+XImD4FGFxwaLNZc9yBliwyV9ZwTspEcICs8YzogTkklhrxJAyM6Ywgaf5wDhtsbwfip0i7Mm1XoaeaHa5mz+SwoO1gZ2ZnOX1qNeg7FAMPdZ39COiHG/EeKLL/K2bx0taabAj63sAmy9Ci05tu4tM0BGuVvi1hbeMHU2DX5JASF7gFYsjgO01n9D2u6rtnIS/zv96jciaSnLJqXS5IW/woBB+zitdM73zCOfabQyg1akI8QQpkpvHQz041rugI5P5Ku93VlfS7v1jFjyXX0=
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
