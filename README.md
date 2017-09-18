@@ -8,7 +8,7 @@ This repository contains a microservice example written in Kotlin.
 
 How to access the latest version
 -------
-Go to this [link](http://kotlinmicroservice-fcosta.rhcloud.com).
+Go to this [link](https://arcane-journey-46156.herokuapp.com).
 
 
 How to run locally
