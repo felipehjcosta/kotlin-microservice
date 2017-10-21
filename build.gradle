@@ -1,5 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.1.3-2'
+    ext.junitPlatformVersion = '1.0.1'
 
     repositories {
         jcenter()
@@ -7,40 +8,59 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
     }
 }
 
+ext.junit4Version = '4.12'
+ext.junitVintageVersion = '4.12.1'
+ext.junitJupiterVersion = '5.0.1'
+ext.log4jVersion = '2.9.0'
 
 allprojects {
     apply plugin: 'kotlin'
     apply plugin: 'jacoco'
-
-    dependencies {
-        testCompile 'junit:junit:4.12'
-        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-        testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-        testCompile 'com.nhaarman:mockito-kotlin:1.3.0', { exclude group: 'org.jetbrains.kotlin' }
-    }
+    apply plugin: 'org.junit.platform.gradle.plugin'
 
     repositories {
         jcenter()
     }
 
     jacoco {
-        toolVersion = '0.7.9'
+        toolVersion = "0.7.9"
+        applyTo junitPlatformTest
     }
 
     jacocoTestReport {
         reports {
-            html.enabled = true
-            xml.enabled = true
-            csv.enabled = false
-        }
-
-        reports {
             xml.enabled true
-            html.enabled true
+            xml.destination file("${buildDir}/reports/jacoco/report.xml")
         }
+    }
+
+    junitPlatformTest {
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/test.exec")
+        }
+    }
+
+    dependencies {
+
+        // JUnit Jupiter API and TestEngine implementation
+        testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+
+        // If you also want to support JUnit 3 and JUnit 4 tests
+        testCompile("junit:junit:${junit4Version}")
+        testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
+
+        // To use Log4J's LogManager
+        testRuntime("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+        testRuntime("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
+
+        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+        testCompile 'com.nhaarman:mockito-kotlin:1.3.0', { exclude group: 'org.jetbrains.kotlin' }
     }
 }
 
