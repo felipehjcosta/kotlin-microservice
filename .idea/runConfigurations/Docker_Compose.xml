@@ -1,0 +1,24 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Docker Compose" type="docker-deploy" factoryName="Docker Deployment" editBeforeRun="true" server-name="Docker">
+    <deployment type="docker-compose.yml" path="$PROJECT_DIR$/docker/debug/docker-compose.yml">
+      <settings>
+        <option name="JSONFilePath" value="$PROJECT_DIR$/container_settings.json" />
+        <option name="command" value="" />
+        <option name="containerName" value="" />
+        <option name="entrypoint" value="" />
+        <option name="envVarsExpanded" value="true" />
+        <option name="imageTag" value="" />
+        <option name="linksExpanded" value="true" />
+        <option name="portBindingsExpanded" value="true" />
+        <option name="publishAllPorts" value="true" />
+        <option name="startBrowserSettings">
+          <browser />
+        </option>
+        <option name="volumeBindingsExpanded" value="true" />
+      </settings>
+    </deployment>
+    <method>
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="jar" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+    </method>
+  </configuration>
+</component>

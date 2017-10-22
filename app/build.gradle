@@ -12,6 +12,21 @@ jar {
     archiveName = "${jar.baseName}.${jar.extension}"
 }
 
+jar.doLast {
+    ["$rootDir/docker/debug/", "$rootDir/docker/release"].each { dest ->
+        copy {
+            from jar
+            into "${dest}/app"
+        }
+    }
+}
+
+clean.doFirst {
+    ["$rootDir/docker/debug", "$rootDir/docker/release"].each { dest ->
+        delete "${dest}/app"
+    }
+}
+
 sourceSets {
     main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
 }
