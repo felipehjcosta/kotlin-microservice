@@ -22,7 +22,7 @@ class StubMovieRepositoryTest {
     }
 
     @Test
-    fun GivenIdWhenFindThenReturnMovie() {
+    fun givenIdWhenFindThenReturnMovie() {
         assertEquals(Movie("Awesome Marvel Movie", 0), stubMovieRepository.find(0))
     }
 
