@@ -23,9 +23,9 @@ class RedisMoviesRepository(private val redisUri: String) : MoviesRepository {
     override fun save(movie: Movie): Movie = executeOnRedis {
         val keys = keys("movie:*")
         val lastIndex = if (keys.isEmpty()) 0 else keys.last().split(":").last().toInt().inc()
-        hmset("movie:$lastIndex", serializeMovie(movie))
-
-        movie.copy(id = lastIndex)
+        val newMovie = movie.copy(id = lastIndex)
+        hmset("movie:$lastIndex", serializeMovie(newMovie))
+        newMovie
     }
 
     override fun update(movie: Movie) = executeOnRedis {

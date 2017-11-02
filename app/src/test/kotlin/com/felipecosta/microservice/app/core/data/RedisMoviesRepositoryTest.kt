@@ -62,6 +62,13 @@ class RedisMoviesRepositoryTest {
     }
 
     @Test
+    fun givenEmptyDataWhenSaveThenAssertFind() {
+        repository.save(Movie("New Movie"))
+        val expectedMovie = Movie("New Movie", 0)
+        assertEquals(expectedMovie, repository.find(0))
+    }
+
+    @Test
     fun givenDataWhenSaveThenAssertSaved() {
         createDummy()
 
