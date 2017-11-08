@@ -5,7 +5,6 @@ import com.beust.klaxon.Parser
 import com.beust.klaxon.json
 import com.beust.klaxon.string
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
-import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import javax.inject.Inject
 
