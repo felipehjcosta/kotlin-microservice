@@ -32,8 +32,8 @@ class ServerRestController {
                 }
             }
 
-    private fun matchPath(registeredPath: String, requestpath: String) = with(AntPathMatcher()) {
-        match(normalizePath(registeredPath), requestpath)
+    private fun matchPath(registeredPath: String, requestPath: String) = with(AntPathMatcher()) {
+        match(normalizePath(registeredPath), requestPath)
     }
 
     private fun normalizePath(path: String): String {
