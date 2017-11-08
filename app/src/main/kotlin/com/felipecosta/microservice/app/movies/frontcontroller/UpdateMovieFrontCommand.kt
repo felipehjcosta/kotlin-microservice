@@ -18,7 +18,7 @@ class UpdateMovieFrontCommand : FrontCommand() {
         val oldMovie = moviesRepository.find(request.routeParams[":id"]?.toInt() ?: -1)
 
         val jsonObject = Parser().parse(request.body.byteInputStream()) as JsonObject
-        val newMovie = oldMovie!!.copy(jsonObject.string("name")!!)
+        val newMovie = oldMovie!!.copy(name = jsonObject.string("name")!!)
 
         moviesRepository.update(newMovie)
 
