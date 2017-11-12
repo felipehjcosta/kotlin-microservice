@@ -25,7 +25,7 @@ dependencies {
 val jar: Jar by tasks
 
 jar.apply {
-    doFirst {
+    doLast {
         arrayOf("$rootDir/docker/debug", "$rootDir/docker/release").forEach { dest ->
             copy {
                 from(this@apply)
