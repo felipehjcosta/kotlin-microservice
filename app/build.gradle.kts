@@ -16,6 +16,11 @@ dependencies {
 
     testCompile("com.github.kstyrc:embedded-redis:0.6")
     testCompile("org.testcontainers:testcontainers:1.4.3")
+    testCompile("io.cucumber:cucumber-java8:2.0.0-SNAPSHOT")
+    testCompile("io.cucumber:cucumber-junit:2.0.0-SNAPSHOT")
+    testCompile("io.cucumber:cucumber-picocontainer:2.0.0-SNAPSHOT")
+    testCompile("com.github.kittinunf.fuel:fuel:1.12.0")
+    testCompile("org.awaitility:awaitility:2.0.0")
 
     compile("com.google.dagger:dagger:2.4")
     kapt("com.google.dagger:dagger-compiler:2.4")

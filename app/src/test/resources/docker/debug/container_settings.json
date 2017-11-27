@@ -1,0 +1,12 @@
+{
+  "HostConfig": {
+    "PortBindings": {
+      "50505/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "50505"
+        }
+      ]
+    }
+  }
+}
