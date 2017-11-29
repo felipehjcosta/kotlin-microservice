@@ -1,11 +1,17 @@
 import org.gradle.kotlin.dsl.kotlin
+import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
 
 group = "com.felipecosta.microservice"
 version = "0.2"
 
 plugins {
     kotlin("kapt")
+    id("org.unbroken-dome.test-sets").version("1.4.2")
 }
+
+val acceptanceTest = testSets.create("acceptanceTest")
+
+val acceptanceTestCompile = acceptanceTest.implementationConfigurationName
 
 dependencies {
     compile(project(":server"))
@@ -16,11 +22,13 @@ dependencies {
 
     testCompile("com.github.kstyrc:embedded-redis:0.6")
     testCompile("org.testcontainers:testcontainers:1.4.3")
-    testCompile("io.cucumber:cucumber-java8:2.0.0-SNAPSHOT")
-    testCompile("io.cucumber:cucumber-junit:2.0.0-SNAPSHOT")
-    testCompile("io.cucumber:cucumber-picocontainer:2.0.0-SNAPSHOT")
-    testCompile("com.github.kittinunf.fuel:fuel:1.12.0")
-    testCompile("org.awaitility:awaitility:2.0.0")
+
+    acceptanceTestCompile("org.testcontainers:testcontainers:1.4.3")
+    acceptanceTestCompile("io.cucumber:cucumber-java8:2.0.0-SNAPSHOT")
+    acceptanceTestCompile("io.cucumber:cucumber-junit:2.0.0-SNAPSHOT")
+    acceptanceTestCompile("io.cucumber:cucumber-picocontainer:2.0.0-SNAPSHOT")
+    acceptanceTestCompile("com.github.kittinunf.fuel:fuel:1.12.0")
+    acceptanceTestCompile("org.awaitility:awaitility:2.0.0")
 
     compile("com.google.dagger:dagger:2.4")
     kapt("com.google.dagger:dagger-compiler:2.4")

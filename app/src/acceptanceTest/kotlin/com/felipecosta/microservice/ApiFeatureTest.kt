@@ -1,8 +1,7 @@
-package com.felipecosta.microservice.app.acceptancetests
+package com.felipecosta.microservice
 
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
-import com.beust.klaxon.string
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import cucumber.api.java8.En

@@ -1,4 +1,4 @@
-package com.felipecosta.microservice.app.acceptancetests
+package com.felipecosta.microservice
 
 import cucumber.api.Scenario
 import cucumber.api.java.After
@@ -24,7 +24,7 @@ class WebClient {
     fun preScenario(scenario: Scenario) {
         junitDescription = Description.createSuiteDescription(scenario.name)
 
-        environment = KDockerComposeContainer("src/test/resources/docker/debug/docker-compose.yml")
+        environment = KDockerComposeContainer("src/acceptanceTest/resources/docker/debug/docker-compose.yml")
                 .withExposedService("app_1", 8080)
                 .withLocalCompose(true)
 
