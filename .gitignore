@@ -32,6 +32,7 @@ cmake-build-debug/
 /*/build/
 build/
 /docker/*/app
+app/src/acceptanceTest/resources/docker/*
 
 # Mongo Explorer plugin:
 .idea/**/mongoSettings.xml

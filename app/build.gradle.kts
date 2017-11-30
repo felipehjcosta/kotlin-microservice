@@ -45,6 +45,11 @@ jar.apply {
                 into("$dest/app")
             }
         }
+
+        copy {
+            from("$rootDir/docker/debug")
+            into("src/${acceptanceTest.sourceSetName}/resources/docker")
+        }
     }
 
     manifest {
@@ -65,6 +70,8 @@ tasks {
             arrayOf("$rootDir/docker/debug", "$rootDir/docker/release").forEach { dest ->
                 delete("$dest/app")
             }
+
+            delete("src/${acceptanceTest.sourceSetName}/resources/docker")
         }
     }
 }
