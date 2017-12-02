@@ -5,13 +5,7 @@ import com.beust.klaxon.Parser
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import cucumber.api.java8.En
-import org.testcontainers.containers.DockerComposeContainer
-import java.io.File
 import kotlin.test.assertEquals
-
-
-class KDockerComposeContainer(dockerFile: String) :
-        DockerComposeContainer<KDockerComposeContainer>(File(dockerFile))
 
 class ApiFeatureTest(webClient: WebClient) : En {
 
