@@ -10,7 +10,7 @@ import org.testcontainers.DockerClientFactory
 import org.testcontainers.dockerclient.LogToStringContainerCallback
 import java.util.concurrent.Callable
 
-class WebClient {
+class ApiClient {
 
     lateinit var junitDescription: Description
 
