@@ -9,3 +9,9 @@ Feature: API
     When the user makes a request for movies
 
     Then the movie "The Avengers" are shown on response
+
+  Scenario: Insert movie
+
+    When insert movie with title "The Avengers"
+
+    Then the response should contains an id

@@ -8,8 +8,12 @@ import com.github.kittinunf.fuel.httpPost
 
 class ApiClient(private val environment: Environment) {
 
-    fun postMovie(movieName: String) {
-        "${environment.baseUrl}api/movies".httpPost().body("""{"name": "$movieName"}""").responseString()
+    fun postMovie(movieName: String): Int {
+        val (_, _, result) = "${environment.baseUrl}api/movies".httpPost()
+                .body("""{"name": "$movieName"}""")
+                .responseString()
+
+        return ((Parser().parse(result.get().byteInputStream()) as JsonObject)["response"] as JsonObject)["id"] as Int
     }
 
     fun getMovies(): List<String> {

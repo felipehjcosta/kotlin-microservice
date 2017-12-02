@@ -5,9 +5,9 @@ import kotlin.test.assertTrue
 
 class ApiFeatureTest(apiClient: ApiClient) : En {
 
-    private lateinit var movies: List<String>
-
     init {
+        lateinit var movies: List<String>
+
         Given("""^the movie "(.*)" exists$""") { movieName: String ->
             apiClient.postMovie(movieName)
         }
@@ -20,5 +20,15 @@ class ApiFeatureTest(apiClient: ApiClient) : En {
             assertTrue { movies.contains(movieName) }
         }
 
+
+        var insertedMovieId = 0
+
+        When("""^insert movie with title "(.*)"$""") { movieName: String ->
+            insertedMovieId = apiClient.postMovie(movieName)
+        }
+
+        Then("""^the response should contains an id$""") {
+            assertTrue { insertedMovieId > 0 }
+        }
     }
 }
