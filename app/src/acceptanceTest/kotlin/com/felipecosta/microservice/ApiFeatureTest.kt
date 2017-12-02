@@ -1,31 +1,24 @@
 package com.felipecosta.microservice
 
-import com.beust.klaxon.JsonObject
-import com.beust.klaxon.Parser
-import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.fuel.httpPost
 import cucumber.api.java8.En
-import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class ApiFeatureTest(apiClient: ApiClient) : En {
 
-    lateinit var resultName: String
+    private lateinit var movies: List<String>
 
     init {
-
-        Given("^a \"([^\"]*)\" movie$") { arg1: String ->
-            val (_, response, _) = "${apiClient.baseUrl}api/movies".httpPost().body("""{"name": "$arg1"}""").responseString()
-            assertEquals(201, response.statusCode)
+        Given("""^the movie "(.*)" exists$""") { movieName: String ->
+            apiClient.postMovie(movieName)
         }
 
-        When("^request for a marvel movie$") {
-            val (_, response, result) = "${apiClient.baseUrl}api/movies/1".httpGet().responseString()
-            resultName = ((Parser().parse(result.get().byteInputStream()) as JsonObject)["response"] as JsonObject)["name"] as String
+        When("""^the user makes a request for movies$""") {
+            movies = apiClient.getMovies()
         }
 
-        Then("^I should be \"([^\"]*)\"$") { arg1: String ->
-            assertEquals(arg1, resultName)
+        Then("""^the movie "(.*)" are shown on response$""") { movieName: String ->
+            assertTrue { movies.contains(movieName) }
         }
+
     }
-
 }

@@ -1,9 +1,11 @@
 Feature: API
 
-  Scenario: Get movies based on request
+  As a API user, I want to interact with
 
-    Given a "The Avengers" movie
+  Scenario: Request movies
 
-    When request for a marvel movie
+    Given the movie "The Avengers" exists
 
-    Then I should be "The Avengers"
+    When the user makes a request for movies
+
+    Then the movie "The Avengers" are shown on response
