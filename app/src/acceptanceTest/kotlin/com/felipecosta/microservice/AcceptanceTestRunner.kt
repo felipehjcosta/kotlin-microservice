@@ -8,4 +8,4 @@ import org.junit.runner.RunWith
         features = arrayOf("src/acceptanceTest/resources/features"),
         plugin = arrayOf("pretty", "html:build/reports/cucumber")
 )
-class CukesRunner
+class AcceptanceTestRunner
