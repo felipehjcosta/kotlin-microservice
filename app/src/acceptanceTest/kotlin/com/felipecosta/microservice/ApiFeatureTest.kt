@@ -1,34 +1,35 @@
 package com.felipecosta.microservice
 
+import com.beust.klaxon.JsonArray
+import com.beust.klaxon.JsonObject
 import cucumber.api.java8.En
 import kotlin.test.assertTrue
 
 class ApiFeatureTest(apiClient: ApiClient) : En {
 
     init {
-        lateinit var movies: List<String>
+        lateinit var moviesResponse: JsonArray<JsonObject>
 
         Given("""^the movie "(.*)" exists$""") { movieName: String ->
             apiClient.postMovie(movieName)
         }
 
         When("""^the user makes a request for movies$""") {
-            movies = apiClient.getMovies()
+            moviesResponse = apiClient.getMovies()
         }
 
         Then("""^the movie "(.*)" are shown on response$""") { movieName: String ->
-            assertTrue { movies.contains(movieName) }
+            assertTrue { moviesResponse.asSequence().map { it["name"] }.contains(movieName) }
         }
 
-
-        var insertedMovieId = 0
+        lateinit var insertedMovie: JsonObject
 
         When("""^insert movie with title "(.*)"$""") { movieName: String ->
-            insertedMovieId = apiClient.postMovie(movieName)
+            insertedMovie = apiClient.postMovie(movieName)
         }
 
         Then("""^the response should contains an id$""") {
-            assertTrue { insertedMovieId > 0 }
+            assertTrue { insertedMovie["id"] as Int > 0 }
         }
     }
 }
