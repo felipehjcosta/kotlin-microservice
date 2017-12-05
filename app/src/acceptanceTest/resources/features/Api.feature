@@ -15,3 +15,11 @@ Feature: API
     When insert movie with title "The Avengers"
 
     Then the response should contains an id
+
+  Scenario: Edit movie
+
+    Given the movie "The Avengers" exists
+
+    When the user changes this movie name to "The Avengers 2"
+
+    Then the movie name changed to "The Avengers 2"
