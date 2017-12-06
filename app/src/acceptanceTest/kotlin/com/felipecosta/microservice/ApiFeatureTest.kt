@@ -4,6 +4,7 @@ import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import cucumber.api.java8.En
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ApiFeatureTest(apiClient: ApiClient) : En {
@@ -21,7 +22,7 @@ class ApiFeatureTest(apiClient: ApiClient) : En {
         }
 
         Then("""^the movie "(.*)" are shown on response$""") { movieName: String ->
-            assertTrue { moviesResponse.asSequence().map { it["name"] }.contains(movieName) }
+            assertTrue { moviesResponse.map { it["name"] }.contains(movieName) }
         }
 
 
@@ -44,6 +45,15 @@ class ApiFeatureTest(apiClient: ApiClient) : En {
 
         Then("""^the movie name changed to "(.*)"$""") { editedMovieName: String ->
             assertEquals(editedMovieName, editedMovie["name"])
+        }
+
+
+        When("""^the user deletes it$""") {
+            apiClient.deleteMovie(postedMovie["id"] as Int)
+        }
+
+        Then("""^the movie doesn't exist anymore$""") {
+            assertFalse { apiClient.getMovies().map { it["id"] as Int }.contains(postedMovie["id"] as Int) }
         }
     }
 }

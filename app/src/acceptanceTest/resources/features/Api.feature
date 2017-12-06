@@ -23,3 +23,11 @@ Feature: API
     When the user changes this movie name to "The Avengers 2"
 
     Then the movie name changed to "The Avengers 2"
+
+  Scenario: Delete movie
+
+    Given the movie "The Avengers" exists
+
+    When the user deletes it
+
+    Then the movie doesn't exist anymore
