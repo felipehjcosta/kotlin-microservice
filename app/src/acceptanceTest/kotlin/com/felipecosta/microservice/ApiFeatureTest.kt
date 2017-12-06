@@ -55,5 +55,18 @@ class ApiFeatureTest(apiClient: ApiClient) : En {
         Then("""^the movie doesn't exist anymore$""") {
             assertFalse { apiClient.getMovies().map { it["id"] as Int }.contains(postedMovie["id"] as Int) }
         }
+
+
+        lateinit var retrievedMovie: JsonObject
+
+        When("""^the user retrieves it$""") {
+            // Write code here that turns the phrase above into concrete actions
+            retrievedMovie = apiClient.getMovie(postedMovie["id"] as Int)
+        }
+
+        Then("""^the movie are shown on the response$""") {
+            // Write code here that turns the phrase above into concrete actions
+            assertTrue { retrievedMovie.isNotEmpty() }
+        }
     }
 }

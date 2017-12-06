@@ -36,4 +36,10 @@ class ApiClient(private val environment: Environment) {
         "${environment.baseUrl}api/movies/$id".httpDelete().responseString()
     }
 
+    fun getMovie(id: Int): JsonObject {
+        val (_, _, result) = "${environment.baseUrl}api/movies/$id".httpGet().responseString()
+
+        return (Parser().parse(result.get().byteInputStream()) as JsonObject)["response"] as JsonObject
+    }
+
 }

@@ -31,3 +31,11 @@ Feature: API
     When the user deletes it
 
     Then the movie doesn't exist anymore
+
+  Scenario: Delete movie
+
+    Given the movie "The Avengers" exists
+
+    When the user retrieves it
+
+    Then the movie are shown on the response
