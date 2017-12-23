@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Docker Compose" type="docker-deploy" factoryName="Docker Deployment" editBeforeRun="true" server-name="Docker">
-    <deployment type="docker-compose.yml" path="$PROJECT_DIR$/docker/debug/docker-compose.yml">
+  <configuration default="false" name="Docker Compose" type="docker-deploy" factoryName="docker-compose.yml" editBeforeRun="true" server-name="Docker">
+    <deployment type="docker-compose.yml">
       <settings>
         <option name="JSONFilePath" value="$PROJECT_DIR$/container_settings.json" />
         <option name="command" value="" />
@@ -15,6 +16,7 @@
           <browser />
         </option>
         <option name="volumeBindingsExpanded" value="true" />
+        <option name="sourceFilePath" value="$PROJECT_DIR$/docker/debug/docker-compose.yml" />
       </settings>
     </deployment>
     <method>
@@ -22,3 +24,4 @@
     </method>
   </configuration>
 </component>
+
