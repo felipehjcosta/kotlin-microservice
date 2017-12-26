@@ -20,6 +20,7 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${rootProject.extra["kotlin_version"]}")
     compile("io.lettuce:lettuce-core:5.0.0.RELEASE")
 
+    testCompile("io.mockk:mockk:1.6")
     testCompile("com.github.kstyrc:embedded-redis:0.6")
     testCompile("org.testcontainers:testcontainers:1.4.3")
 

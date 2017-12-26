@@ -3,30 +3,27 @@ package com.felipecosta.microservice.app.notes.frontcontroller
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
 import com.felipecosta.microservice.server.renderer.Renderer
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 class NotesFrontCommandTest {
 
-    val renderer: Renderer = mock()
+    private val renderer = mockk<Renderer>()
 
-    val request: Request = mock()
+    private val request = mockk<Request>()
 
-    lateinit var notesFrontCommand: NotesFrontCommand
-
-    @Before
-    fun setUp() {
-        notesFrontCommand = NotesFrontCommand()
-    }
+    private val notesFrontCommand = NotesFrontCommand()
 
     @Test
     fun givenOutputObjectWhenProcessThenVerifyResponse() {
         val expectedBody = "Awesome output"
-        whenever(renderer.render(Output("My First Website", "My Interesting Content"), "views/notes.html")).
-                thenReturn(expectedBody)
+        every {
+            renderer.render(Output("My First Website", "My Interesting Content"), "views/notes.html")
+        } answers {
+            expectedBody
+        }
 
         notesFrontCommand.apply {
             init(request, renderer)
