@@ -3,8 +3,8 @@ package com.felipecosta.microservice.app.helloworld.frontcontroller
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class HelloFrontCommandTest {
 

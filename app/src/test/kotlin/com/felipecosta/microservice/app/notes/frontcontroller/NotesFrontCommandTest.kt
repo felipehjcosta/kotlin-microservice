@@ -5,8 +5,8 @@ import com.felipecosta.microservice.server.Response
 import com.felipecosta.microservice.server.renderer.Renderer
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class NotesFrontCommandTest {
 
