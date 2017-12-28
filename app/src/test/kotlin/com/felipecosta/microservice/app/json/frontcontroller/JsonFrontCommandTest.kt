@@ -2,27 +2,21 @@ package com.felipecosta.microservice.app.json.frontcontroller
 
 import com.beust.klaxon.*
 import com.felipecosta.microservice.server.Request
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
-import org.junit.Before
-import org.junit.Test
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class JsonFrontCommandTest {
 
-    val request: Request = mock()
+    private val request = mockk<Request>(relaxed = true)
 
-    lateinit var jsonSparkFrontCommand: JsonFrontCommand
-
-    @Before
-    fun setUp() {
-        jsonSparkFrontCommand = JsonFrontCommand().apply { init(request) }
-    }
+    private val jsonSparkFrontCommand = JsonFrontCommand().apply { init(request) }
 
     @Test
     fun whenProcessThenAssertResponseWithUrl() {
-        whenever(request.url).thenReturn("http://127.0.0.1:4567/hello-front-controller-json")
+        every { request.url } returns "http://127.0.0.1:4567/hello-front-controller-json"
 
         jsonSparkFrontCommand.process()
 
@@ -34,7 +28,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsHost() {
-        whenever(request.host).thenReturn("127.0.0.1:4567")
+        every { request.host} returns "127.0.0.1:4567"
 
         jsonSparkFrontCommand.process()
 
@@ -46,7 +40,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsUserAgent() {
-        whenever(request.userAgent).thenReturn("Mozilla/5.0")
+        every { request.userAgent} returns "Mozilla/5.0"
 
         jsonSparkFrontCommand.process()
 
@@ -58,7 +52,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithOneParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        whenever(request.queryParams).thenReturn(mapOf("q" to arrayOf("search")))
+        every { request.queryParams} returns mapOf("q" to arrayOf("search"))
 
         jsonSparkFrontCommand.process()
 
@@ -71,7 +65,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithTwoParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        whenever(request.queryParams).thenReturn(mapOf("q" to arrayOf("search", "awesome search")))
+        every { request.queryParams} returns mapOf("q" to arrayOf("search", "awesome search"))
 
         jsonSparkFrontCommand.process()
 
