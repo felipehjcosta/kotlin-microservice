@@ -5,16 +5,16 @@ import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class UpdateMovieFrontCommandTest {
-    val mockMoviesRepository: MoviesRepository = mock()
+    private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    val frontCommand = UpdateMovieFrontCommand().apply {
+    private val frontCommand = UpdateMovieFrontCommand().apply {
         moviesRepository = mockMoviesRepository
     }
 
@@ -26,7 +26,8 @@ class UpdateMovieFrontCommandTest {
             override val routeParams = mapOf(":id" to "1")
         })
 
-        whenever(mockMoviesRepository.find(eq(1))).thenReturn(Movie("Old movie", 1))
+        every { mockMoviesRepository.find(1) } returns Movie("Old movie", 1)
+        every { mockMoviesRepository.update(Movie("New movie", 1)) } just Runs
 
         frontCommand.process()
 

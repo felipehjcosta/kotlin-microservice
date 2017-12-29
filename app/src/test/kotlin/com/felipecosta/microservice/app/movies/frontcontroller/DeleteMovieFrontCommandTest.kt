@@ -5,17 +5,17 @@ import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class DeleteMovieFrontCommandTest {
-    val mockMoviesRepository = mock<MoviesRepository>()
+    private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    val frontCommand = DeleteMovieFrontCommand().apply {
+    private val frontCommand = DeleteMovieFrontCommand().apply {
         moviesRepository = mockMoviesRepository
     }
 
@@ -27,7 +27,8 @@ class DeleteMovieFrontCommandTest {
 
         val movie = Movie("Any movie", 1)
 
-        whenever(mockMoviesRepository.find(eq(1))).thenReturn(movie)
+        every { mockMoviesRepository.find(1) } returns movie
+        every { mockMoviesRepository.delete(movie) } just Runs
 
         frontCommand.process()
 
@@ -42,10 +43,13 @@ class DeleteMovieFrontCommandTest {
 
         val movie = Movie("Any movie", 1)
 
-        whenever(mockMoviesRepository.find(eq(1))).thenReturn(movie)
+        every { mockMoviesRepository.find(1) } returns movie
+        every { mockMoviesRepository.delete(movie) } just Runs
 
         frontCommand.process()
 
-        verify(mockMoviesRepository).delete(eq(movie))
+        verify {
+            mockMoviesRepository.delete(movie)
+        }
     }
 }

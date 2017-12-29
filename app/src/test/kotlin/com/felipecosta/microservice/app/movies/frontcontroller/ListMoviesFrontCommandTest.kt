@@ -3,27 +3,23 @@ package com.felipecosta.microservice.app.movies.frontcontroller
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Response
-import com.nhaarman.mockito_kotlin.mock
-import org.junit.Before
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Test
-import org.mockito.BDDMockito.given
 import kotlin.test.assertEquals
 
 class ListMoviesFrontCommandTest {
 
-    lateinit var listMoviesFrontCommand: ListMoviesFrontCommand
+    private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    val moviesRepository: MoviesRepository = mock()
-
-    @Before
-    fun setUp() {
-        listMoviesFrontCommand = ListMoviesFrontCommand()
-        listMoviesFrontCommand.moviesRepository = moviesRepository
+    private var listMoviesFrontCommand = ListMoviesFrontCommand().apply {
+        moviesRepository = mockMoviesRepository
     }
+
 
     @Test
     fun givenEmptyMovieListWhenProcessThenAssertResponseWithEmptyJsonList() {
-        given(moviesRepository.findAll()).willReturn(emptyList())
+        every { mockMoviesRepository.findAll() } returns emptyList()
 
         listMoviesFrontCommand.process()
 
@@ -32,7 +28,7 @@ class ListMoviesFrontCommandTest {
 
     @Test
     fun givenSingleMovieListWhenProcessThenAssertResponseWithSingleMovieJsonList() {
-        given(moviesRepository.findAll()).willReturn(listOf(Movie("Awesome movie", 1)))
+        every { mockMoviesRepository.findAll() } returns listOf(Movie("Awesome movie", 1))
 
         listMoviesFrontCommand.process()
 

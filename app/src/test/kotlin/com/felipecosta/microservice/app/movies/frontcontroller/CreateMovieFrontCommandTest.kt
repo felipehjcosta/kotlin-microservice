@@ -6,17 +6,16 @@ import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.HttpStatus
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class CreateMovieFrontCommandTest {
 
-    val mockMoviesRepository: MoviesRepository = mock()
+    private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    val frontCommand = CreateMovieFrontCommand().apply {
+    private val frontCommand = CreateMovieFrontCommand().apply {
         moviesRepository = mockMoviesRepository
     }
 
@@ -26,12 +25,10 @@ class CreateMovieFrontCommandTest {
             override val body: String = """{"name":"New movie"}"""
         })
 
-        whenever(mockMoviesRepository.save(eq(Movie("New movie")))).thenReturn(Movie("New movie", 1))
+        every { mockMoviesRepository.save(Movie("New movie")) } returns Movie("New movie", 1)
 
         frontCommand.process()
 
         assertEquals(Response("""{"response":{"name":"New movie","id":1}}""", HttpStatus.CREATED), frontCommand.response)
     }
-
-
 }
