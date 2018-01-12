@@ -29,7 +29,4 @@ script:
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/jacocoJunit5TestReport/jacocoJunit5TestReport.xml
-- cd docker/release
-- heroku plugins:install heroku-container-registry
-- docker login -e _ -u _ --password=$HEROKU_API_KEY registry.heroku.com
-- heroku container:push web --app $HEROKU_APP_NAME
+- test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
