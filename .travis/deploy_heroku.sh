@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 cd docker/release
 heroku plugins:install heroku-container-registry
