@@ -8,14 +8,14 @@ This repository contains a microservice example written in Kotlin.
 
 How to access the latest version
 -------
-Go to this [link](https://arcane-journey-46156.herokuapp.com).
+Go to this [link](https://kotlin-microservice.herokuapp.com)
 
 
 How to run locally
 -------
 Download the project and run the following command:
 ```
-./gradlew build jar && java -jar app/build/libs/app-*.jar
+./gradlew jar && docker-compose -f docker/debug/docker-compose.yml up
 ```
 
 
