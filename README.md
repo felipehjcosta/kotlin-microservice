@@ -2,6 +2,7 @@
 
 This repository contains a microservice example written in Kotlin.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/85343e6a998e44e0b74652e87064733c)](https://www.codacy.com/app/felipe.h.j.costa/kotlin-microservice?utm_source=github.com&utm_medium=referral&utm_content=felipehjcosta/kotlin-microservice&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/felipehjcosta/kotlin-microservice.svg?branch=master)](https://travis-ci.org/felipehjcosta/kotlin-microservice)
 [![codecov](https://codecov.io/gh/felipehjcosta/kotlin-microservice/branch/master/graph/badge.svg)](https://codecov.io/gh/felipehjcosta/kotlin-microservice)
 [![codebeat badge](https://codebeat.co/badges/b5a0014a-b81f-4124-ab46-3e1a7197e4dd)](https://codebeat.co/projects/github-com-fcostaa-kotlin-microservice-master)
