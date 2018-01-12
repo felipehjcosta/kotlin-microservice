@@ -10,12 +10,9 @@ services:
 jdk:
 - oraclejdk8
 
-script:
-- "./gradlew test jacocoTestReport jar acceptanceTest --console=plain"
-
-after_success:
-- bash <(curl -s https://codecov.io/bash)
-- test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
+before_install:
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -25,3 +22,11 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
+
+script:
+- "./gradlew test jacocoJunit5TestReport jar acceptanceTest --console=plain"
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+- java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/jacocoJunit5TestReport/jacocoJunit5TestReport.xml
+- test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
