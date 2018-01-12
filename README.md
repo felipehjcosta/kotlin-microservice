@@ -4,7 +4,7 @@ This repository contains a microservice example written in Kotlin.
 
 [![Build Status](https://travis-ci.org/felipehjcosta/kotlin-microservice.svg?branch=master)](https://travis-ci.org/felipehjcosta/kotlin-microservice)
 [![codecov](https://codecov.io/gh/felipehjcosta/kotlin-microservice/branch/master/graph/badge.svg)](https://codecov.io/gh/felipehjcosta/kotlin-microservice)
-[![codebeat badge](https://codebeat.co/badges/b5a0014a-b81f-4124-ab46-3e1a7197e4dd)](https://codebeat.co/projects/github-com-fcostaa-kotlin-microservice-master)
+[![codebeat badge](https://codebeat.co/badges/b5a0014a-b81f-4124-ab46-3e1a7197e4dd)](https://codebeat.co/projects/github-com-fcostaa-kotlin-microservice-master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f00d680196f64592b6a3a22e296cfb44)](https://www.codacy.com/app/felipe.h.j.costa/kotlin-microservice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=felipehjcosta/kotlin-microservice&amp;utm_campaign=Badge_Grade)
 
 How to access the latest version
 -------
