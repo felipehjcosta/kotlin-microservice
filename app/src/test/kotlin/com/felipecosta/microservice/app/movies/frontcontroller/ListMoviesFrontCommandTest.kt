@@ -12,10 +12,7 @@ class ListMoviesFrontCommandTest {
 
     private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    private var listMoviesFrontCommand = ListMoviesFrontCommand().apply {
-        moviesRepository = mockMoviesRepository
-    }
-
+    private var listMoviesFrontCommand = ListMoviesFrontCommand(mockMoviesRepository)
 
     @Test
     fun givenEmptyMovieListWhenProcessThenAssertResponseWithEmptyJsonList() {

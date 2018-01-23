@@ -14,9 +14,7 @@ import kotlin.test.assertEquals
 class UpdateMovieFrontCommandTest {
     private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    private val frontCommand = UpdateMovieFrontCommand().apply {
-        moviesRepository = mockMoviesRepository
-    }
+    private val frontCommand = UpdateMovieFrontCommand(mockMoviesRepository)
 
     @Test
     fun givenJsonBodyThenAssertResponseWithUpdatedMovie() {

@@ -14,9 +14,7 @@ class GetMovieFrontCommandTest {
 
     private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    private val frontCommand = GetMovieFrontCommand().apply {
-        moviesRepository = mockMoviesRepository
-    }
+    private val frontCommand = GetMovieFrontCommand(mockMoviesRepository)
 
     @Test
     fun givenIdWhenProcessThenAssertResponseWithSingleMovie() {

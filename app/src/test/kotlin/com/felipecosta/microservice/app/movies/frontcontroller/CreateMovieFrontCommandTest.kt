@@ -15,9 +15,7 @@ class CreateMovieFrontCommandTest {
 
     private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    private val frontCommand = CreateMovieFrontCommand().apply {
-        moviesRepository = mockMoviesRepository
-    }
+    private val frontCommand = CreateMovieFrontCommand(mockMoviesRepository)
 
     @Test
     fun givenJsonBodyThenAssertResponseWithCreatedMovie() {

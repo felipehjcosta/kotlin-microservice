@@ -15,9 +15,7 @@ import kotlin.test.assertEquals
 class DeleteMovieFrontCommandTest {
     private val mockMoviesRepository = mockk<MoviesRepository>()
 
-    private val frontCommand = DeleteMovieFrontCommand().apply {
-        moviesRepository = mockMoviesRepository
-    }
+    private val frontCommand = DeleteMovieFrontCommand(mockMoviesRepository)
 
     @Test
     fun givenMovieIdThenAssertResponseOk() {

@@ -4,9 +4,7 @@ import com.beust.klaxon.json
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
-class GetMovieFrontCommand : FrontCommand() {
-
-    lateinit var moviesRepository: MoviesRepository
+class GetMovieFrontCommand(private val moviesRepository: MoviesRepository) : FrontCommand() {
 
     override fun process() {
         val movie = moviesRepository.find(request.routeParams[":id"]?.toInt() ?: -1)

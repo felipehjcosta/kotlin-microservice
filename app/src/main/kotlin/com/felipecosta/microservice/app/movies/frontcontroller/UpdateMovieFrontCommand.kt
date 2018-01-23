@@ -7,9 +7,7 @@ import com.beust.klaxon.string
 import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
-class UpdateMovieFrontCommand : FrontCommand() {
-
-    lateinit var moviesRepository: MoviesRepository
+class UpdateMovieFrontCommand(private val moviesRepository: MoviesRepository) : FrontCommand() {
 
     override fun process() {
         val oldMovie = moviesRepository.find(request.routeParams[":id"]?.toInt() ?: -1)

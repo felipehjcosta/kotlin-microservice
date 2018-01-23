@@ -19,6 +19,16 @@ fun main(args: Array<String>) {
         constant("redisUri") with "h:p4d9bad74864deada66ebed2e832c6d6bf2de394afef54902351c836ae9850e0e@ec2-54-227-223-104.compute-1.amazonaws.com:60759"
 
         bind<MoviesRepository>() with singleton { RedisMoviesRepository(instance("redisUri")) }
+
+        bind<ListMoviesFrontCommand>() with provider { ListMoviesFrontCommand(instance()) }
+
+        bind<GetMovieFrontCommand>() with provider { GetMovieFrontCommand(instance()) }
+
+        bind<CreateMovieFrontCommand>() with provider { CreateMovieFrontCommand(instance()) }
+
+        bind<UpdateMovieFrontCommand>() with provider { UpdateMovieFrontCommand(instance()) }
+
+        bind<DeleteMovieFrontCommand>() with provider { DeleteMovieFrontCommand(instance()) }
     }
 
     server {
@@ -29,26 +39,15 @@ fun main(args: Array<String>) {
         +(map get "/json" to ::JsonFrontCommand)
         +(map get "/notes" to ::NotesFrontCommand with PebbleRenderer(pebbleEngine))
 
+        +(map get "/api/movies" to kodein.provider<ListMoviesFrontCommand>())
 
-        +(map get "/api/movies" to {
-            ListMoviesFrontCommand().apply { moviesRepository = kodein.instance() }
-        })
+        +(map get "/api/movies/:id" to kodein.provider<GetMovieFrontCommand>())
 
-        +(map get "/api/movies/:id" to {
-            GetMovieFrontCommand().apply { moviesRepository = kodein.instance() }
-        })
+        +(map post "/api/movies" to kodein.provider<CreateMovieFrontCommand>())
 
-        +(map post "/api/movies" to {
-            CreateMovieFrontCommand().apply { moviesRepository = kodein.instance() }
-        })
+        +(map put "/api/movies/:id" to kodein.provider<UpdateMovieFrontCommand>())
 
-        +(map put "/api/movies/:id" to {
-            UpdateMovieFrontCommand().apply { moviesRepository = kodein.instance() }
-        })
-
-        +(map delete "/api/movies/:id" to {
-            DeleteMovieFrontCommand().apply { moviesRepository = kodein.instance() }
-        })
+        +(map delete "/api/movies/:id" to kodein.provider<DeleteMovieFrontCommand>())
     }
 
 }
