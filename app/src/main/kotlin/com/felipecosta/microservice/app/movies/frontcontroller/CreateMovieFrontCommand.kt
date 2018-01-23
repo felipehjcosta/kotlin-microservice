@@ -8,11 +8,9 @@ import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.HttpStatus
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
-import javax.inject.Inject
 
 class CreateMovieFrontCommand : FrontCommand() {
 
-    @Inject
     lateinit var moviesRepository: MoviesRepository
 
     override fun process() {

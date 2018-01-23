@@ -31,9 +31,7 @@ dependencies {
     acceptanceTestCompile("com.github.kittinunf.fuel:fuel:1.12.0")
     acceptanceTestCompile("org.awaitility:awaitility:2.0.0")
 
-    compile("com.google.dagger:dagger:2.4")
-    kapt("com.google.dagger:dagger-compiler:2.4")
-    compileOnly("javax.annotation:jsr250-api:1.0")
+    compile("com.github.salomonbrys.kodein:kodein:4.1.0")
 }
 
 val jar: Jar by tasks
