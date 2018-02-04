@@ -15,7 +15,7 @@ How to run locally
 -------
 Download the project and run the following command:
 ```
-./gradlew jar && docker-compose -f docker/debug/docker-compose.yml up
+make run
 ```
 
 
