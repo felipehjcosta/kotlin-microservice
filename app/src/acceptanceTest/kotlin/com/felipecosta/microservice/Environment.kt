@@ -24,7 +24,7 @@ class Environment {
     fun preScenario(scenario: Scenario) {
         junitDescription = Description.createSuiteDescription(scenario.name)
 
-        environment = KDockerComposeContainer("src/acceptanceTest/resources/docker/docker-compose.yml")
+        environment = KDockerComposeContainer("../docker-compose.yml")
                 .withExposedService("app_1", 8080)
                 .withLocalCompose(true)
 

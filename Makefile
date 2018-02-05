@@ -1,4 +1,4 @@
 run:
-	docker-compose -f docker/debug/docker-compose.yml down
+	docker-compose down
 	./gradlew jar
-	docker-compose -f docker/debug/docker-compose.yml up
+	docker-compose up

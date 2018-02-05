@@ -38,16 +38,11 @@ val jar: Jar by tasks
 
 jar.apply {
     doLast {
-        arrayOf("$rootDir/docker/debug", "$rootDir/docker/release").forEach { dest ->
+        arrayOf("$rootDir/docker/development", "$rootDir/docker/production").forEach { dest ->
             copy {
                 from(this@apply)
                 into("$dest/app")
             }
-        }
-
-        copy {
-            from("$rootDir/docker/debug")
-            into("src/${acceptanceTest.sourceSetName}/resources/docker")
         }
     }
 
@@ -66,11 +61,9 @@ jar.apply {
 tasks {
     "clean" {
         doFirst {
-            arrayOf("$rootDir/docker/debug", "$rootDir/docker/release").forEach { dest ->
+            arrayOf("$rootDir/docker/development", "$rootDir/docker/production").forEach { dest ->
                 delete("$dest/app")
             }
-
-            delete("src/${acceptanceTest.sourceSetName}/resources/docker")
         }
     }
 }
