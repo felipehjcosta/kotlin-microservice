@@ -1,5 +1,5 @@
 buildscript {
-    extra["kotlin_version"] = "1.2.20"
+    extra["kotlin_version"] = "1.2.21"
     extra["junitPlatformVersion"] = "1.0.1"
 
     extra["junit4Version"] = "4.12"
