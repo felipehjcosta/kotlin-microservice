@@ -1,10 +1,10 @@
 buildscript {
     extra["kotlin_version"] = "1.2.21"
-    extra["junitPlatformVersion"] = "1.0.1"
 
     extra["junit4Version"] = "4.12"
-    extra["junitVintageVersion"] = "4.12.1"
-    extra["junitJupiterVersion"] = "5.0.1"
+    extra["junitPlatformVersion"] = "1.0.3"
+    extra["junitVintageVersion"] = "4.12.3"
+    extra["junitJupiterVersion"] = "5.0.3"
     extra["log4jVersion"] = "2.9.0"
 
     repositories {
