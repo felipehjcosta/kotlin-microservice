@@ -5,7 +5,6 @@ group = "com.felipecosta.microservice"
 version = "0.2"
 
 plugins {
-    kotlin("kapt")
     id("org.unbroken-dome.test-sets").version("1.4.2")
 }
 
@@ -66,8 +65,4 @@ tasks {
             }
         }
     }
-}
-
-java.sourceSets["main"].java {
-    srcDir("$buildDir/generated/source/kapt/main")
 }
