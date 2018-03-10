@@ -8,6 +8,8 @@ plugins {
     id("org.unbroken-dome.test-sets").version("1.4.2")
 }
 
+val kotlinVersion: String by rootProject.extra
+
 val acceptanceTest = testSets.create("acceptanceTest")
 
 val acceptanceTestCompile = acceptanceTest.implementationConfigurationName
@@ -15,8 +17,8 @@ val acceptanceTestCompile = acceptanceTest.implementationConfigurationName
 dependencies {
     compile(project(":server"))
     compile(project(":server-spark-adapter"))
-    compile("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
-    compile("org.jetbrains.kotlin:kotlin-reflect:${rootProject.extra["kotlin_version"]}")
+    compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     compile("io.lettuce:lettuce-core:5.0.0.RELEASE")
 
     testCompile("io.mockk:mockk:1.6")

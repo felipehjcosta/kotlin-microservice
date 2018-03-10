@@ -1,5 +1,6 @@
 buildscript {
-    extra["kotlin_version"] = "1.2.30"
+
+    val kotlinVersion by extra { "1.2.30" }
 
     extra["junit4Version"] = "4.12"
     extra["junitPlatformVersion"] = "1.0.3"
@@ -12,7 +13,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${extra["kotlin_version"]}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("org.junit.platform:junit-platform-gradle-plugin:${extra["junitPlatformVersion"]}")
     }
 }
@@ -25,6 +26,8 @@ plugins {
 }
 
 allprojects {
+
+    val kotlinVersion: String by rootProject.extra
     apply {
         plugin("kotlin")
         plugin("jacoco")
@@ -51,8 +54,8 @@ allprojects {
         testRuntime("org.apache.logging.log4j:log4j-core:${rootProject.extra["log4jVersion"]}")
         testRuntime("org.apache.logging.log4j:log4j-jul:${rootProject.extra["log4jVersion"]}")
 
-        testCompile("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
-        testCompile("org.jetbrains.kotlin:kotlin-test-junit:${rootProject.extra["kotlin_version"]}")
+        testCompile("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+        testCompile("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
         testCompile("com.nhaarman:mockito-kotlin:1.3.0") {
             exclude(group = "org.jetbrains.kotlin")
         }
