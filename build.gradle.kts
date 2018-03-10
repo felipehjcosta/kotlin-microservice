@@ -21,6 +21,7 @@ plugins {
     base
     jacoco
     java
+    id("com.vanniktech.dependency.graph.generator").version("0.2.0")
 }
 
 allprojects {

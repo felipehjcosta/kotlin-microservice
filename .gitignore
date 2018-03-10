@@ -79,4 +79,7 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+# Dependency graph generator output
+*dependency-graph.png
+
 # End of https://www.gitignore.io/api/intellij
