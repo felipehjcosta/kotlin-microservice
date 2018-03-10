@@ -40,9 +40,11 @@ allprojects {
     }
 
     dependencies {
+        compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+
         testCompile("org.junit.jupiter:junit-jupiter-api:${rootProject.extra["junitJupiterVersion"]}")
 
-        //        // JUnit Jupiter API and TestEngine implementation
+        // JUnit Jupiter API and TestEngine implementation
         testCompile("org.junit.jupiter:junit-jupiter-api:${rootProject.extra["junitJupiterVersion"]}")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:${rootProject.extra["junitJupiterVersion"]}")
 
