@@ -1,6 +1,6 @@
 buildscript {
 
-    val kotlinVersion by extra { "1.2.30" }
+    val kotlinVersion by extra { "1.2.40" }
     val junitPlatformVersion by extra { "1.0.3" }
     val junit4Version by extra { "4.12" }
     val junitVintageVersion by extra { "4.12.3" }
