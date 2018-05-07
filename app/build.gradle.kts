@@ -6,6 +6,7 @@ version = "0.2"
 
 plugins {
     id("org.unbroken-dome.test-sets").version("1.4.2")
+    id("com.avast.gradle.docker-compose").version("0.7.1")
 }
 
 val acceptanceTest = testSets.create("acceptanceTest")
@@ -63,4 +64,9 @@ tasks {
             }
         }
     }
+}
+
+dockerCompose {
+    useComposeFiles = listOf("$rootDir/docker-compose.yml")
+    isRequiredBy(tasks.getByName("acceptanceTest"))
 }
