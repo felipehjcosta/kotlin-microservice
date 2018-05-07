@@ -12,7 +12,8 @@ jdk:
 
 before_install:
   - sudo apt-get install jq
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+  - sudo apt-get install libxml-xpath-perl
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl "https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/maven-metadata.xml" | xpath -e "/metadata/versioning/release/text()")
 
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
