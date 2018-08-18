@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(ServerRestController::class)
-@ContextConfiguration(classes = arrayOf(ServerRestController::class))
+@ContextConfiguration(classes = [ServerRestController::class])
 class ServerRestControllerTest {
 
     @Autowired

@@ -5,7 +5,7 @@ import org.junit.runner.RunWith
 
 @RunWith(Cucumber::class)
 @cucumber.api.CucumberOptions(
-        features = arrayOf("src/acceptanceTest/resources/features"),
-        plugin = arrayOf("pretty", "html:build/reports/cucumber")
+        features = ["src/acceptanceTest/resources/features"],
+        plugin = ["pretty", "html:build/reports/cucumber"]
 )
 class AcceptanceTestRunner
