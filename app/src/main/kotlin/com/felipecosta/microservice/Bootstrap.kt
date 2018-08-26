@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
 
     val kodein = Kodein {
 
-        constant("redisUri") with "h:p4d9bad74864deada66ebed2e832c6d6bf2de394afef54902351c836ae9850e0e@ec2-54-227-223-104.compute-1.amazonaws.com:60759"
+        constant("redisUri") with (if (System.getenv("REDIS_URI") != null) System.getenv("REDIS_URI") else "redis:6379")
 
         bind<MoviesRepository>() with singleton { RedisMoviesRepository(instance("redisUri")) }
 
