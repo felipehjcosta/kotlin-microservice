@@ -31,6 +31,8 @@ fun main(args: Array<String>) {
         bind<DeleteMovieFrontCommand>() with provider { DeleteMovieFrontCommand(instance()) }
     }
 
+    println("[Bootstrap] redisUri: ${kodein.instance<String>("redisUri")}")
+
     server {
 
         handler { SparkServerHandler() }
