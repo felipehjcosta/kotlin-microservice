@@ -34,14 +34,18 @@ dependencies {
 
 val jar: Jar by tasks
 
+val appJarDestinationPaths = arrayOf("$rootDir/docker/development",
+        "$rootDir/docker/production",
+        "$projectDir/src/acceptanceTest/resources/docker")
+
 jar.apply {
     doLast {
-        arrayOf("$rootDir/docker/development", "$rootDir/docker/production").forEach { dest ->
-            copy {
-                from(this@apply)
-                into("$dest/app")
-            }
+        appJarDestinationPaths.forEach { dest ->
+        copy {
+            from(this@apply)
+            into("$dest/app")
         }
+    }
     }
 
     manifest {
@@ -59,7 +63,7 @@ jar.apply {
 tasks {
     "clean" {
         doFirst {
-            arrayOf("$rootDir/docker/development", "$rootDir/docker/production").forEach { dest ->
+            appJarDestinationPaths.forEach { dest ->
                 delete("$dest/app")
             }
         }
