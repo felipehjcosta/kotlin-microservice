@@ -54,7 +54,7 @@ class RedisMoviesRepository(private val redisUri: String) : MoviesRepository {
     private fun serializeMovie(movie: Movie) = mapOf("name" to movie.name, "id" to "${movie.id}")
 
     private inline fun <reified T> executeOnRedis(body: RedisCommands<String, String>.() -> T): T {
-        val client = RedisClient.create("redis://$redisUri")
+        val client = RedisClient.create(redisUri)
         val connection = client.connect()
 
         val returnValue = body(connection.sync())
