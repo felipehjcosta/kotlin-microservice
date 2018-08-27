@@ -25,7 +25,7 @@ class RedisMoviesRepositoryTest {
 
     @Before
     fun setUp() {
-        redisUri = "${redisRule.containerIpAddress}:${redisRule.getMappedPort(6379)}"
+        redisUri = "redis://${redisRule.containerIpAddress}:${redisRule.getMappedPort(6379)}"
         repository = RedisMoviesRepository(redisUri)
     }
 
@@ -109,7 +109,7 @@ class RedisMoviesRepositoryTest {
     }
 
     private fun createDummy() {
-        val client = RedisClient.create("redis://$redisUri")
+        val client = RedisClient.create(redisUri)
         val connection = client.connect()
 
         val commands = connection.sync()
