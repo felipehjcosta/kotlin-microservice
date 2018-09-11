@@ -82,9 +82,9 @@ allprojects {
         }
         task<JacocoReport>("jacocoJunit5TestReport") {
             executionData(junitPlatformTest)
-            sourceSets(java.sourceSets["main"])
-            sourceDirectories = files(java.sourceSets["main"].allSource.srcDirs)
-            classDirectories = files(java.sourceSets["main"].output)
+            sourceSets(sourceSets["main"])
+            sourceDirectories = files(sourceSets["main"].allSource.srcDirs)
+            classDirectories = files(sourceSets["main"].output)
         }
     }
 }
