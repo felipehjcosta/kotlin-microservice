@@ -18,7 +18,7 @@ dependencies {
     compile(project(":server-spark-adapter"))
     compile("io.lettuce:lettuce-core:5.0.0.RELEASE")
 
-    testCompile("io.mockk:mockk:1.6")
+    testCompile("io.mockk:mockk:1.8.12.kotlin13")
     testCompile("com.github.kstyrc:embedded-redis:0.6")
     testCompile("org.testcontainers:testcontainers:1.4.3")
 
