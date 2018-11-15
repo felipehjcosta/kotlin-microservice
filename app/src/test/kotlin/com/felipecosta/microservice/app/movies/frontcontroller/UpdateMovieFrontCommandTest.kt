@@ -7,6 +7,7 @@ import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
 import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import org.junit.Test
 import kotlin.test.assertEquals

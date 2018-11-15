@@ -5,10 +5,7 @@ import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Test
 import kotlin.test.assertEquals
 
