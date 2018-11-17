@@ -2,32 +2,25 @@ package com.felipecosta.microservice.server.renderer.impl
 
 import com.mitchellbosecke.pebble.PebbleEngine
 import com.mitchellbosecke.pebble.template.PebbleTemplate
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.mock
+import io.mockk.every
+import io.mockk.mockk
 import java.io.StringWriter
 
 class PebbleRendererTest {
 
-    var pebbleEngine: PebbleEngine = mock()
+    private var pebbleEngine = mockk<PebbleEngine>()
 
-    var pebbleTemplate: PebbleTemplate = mock()
+    private val pebbleTemplate = mockk<PebbleTemplate>()
 
-    lateinit var pebbleRenderer: PebbleRenderer
-
-    @org.junit.Before
-    fun setUp() {
-        pebbleRenderer = PebbleRenderer(pebbleEngine)
-    }
+    private val pebbleRenderer = PebbleRenderer(pebbleEngine)
 
     @org.junit.Test
     fun givenOutputObjectWithTemplateWhenRenderThenAssertOutputText() {
         val outputObject = OutputObject("title", "content")
 
-        com.nhaarman.mockito_kotlin.whenever(pebbleEngine.getTemplate(eq("index.html"))).thenReturn(pebbleTemplate)
-        com.nhaarman.mockito_kotlin.whenever(pebbleTemplate.evaluate(any(), eq(mapOf("outputobject" to outputObject)))).then {
-            val stringWriter = it.arguments[0] as StringWriter
-            stringWriter.append("awesome text")
+        every { pebbleEngine.getTemplate("index.html") } returns pebbleTemplate
+        every { pebbleTemplate.evaluate(any(), mapOf("outputobject" to outputObject)) } answers {
+            (args[0] as StringWriter).append("awesome text")
         }
 
         val output = pebbleRenderer.render(outputObject, "index.html")
@@ -39,11 +32,8 @@ class PebbleRendererTest {
     fun givenMapWithTemplateWhenRenderThenAssertOutputText() {
         val outputMap = mapOf("title" to "My First Website", "content" to "My Interesting Content")
 
-        com.nhaarman.mockito_kotlin.whenever(pebbleEngine.getTemplate(eq("index.html"))).thenReturn(pebbleTemplate)
-        com.nhaarman.mockito_kotlin.whenever(pebbleTemplate.evaluate(any(), eq(outputMap))).then {
-            val stringWriter = it.arguments[0] as StringWriter
-            stringWriter.append("awesome text")
-        }
+        every { pebbleEngine.getTemplate("index.html") } returns pebbleTemplate
+        every { pebbleTemplate.evaluate(any(), outputMap) } answers { (args[0] as StringWriter).append("awesome text") }
 
         val output = pebbleRenderer.render(outputMap, "index.html")
 
@@ -54,11 +44,8 @@ class PebbleRendererTest {
     fun givenEmptyMapWithTemplateWhenRenderThenAssertOutputText() {
         val outputObject = emptyMap<String, Any>()
 
-        com.nhaarman.mockito_kotlin.whenever(pebbleEngine.getTemplate(eq("index.html"))).thenReturn(pebbleTemplate)
-        com.nhaarman.mockito_kotlin.whenever(pebbleTemplate.evaluate(any())).then {
-            val stringWriter = it.arguments[0] as StringWriter
-            stringWriter.append("awesome text")
-        }
+        every { pebbleEngine.getTemplate("index.html") } returns pebbleTemplate
+        every { pebbleTemplate.evaluate(any()) } answers { (args[0] as StringWriter).append("awesome text") }
 
         val output = pebbleRenderer.render(outputObject, "index.html")
 

@@ -3,23 +3,22 @@ package com.felipecosta.microservice.server
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ServerGetActionTest {
 
-    val getHandlerCaptor = argumentCaptor<GetHandler<FrontCommand>>()
+    private val getHandlerSlotCaptor = slot<GetHandler<FrontCommand>>()
 
-    val mockFrontCommand = mock<FrontCommand>()
+    private val mockFrontCommand = mockk<FrontCommand>(relaxed = true)
 
-    val mockServerHandler = mock<ServerHandler>()
+    private val mockServerHandler = mockk<ServerHandler>(relaxed = true)
 
-    val mockRenderer = mock<Renderer>()
+    private val mockRenderer = mockk<Renderer>(relaxed = true)
 
     @Test
     fun givenServerItShouldAssertEmptyServerHandler() {
@@ -48,9 +47,9 @@ class ServerGetActionTest {
             +(map get "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).get(getHandlerCaptor.capture())
+        verify { mockServerHandler.get(capture(getHandlerSlotCaptor)) }
 
-        assertEquals(1, getHandlerCaptor.allValues.size)
+        assertTrue { getHandlerSlotCaptor.isCaptured }
     }
 
     @Test
@@ -62,9 +61,9 @@ class ServerGetActionTest {
             +(map get "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).get(getHandlerCaptor.capture())
+        verify { mockServerHandler.get(capture(getHandlerSlotCaptor)) }
 
-        assertEquals(GetPath("/"), getHandlerCaptor.firstValue.getPath)
+        assertEquals(GetPath("/"), getHandlerSlotCaptor.captured.getPath)
     }
 
     @Test
@@ -76,9 +75,9 @@ class ServerGetActionTest {
             +(map get "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).get(getHandlerCaptor.capture())
+        verify { mockServerHandler.get(capture(getHandlerSlotCaptor)) }
 
-        assertEquals(mockFrontCommand, getHandlerCaptor.firstValue.action())
+        assertEquals(mockFrontCommand, getHandlerSlotCaptor.captured.action())
     }
 
     @Test
@@ -90,9 +89,9 @@ class ServerGetActionTest {
             +(map get "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).get(getHandlerCaptor.capture())
+        verify { mockServerHandler.get(capture(getHandlerSlotCaptor)) }
 
-        assertTrue { DefaultRenderer::class.java.isAssignableFrom(getHandlerCaptor.firstValue.renderer.javaClass) }
+        assertTrue { DefaultRenderer::class.java.isAssignableFrom(getHandlerSlotCaptor.captured.renderer.javaClass) }
     }
 
     @Test
@@ -104,9 +103,9 @@ class ServerGetActionTest {
             +(map get "/" to { mockFrontCommand } with mockRenderer)
         }
 
-        verify(mockServerHandler).get(getHandlerCaptor.capture())
+        verify { mockServerHandler.get(capture(getHandlerSlotCaptor)) }
 
-        assertEquals(mockRenderer, getHandlerCaptor.firstValue.renderer)
+        assertEquals(mockRenderer, getHandlerSlotCaptor.captured.renderer)
     }
 
     @Test
@@ -119,8 +118,6 @@ class ServerGetActionTest {
             +(map get "/hello" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler, times(2)).get(getHandlerCaptor.capture())
-
-        assertEquals(2, getHandlerCaptor.allValues.size)
+        verify(exactly = 2) { mockServerHandler.get(capture(getHandlerSlotCaptor)) }
     }
 }

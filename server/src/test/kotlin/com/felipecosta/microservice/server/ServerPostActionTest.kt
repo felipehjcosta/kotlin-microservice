@@ -3,23 +3,22 @@ package com.felipecosta.microservice.server
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ServerPostActionTest {
 
-    val postHandlerCaptor = argumentCaptor<PostHandler<FrontCommand>>()
+    private val postHandlerSlotCaptor = slot<PostHandler<FrontCommand>>()
 
-    val mockFrontCommand = mock<FrontCommand>()
+    private val mockFrontCommand = mockk<FrontCommand>(relaxed = true)
 
-    val mockServerHandler = mock<ServerHandler>()
+    private val mockServerHandler = mockk<ServerHandler>(relaxed = true)
 
-    val mockRenderer = mock<Renderer>()
+    private val mockRenderer = mockk<Renderer>(relaxed = true)
 
     @Test
     fun givenServerItShouldAssertEmptyServerHandler() {
@@ -48,9 +47,9 @@ class ServerPostActionTest {
             +(map post "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).post(postHandlerCaptor.capture())
+        verify { mockServerHandler.post(capture(postHandlerSlotCaptor)) }
 
-        assertEquals(1, postHandlerCaptor.allValues.size)
+        assertTrue { postHandlerSlotCaptor.isCaptured }
     }
 
     @Test
@@ -62,9 +61,9 @@ class ServerPostActionTest {
             +(map post "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).post(postHandlerCaptor.capture())
+        verify { mockServerHandler.post(capture(postHandlerSlotCaptor)) }
 
-        assertEquals(PostPath("/"), postHandlerCaptor.firstValue.postPath)
+        assertEquals(PostPath("/"), postHandlerSlotCaptor.captured.postPath)
     }
 
     @Test
@@ -76,9 +75,9 @@ class ServerPostActionTest {
             +(map post "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).post(postHandlerCaptor.capture())
+        verify { mockServerHandler.post(capture(postHandlerSlotCaptor)) }
 
-        assertEquals(mockFrontCommand, postHandlerCaptor.firstValue.action())
+        assertEquals(mockFrontCommand, postHandlerSlotCaptor.captured.action())
     }
 
     @Test
@@ -90,9 +89,9 @@ class ServerPostActionTest {
             +(map post "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).post(postHandlerCaptor.capture())
+        verify { mockServerHandler.post(capture(postHandlerSlotCaptor)) }
 
-        assertTrue { DefaultRenderer::class.java.isAssignableFrom(postHandlerCaptor.firstValue.renderer.javaClass) }
+        assertTrue { DefaultRenderer::class.java.isAssignableFrom(postHandlerSlotCaptor.captured.renderer.javaClass) }
     }
 
     @Test
@@ -104,9 +103,9 @@ class ServerPostActionTest {
             +(map post "/" to { mockFrontCommand } with mockRenderer)
         }
 
-        verify(mockServerHandler).post(postHandlerCaptor.capture())
+        verify { mockServerHandler.post(capture(postHandlerSlotCaptor)) }
 
-        assertEquals(mockRenderer, postHandlerCaptor.firstValue.renderer)
+        assertEquals(mockRenderer, postHandlerSlotCaptor.captured.renderer)
     }
 
     @Test
@@ -119,8 +118,6 @@ class ServerPostActionTest {
             +(map post "/hello" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler, times(2)).post(postHandlerCaptor.capture())
-
-        assertEquals(2, postHandlerCaptor.allValues.size)
+        verify(exactly = 2) { mockServerHandler.post(capture(postHandlerSlotCaptor)) }
     }
 }

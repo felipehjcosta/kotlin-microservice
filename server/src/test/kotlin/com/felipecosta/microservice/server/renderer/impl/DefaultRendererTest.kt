@@ -1,15 +1,12 @@
 package com.felipecosta.microservice.server.renderer.impl
 
+import io.mockk.mockk
+
 class DefaultRendererTest {
 
-    val obj: Any = com.nhaarman.mockito_kotlin.mock()
+    private val obj = mockk<Any>()
 
-    lateinit var defaultRenderer: DefaultRenderer
-
-    @org.junit.Before
-    fun setUp() {
-        defaultRenderer = DefaultRenderer()
-    }
+    private val defaultRenderer = DefaultRenderer()
 
     @org.junit.Test
     fun givenObjectWhenRenderThenVerifyOutputText() {

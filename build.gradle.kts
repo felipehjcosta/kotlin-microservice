@@ -63,9 +63,7 @@ allprojects {
 
         testCompile("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
         testCompile("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
-        testCompile("com.nhaarman:mockito-kotlin:1.3.0") {
-            exclude(group = "org.jetbrains.kotlin")
-        }
+        testCompile("io.mockk:mockk:1.8.12.kotlin13")
     }
 
     tasks.withType<JacocoReport> {

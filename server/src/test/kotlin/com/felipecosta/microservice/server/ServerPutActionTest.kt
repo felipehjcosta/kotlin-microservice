@@ -3,23 +3,22 @@ package com.felipecosta.microservice.server
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ServerPutActionTest {
 
-    val putHandlerCaptor = argumentCaptor<PutHandler<FrontCommand>>()
+    private val putHandlerSlotCaptor = slot<PutHandler<FrontCommand>>()
 
-    val mockFrontCommand = mock<FrontCommand>()
+    private val mockFrontCommand = mockk<FrontCommand>(relaxed = true)
 
-    val mockServerHandler = mock<ServerHandler>()
+    private val mockServerHandler = mockk<ServerHandler>(relaxed = true)
 
-    val mockRenderer = mock<Renderer>()
+    private val mockRenderer = mockk<Renderer>(relaxed = true)
 
     @Test
     fun givenServerItShouldAssertEmptyServerHandler() {
@@ -48,9 +47,9 @@ class ServerPutActionTest {
             +(map put "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).put(putHandlerCaptor.capture())
+        verify { mockServerHandler.put(capture(putHandlerSlotCaptor)) }
 
-        assertEquals(1, putHandlerCaptor.allValues.size)
+        assertTrue { putHandlerSlotCaptor.isCaptured }
     }
 
     @Test
@@ -62,9 +61,9 @@ class ServerPutActionTest {
             +(map put "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).put(putHandlerCaptor.capture())
+        verify { mockServerHandler.put(capture(putHandlerSlotCaptor)) }
 
-        assertEquals(PutPath("/"), putHandlerCaptor.firstValue.putPath)
+        assertEquals(PutPath("/"), putHandlerSlotCaptor.captured.putPath)
     }
 
     @Test
@@ -76,9 +75,9 @@ class ServerPutActionTest {
             +(map put "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).put(putHandlerCaptor.capture())
+        verify { mockServerHandler.put(capture(putHandlerSlotCaptor)) }
 
-        assertEquals(mockFrontCommand, putHandlerCaptor.firstValue.action())
+        assertEquals(mockFrontCommand, putHandlerSlotCaptor.captured.action())
     }
 
     @Test
@@ -90,9 +89,9 @@ class ServerPutActionTest {
             +(map put "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).put(putHandlerCaptor.capture())
+        verify { mockServerHandler.put(capture(putHandlerSlotCaptor)) }
 
-        assertTrue { DefaultRenderer::class.java.isAssignableFrom(putHandlerCaptor.firstValue.renderer.javaClass) }
+        assertTrue { DefaultRenderer::class.java.isAssignableFrom(putHandlerSlotCaptor.captured.renderer.javaClass) }
     }
 
     @Test
@@ -104,9 +103,9 @@ class ServerPutActionTest {
             +(map put "/" to { mockFrontCommand } with mockRenderer)
         }
 
-        verify(mockServerHandler).put(putHandlerCaptor.capture())
+        verify { mockServerHandler.put(capture(putHandlerSlotCaptor)) }
 
-        assertEquals(mockRenderer, putHandlerCaptor.firstValue.renderer)
+        assertEquals(mockRenderer, putHandlerSlotCaptor.captured.renderer)
     }
 
     @Test
@@ -119,8 +118,6 @@ class ServerPutActionTest {
             +(map put "/hello" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler, times(2)).put(putHandlerCaptor.capture())
-
-        assertEquals(2, putHandlerCaptor.allValues.size)
+        verify(exactly = 2) { mockServerHandler.put(capture(putHandlerSlotCaptor)) }
     }
 }

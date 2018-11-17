@@ -3,23 +3,22 @@ package com.felipecosta.microservice.server
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ServerDeleteActionTest {
 
-    val deleteHandlerCaptor = argumentCaptor<DeleteHandler<FrontCommand>>()
+    private val deleteHandlerSlotCaptor = slot<DeleteHandler<FrontCommand>>()
 
-    val mockFrontCommand = mock<FrontCommand>()
+    private val mockFrontCommand = mockk<FrontCommand>(relaxed = true)
 
-    val mockServerHandler = mock<ServerHandler>()
+    private val mockServerHandler = mockk<ServerHandler>(relaxed = true)
 
-    val mockRenderer = mock<Renderer>()
+    private val mockRenderer = mockk<Renderer>(relaxed = true)
 
     @Test
     fun givenServerItShouldAssertEmptyServerHandler() {
@@ -48,9 +47,9 @@ class ServerDeleteActionTest {
             +(map delete "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).delete(deleteHandlerCaptor.capture())
+        verify { mockServerHandler.delete(capture(deleteHandlerSlotCaptor)) }
 
-        assertEquals(1, deleteHandlerCaptor.allValues.size)
+        assertTrue { deleteHandlerSlotCaptor.isCaptured }
     }
 
     @Test
@@ -62,9 +61,9 @@ class ServerDeleteActionTest {
             +(map delete "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).delete(deleteHandlerCaptor.capture())
+        verify { mockServerHandler.delete(capture(deleteHandlerSlotCaptor)) }
 
-        assertEquals(DeletePath("/"), deleteHandlerCaptor.firstValue.deletePath)
+        assertEquals(DeletePath("/"), deleteHandlerSlotCaptor.captured.deletePath)
     }
 
     @Test
@@ -76,9 +75,9 @@ class ServerDeleteActionTest {
             +(map delete "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).delete(deleteHandlerCaptor.capture())
+        verify { mockServerHandler.delete(capture(deleteHandlerSlotCaptor)) }
 
-        assertEquals(mockFrontCommand, deleteHandlerCaptor.firstValue.action())
+        assertEquals(mockFrontCommand, deleteHandlerSlotCaptor.captured.action())
     }
 
     @Test
@@ -90,9 +89,9 @@ class ServerDeleteActionTest {
             +(map delete "/" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler).delete(deleteHandlerCaptor.capture())
+        verify { mockServerHandler.delete(capture(deleteHandlerSlotCaptor)) }
 
-        assertTrue { DefaultRenderer::class.java.isAssignableFrom(deleteHandlerCaptor.firstValue.renderer.javaClass) }
+        assertTrue { DefaultRenderer::class.java.isAssignableFrom(deleteHandlerSlotCaptor.captured.renderer.javaClass) }
     }
 
     @Test
@@ -104,9 +103,9 @@ class ServerDeleteActionTest {
             +(map delete "/" to { mockFrontCommand } with mockRenderer)
         }
 
-        verify(mockServerHandler).delete(deleteHandlerCaptor.capture())
+        verify { mockServerHandler.delete(capture(deleteHandlerSlotCaptor)) }
 
-        assertEquals(mockRenderer, deleteHandlerCaptor.firstValue.renderer)
+        assertEquals(mockRenderer, deleteHandlerSlotCaptor.captured.renderer)
     }
 
     @Test
@@ -119,8 +118,6 @@ class ServerDeleteActionTest {
             +(map delete "/hello" to { mockFrontCommand })
         }
 
-        verify(mockServerHandler, times(2)).delete(deleteHandlerCaptor.capture())
-
-        assertEquals(2, deleteHandlerCaptor.allValues.size)
+        verify(exactly = 2) { mockServerHandler.delete(capture(deleteHandlerSlotCaptor)) }
     }
 }
