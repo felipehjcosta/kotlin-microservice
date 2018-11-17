@@ -1,16 +1,16 @@
 package com.felipecosta.microservice.server
 
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
-import com.nhaarman.mockito_kotlin.mock
+import io.mockk.mockk
 import org.junit.After
 import org.junit.Test
 import kotlin.test.assertNotNull
 
 class SpringBootServerHandlerTest {
 
-    val serverHandler = SpringBootServerHandler()
+    private val serverHandler = SpringBootServerHandler()
 
-    val mockFrontCommand = mock<FrontCommand>()
+    private val mockFrontCommand = mockk<FrontCommand>()
 
     @After
     fun tearDown() {

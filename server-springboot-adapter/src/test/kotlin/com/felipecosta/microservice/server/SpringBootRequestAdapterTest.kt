@@ -1,36 +1,36 @@
 package com.felipecosta.microservice.server
 
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Test
 import javax.servlet.http.HttpServletRequest
 import kotlin.test.assertEquals
 
 class SpringBootRequestAdapterTest {
 
-    val mockHttpServletRequest = mock<HttpServletRequest>()
+    private val mockHttpServletRequest = mockk<HttpServletRequest>(relaxed = true)
 
-    val springBootRequestAdapter = SpringBootRequestAdapter(mockHttpServletRequest)
+    private val springBootRequestAdapter = SpringBootRequestAdapter(mockHttpServletRequest)
 
     @Test
     fun givenWrappedUrlItShouldAssertSameUrl() {
-        whenever(mockHttpServletRequest.requestURL).thenReturn(StringBuffer("http://localhost:8080/hello"))
+        every { mockHttpServletRequest.requestURL } returns StringBuffer("http://localhost:8080/hello")
 
         assertEquals("http://localhost:8080/hello", springBootRequestAdapter.url)
     }
 
     @Test
     fun givenWrappedHostItShouldAssertSameHost() {
-        whenever(mockHttpServletRequest.scheme).thenReturn("http")
-        whenever(mockHttpServletRequest.serverName).thenReturn("localhost")
-        whenever(mockHttpServletRequest.serverPort).thenReturn(8080)
+        every { mockHttpServletRequest.scheme } returns "http"
+        every { mockHttpServletRequest.serverName } returns "localhost"
+        every { mockHttpServletRequest.serverPort } returns 8080
 
         assertEquals("http://localhost:8080", springBootRequestAdapter.host)
     }
 
     @Test
     fun givenWrappedUserAgentItShouldAssertSameUserAgent() {
-        whenever(mockHttpServletRequest.getHeader("User-Agent")).thenReturn("Safari")
+        every { mockHttpServletRequest.getHeader("User-Agent") } returns "Safari"
 
         assertEquals("Safari", springBootRequestAdapter.userAgent)
     }
@@ -42,13 +42,15 @@ class SpringBootRequestAdapterTest {
 
     @Test
     fun givenWrappedQueryParamsItShouldAssertSameParams() {
-        whenever(mockHttpServletRequest.parameterMap).thenReturn(emptyMap())
+        every { mockHttpServletRequest.parameterMap } returns emptyMap()
 
         assertEquals(emptyMap(), springBootRequestAdapter.queryParams)
     }
 
     @Test
     fun givenWrappedWithoutQueryParamsItShouldAssertSameParams() {
+        every { mockHttpServletRequest.parameterMap } returns null
+
         assertEquals(emptyMap(), springBootRequestAdapter.queryParams)
     }
 }
