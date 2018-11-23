@@ -19,7 +19,7 @@ dependencies {
     compile("io.lettuce:lettuce-core:5.0.0.RELEASE")
 
     testCompile("com.github.kstyrc:embedded-redis:0.6")
-    testCompile("org.testcontainers:testcontainers:1.4.3")
+    testCompile("org.testcontainers:testcontainers:1.10.1")
 
     acceptanceTestCompile("org.testcontainers:testcontainers:1.4.3")
     acceptanceTestCompile("io.cucumber:cucumber-java8:2.0.0-SNAPSHOT")
