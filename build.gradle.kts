@@ -66,6 +66,10 @@ allprojects {
         testCompile("io.mockk:mockk:1.8.12.kotlin13")
     }
 
+    jacoco {
+        toolVersion = "0.8.2"
+    }
+
     tasks.withType<JacocoReport> {
         reports {
             xml.isEnabled = true
