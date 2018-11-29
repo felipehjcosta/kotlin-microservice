@@ -1,15 +1,24 @@
 package com.felipecosta.microservice.server
 
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import spark.QueryParamsMap
 import kotlin.test.assertEquals
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class SparkRequestAdapterTest {
     private val mockSparkRequest = mockk<spark.Request>()
 
     private val sparkRequestAdapter = SparkRequestAdapter(mockSparkRequest)
+
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
 
     @Test
     fun givenWrappedUrlItShouldAssertSameUrl() {

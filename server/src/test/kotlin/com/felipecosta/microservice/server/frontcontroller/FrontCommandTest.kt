@@ -5,7 +5,11 @@ import com.felipecosta.microservice.server.Response
 import com.felipecosta.microservice.server.renderer.Renderer
 import io.mockk.*
 import org.junit.Assert.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class FrontCommandTest {
 
     private val request = mockk<Request>()
@@ -14,7 +18,12 @@ class FrontCommandTest {
 
     private val frontCommand = spyk<FrontCommand>().apply { init(request) }
 
-    @org.junit.Test
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
+
+    @Test
     fun whenRenderWithTemplateThenVerifyResponse() {
         frontCommand.init(request, renderer)
         every { renderer.render(emptyMap<String, Any>(), "views/hello_world_test.html") } returns "Awesome return"
@@ -25,7 +34,7 @@ class FrontCommandTest {
         assertEquals(expectedResponse, actualResponse)
     }
 
-    @org.junit.Test
+    @Test
     fun whenRenderWithTextThenVerifyResponse() {
         val expectedResponse = Response("{\"value:\" \"Hello\"}", 200)
         frontCommand.render(text = "{\"value:\" \"Hello\"}")
@@ -33,7 +42,7 @@ class FrontCommandTest {
         assertEquals(expectedResponse, actualResponse)
     }
 
-    @org.junit.Test
+    @Test
     fun givenMockRendererWhenRenderWithTextThenVerifyResponse() {
         frontCommand.init(request, renderer)
 

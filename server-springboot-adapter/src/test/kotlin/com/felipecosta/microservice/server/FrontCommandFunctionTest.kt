@@ -1,13 +1,13 @@
 package com.felipecosta.microservice.server
 
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.spyk
-import io.mockk.verifyOrder
-import org.junit.Test
+import io.mockk.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class FrontCommandFunctionTest {
 
     private val spiedFrontCommand = spyk<FrontCommand>()
@@ -15,6 +15,11 @@ class FrontCommandFunctionTest {
     private val mockRequest = mockk<Request>()
 
     private val frontCommandFunction = FrontCommandFunction { spiedFrontCommand }
+
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
 
     @Test
     fun whenInvokeItShouldCallInitWithRequest() {

@@ -3,16 +3,25 @@ package com.felipecosta.microservice.app.json.frontcontroller
 import com.beust.klaxon.*
 import com.felipecosta.microservice.server.Request
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class JsonFrontCommandTest {
 
     private val request = mockk<Request>(relaxed = true)
 
     private val jsonSparkFrontCommand = JsonFrontCommand().apply { init(request) }
+
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
 
     @Test
     fun whenProcessThenAssertResponseWithUrl() {
@@ -28,7 +37,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsHost() {
-        every { request.host} returns "127.0.0.1:4567"
+        every { request.host } returns "127.0.0.1:4567"
 
         jsonSparkFrontCommand.process()
 
@@ -40,7 +49,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun whenProcessThenAssertResponseBodyContainsUserAgent() {
-        every { request.userAgent} returns "Mozilla/5.0"
+        every { request.userAgent } returns "Mozilla/5.0"
 
         jsonSparkFrontCommand.process()
 
@@ -52,7 +61,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithOneParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        every { request.queryParams} returns mapOf("q" to arrayOf("search"))
+        every { request.queryParams } returns mapOf("q" to arrayOf("search"))
 
         jsonSparkFrontCommand.process()
 
@@ -65,7 +74,7 @@ class JsonFrontCommandTest {
 
     @Test
     fun GivenOneQueryParamWithTwoParameterWhenProcessThenAssertResponseBodyContainsQueryParams() {
-        every { request.queryParams} returns mapOf("q" to arrayOf("search", "awesome search"))
+        every { request.queryParams } returns mapOf("q" to arrayOf("search", "awesome search"))
 
         jsonSparkFrontCommand.process()
 

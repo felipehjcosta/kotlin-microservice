@@ -5,16 +5,25 @@ import com.felipecosta.microservice.app.core.domain.MoviesRepository
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.Response
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class GetMovieFrontCommandTest {
 
     private val mockMoviesRepository = mockk<MoviesRepository>()
 
     private val frontCommand = GetMovieFrontCommand(mockMoviesRepository)
+
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
 
     @Test
     fun givenIdWhenProcessThenAssertResponseWithSingleMovie() {

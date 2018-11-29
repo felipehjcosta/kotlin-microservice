@@ -3,7 +3,11 @@ package com.felipecosta.microservice.server.pagecontroller
 import com.felipecosta.microservice.server.Request
 import com.felipecosta.microservice.server.renderer.Renderer
 import io.mockk.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class PageControllerTest {
 
     private val renderer = mockk<Renderer>()
@@ -12,7 +16,12 @@ class PageControllerTest {
         override fun doGet(request: Request) {}
     })
 
-    @org.junit.Test
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
+
+    @Test
     fun whenRenderWithTemplateThenVerifyOutput() {
         every { renderer.render(emptyMap<String, Any>(), "views/hello_world_test.html") } returns "Awesome return"
 
@@ -22,7 +31,7 @@ class PageControllerTest {
         org.junit.Assert.assertEquals(expectedOutput, actualOutput)
     }
 
-    @org.junit.Test
+    @Test
     fun whenRenderWithTextThenVerifyOutput() {
         val expectedOutput = "{\"value:\" \"Hello\"}"
         pageController.render(text = "{\"value:\" \"Hello\"}")
@@ -30,7 +39,7 @@ class PageControllerTest {
         org.junit.Assert.assertEquals(expectedOutput, actualOutput)
     }
 
-    @org.junit.Test
+    @Test
     fun givenMockRendererWhenRenderWithTextThenVerifyOutput() {
         pageController.render(text = "{\"value:\" \"Hello\"}")
         verify { renderer wasNot Called }

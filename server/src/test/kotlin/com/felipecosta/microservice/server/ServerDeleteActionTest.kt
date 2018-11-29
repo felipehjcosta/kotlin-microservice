@@ -3,13 +3,17 @@ package com.felipecosta.microservice.server
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 import com.felipecosta.microservice.server.renderer.Renderer
 import com.felipecosta.microservice.server.renderer.impl.DefaultRenderer
+import io.mockk.clearAllMocks
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class ServerDeleteActionTest {
 
     private val deleteHandlerSlotCaptor = slot<DeleteHandler<FrontCommand>>()
@@ -19,6 +23,11 @@ class ServerDeleteActionTest {
     private val mockServerHandler = mockk<ServerHandler>(relaxed = true)
 
     private val mockRenderer = mockk<Renderer>(relaxed = true)
+
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
 
     @Test
     fun givenServerItShouldAssertEmptyServerHandler() {

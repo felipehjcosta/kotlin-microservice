@@ -2,10 +2,15 @@ package com.felipecosta.microservice.server.renderer.impl
 
 import com.mitchellbosecke.pebble.PebbleEngine
 import com.mitchellbosecke.pebble.template.PebbleTemplate
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.io.StringWriter
 
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 class PebbleRendererTest {
 
     private var pebbleEngine = mockk<PebbleEngine>()
@@ -14,7 +19,12 @@ class PebbleRendererTest {
 
     private val pebbleRenderer = PebbleRenderer(pebbleEngine)
 
-    @org.junit.Test
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
+
+    @Test
     fun givenOutputObjectWithTemplateWhenRenderThenAssertOutputText() {
         val outputObject = OutputObject("title", "content")
 
@@ -28,7 +38,7 @@ class PebbleRendererTest {
         kotlin.test.assertEquals("awesome text", output)
     }
 
-    @org.junit.Test
+    @Test
     fun givenMapWithTemplateWhenRenderThenAssertOutputText() {
         val outputMap = mapOf("title" to "My First Website", "content" to "My Interesting Content")
 

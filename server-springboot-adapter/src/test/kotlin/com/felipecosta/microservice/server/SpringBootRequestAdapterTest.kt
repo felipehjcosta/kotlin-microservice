@@ -2,7 +2,7 @@ package com.felipecosta.microservice.server
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import javax.servlet.http.HttpServletRequest
 import kotlin.test.assertEquals
 

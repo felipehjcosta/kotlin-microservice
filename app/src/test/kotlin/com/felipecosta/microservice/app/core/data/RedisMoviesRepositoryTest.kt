@@ -2,19 +2,22 @@ package com.felipecosta.microservice.app.core.data
 
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import io.lettuce.core.RedisClient
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.testcontainers.containers.GenericContainer
+import org.testcontainers.junit.jupiter.Container
+import org.testcontainers.junit.jupiter.Testcontainers
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-
+@TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
+@Testcontainers
 class RedisMoviesRepositoryTest {
 
-    @get:Rule
+    @Container
     val redisRule: GenericContainer<Nothing> = GenericContainer<Nothing>("redis:3.2.9").apply {
         addExposedPort(6379)
     }
@@ -23,9 +26,18 @@ class RedisMoviesRepositoryTest {
 
     private lateinit var repository: RedisMoviesRepository
 
-    @Before
+    @BeforeEach
     fun setUp() {
         redisUri = "redis://${redisRule.containerIpAddress}:${redisRule.getMappedPort(6379)}"
+
+        RedisClient.create(redisUri).apply {
+            connect().apply {
+                sync().flushall()
+                close()
+            }
+            shutdown()
+        }
+
         repository = RedisMoviesRepository(redisUri)
     }
 

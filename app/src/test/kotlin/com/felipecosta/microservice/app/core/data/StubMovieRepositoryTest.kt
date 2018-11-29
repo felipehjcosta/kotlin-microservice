@@ -2,19 +2,13 @@ package com.felipecosta.microservice.app.core.data
 
 import com.felipecosta.microservice.app.core.domain.entity.Movie
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 
 class StubMovieRepositoryTest {
 
-    lateinit var stubMovieRepository: StubMovieRepository
-
-    @Before
-    fun setUp() {
-        stubMovieRepository = StubMovieRepository()
-    }
+    private val stubMovieRepository = StubMovieRepository()
 
     @Test
     fun whenFindAllThenItIsNotEmpty() {

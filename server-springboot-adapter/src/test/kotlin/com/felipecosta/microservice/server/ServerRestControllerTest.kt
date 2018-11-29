@@ -1,177 +1,201 @@
 package com.felipecosta.microservice.server
 
 import com.felipecosta.microservice.server.frontcontroller.FrontCommand
-import org.junit.After
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertTimeout
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.time.Duration
 
-@RunWith(SpringRunner::class)
+@ExtendWith(SpringExtension::class)
 @WebMvcTest(ServerRestController::class)
 @ContextConfiguration(classes = [ServerRestController::class])
 class ServerRestControllerTest {
 
+    companion object {
+        private const val TIMEOUT = 5000L
+    }
+
     @Autowired
     lateinit var mvc: MockMvc
 
-    @After
+    @AfterEach
     fun tearDown() {
         ServerUrlMappings.clear()
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenNotRegisteredGetPathWhenPerformGetThenAssertNotFound() {
-        mvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().isNotFound)
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            mvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().isNotFound)
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredGetPathWhenPerformGetThenAssertGetResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "Hello World")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "Hello World")
+                }
             }
-        }
 
-        ServerUrlMappings[GetPath("/")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[GetPath("/")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("Hello World"))
+            mvc.perform(MockMvcRequestBuilders.get("/"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("Hello World"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredGetPathWithVariableWhenPerformGetThenAssertGetResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "testing GET")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "testing GET")
+                }
             }
-        }
 
-        ServerUrlMappings[GetPath("/:id")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[GetPath("/:id")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.get("/42"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("testing GET"))
+            mvc.perform(MockMvcRequestBuilders.get("/42"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("testing GET"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredPostPathWhenPerformPostThenAssertPostResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "post response")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "post response")
+                }
             }
-        }
 
-        ServerUrlMappings[PostPath("/")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[PostPath("/")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.post("/"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("post response"))
+            mvc.perform(MockMvcRequestBuilders.post("/"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("post response"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredPostPathWithVariableWhenPerformPostThenAssertPostResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "post response")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "post response")
+                }
             }
-        }
 
-        ServerUrlMappings[PostPath("/:id")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[PostPath("/:id")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.post("/42"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("post response"))
+            mvc.perform(MockMvcRequestBuilders.post("/42"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("post response"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredPutPathWhenPerformPutThenAssertPutResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "put response")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "put response")
+                }
             }
-        }
 
-        ServerUrlMappings[PutPath("/")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[PutPath("/")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.put("/"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("put response"))
+            mvc.perform(MockMvcRequestBuilders.put("/"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("put response"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredPutPathWithVariableWhenPerformPutThenAssertPutResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "put response")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "put response")
+                }
             }
-        }
 
-        ServerUrlMappings[PutPath("/:id")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[PutPath("/:id")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.put("/42"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("put response"))
+            mvc.perform(MockMvcRequestBuilders.put("/42"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("put response"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredDeletePathWhenPerformDeleteThenAssertDeleteResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "delete response")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "delete response")
+                }
             }
-        }
 
-        ServerUrlMappings[DeletePath("/")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[DeletePath("/")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.delete("/"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("delete response"))
+            mvc.perform(MockMvcRequestBuilders.delete("/"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("delete response"))
+        }
     }
 
-    @Test(timeout = 5000L)
+    @Test
     fun givenRegisteredDeletePatWithVariableWhenPerformDeleteThenAssertDeleteResponse() {
-        val stubFrontCommand = object : FrontCommand() {
-            override fun process() {
-                render(text = "delete response")
+        assertTimeout(Duration.ofMillis(TIMEOUT)) {
+            val stubFrontCommand = object : FrontCommand() {
+                override fun process() {
+                    render(text = "delete response")
+                }
             }
-        }
 
-        ServerUrlMappings[DeletePath("/:id")] = {
-            stubFrontCommand.process()
-            stubFrontCommand.response
-        }
+            ServerUrlMappings[DeletePath("/:id")] = {
+                stubFrontCommand.process()
+                stubFrontCommand.response
+            }
 
-        mvc.perform(MockMvcRequestBuilders.delete("/42"))
-                .andExpect(status().isOk)
-                .andExpect(content().string("delete response"))
+            mvc.perform(MockMvcRequestBuilders.delete("/42"))
+                    .andExpect(status().isOk)
+                    .andExpect(content().string("delete response"))
+        }
     }
 }
