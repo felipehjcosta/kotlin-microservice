@@ -2,8 +2,6 @@ buildscript {
 
     val kotlinVersion by extra { "1.3.0" }
     val junitPlatformVersion by extra { "1.0.3" }
-    val junit4Version by extra { "4.12" }
-    val junitVintageVersion by extra { "4.12.3" }
     val junitJupiterVersion by extra { "5.0.3" }
     val log4jVersion by extra { "2.9.0" }
 
@@ -27,9 +25,6 @@ plugins {
 allprojects {
 
     val kotlinVersion: String by rootProject.extra
-    val junitPlatformVersion: String by rootProject.extra
-    val junit4Version: String by rootProject.extra
-    val junitVintageVersion: String by rootProject.extra
     val junitJupiterVersion: String by rootProject.extra
     val log4jVersion: String by rootProject.extra
 
@@ -47,15 +42,9 @@ allprojects {
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
-        testCompile("org.junit.jupiter:junit-jupiter-api:$junitPlatformVersion")
-
         // JUnit Jupiter API and TestEngine implementation
         testCompile("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
-
-        // If you also want to support JUnit 3 and JUnit 4 tests
-        testCompile("junit:junit:$junit4Version")
-        testRuntime("org.junit.vintage:junit-vintage-engine:$junitVintageVersion")
 
         // To use Log4J's LogManager
         testRuntime("org.apache.logging.log4j:log4j-core:$log4jVersion")
