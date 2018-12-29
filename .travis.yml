@@ -10,11 +10,6 @@ services:
 jdk:
 - oraclejdk8
 
-before_install:
-  - sudo apt-get install jq
-  - sudo apt-get install libxml-xpath-perl
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/4.0.0/codacy-coverage-reporter-4.0.0-assembly.jar
-
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -29,5 +24,4 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/jacocoJunit5TestReport/jacocoJunit5TestReport.xml
 - test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
