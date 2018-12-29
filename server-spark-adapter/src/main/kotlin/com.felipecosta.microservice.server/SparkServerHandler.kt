@@ -4,10 +4,14 @@ import com.felipecosta.microservice.server.frontcontroller.FrontCommand
 
 class SparkServerHandler : ServerHandler {
 
-    private val port = if (System.getenv("PORT") != null) Integer.parseInt(System.getenv("PORT")) else 8080
+    private val port = if (System.getenv("PORT") != null) Integer.parseInt(System.getenv("PORT")) else DEFAULT_PORT
 
     init {
         spark.Spark.port(port)
+    }
+
+    companion object {
+        private const val DEFAULT_PORT = 8080
     }
 
     override fun get(getHandler: GetHandler<FrontCommand>) {

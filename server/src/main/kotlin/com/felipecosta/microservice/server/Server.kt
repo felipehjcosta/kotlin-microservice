@@ -31,7 +31,11 @@ data class GetPath(val getPath: String) : ActionHandler(getPath)
 
 infix fun <T : FrontCommand> GetPath.to(action: () -> T) = GetHandler(this, action)
 
-data class GetHandler<out T : FrontCommand>(val getPath: GetPath, val action: () -> T, var renderer: Renderer = DefaultRenderer())
+data class GetHandler<out T : FrontCommand>(
+    val getPath: GetPath,
+    val action: () -> T,
+    var renderer: Renderer = DefaultRenderer()
+)
 
 infix fun <T : FrontCommand> GetHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }
 
@@ -42,7 +46,11 @@ data class PostPath(val postPath: String) : ActionHandler(postPath)
 
 infix fun <T : FrontCommand> PostPath.to(action: () -> T) = PostHandler(this, action)
 
-data class PostHandler<out T : FrontCommand>(val postPath: PostPath, val action: () -> T, var renderer: Renderer = DefaultRenderer())
+data class PostHandler<out T : FrontCommand>(
+    val postPath: PostPath,
+    val action: () -> T,
+    var renderer: Renderer = DefaultRenderer()
+)
 
 infix fun <T : FrontCommand> PostHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }
 
@@ -53,7 +61,11 @@ data class PutPath(val putPath: String) : ActionHandler(putPath)
 
 infix fun <T : FrontCommand> PutPath.to(action: () -> T) = PutHandler(this, action)
 
-data class PutHandler<out T : FrontCommand>(val putPath: PutPath, val action: () -> T, var renderer: Renderer = DefaultRenderer())
+data class PutHandler<out T : FrontCommand>(
+    val putPath: PutPath,
+    val action: () -> T,
+    var renderer: Renderer = DefaultRenderer()
+)
 
 infix fun <T : FrontCommand> PutHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }
 
@@ -64,6 +76,10 @@ data class DeletePath(val deletePath: String) : ActionHandler(deletePath)
 
 infix fun <T : FrontCommand> DeletePath.to(action: () -> T) = DeleteHandler(this, action)
 
-data class DeleteHandler<out T : FrontCommand>(val deletePath: DeletePath, val action: () -> T, var renderer: Renderer = DefaultRenderer())
+data class DeleteHandler<out T : FrontCommand>(
+    val deletePath: DeletePath,
+    val action: () -> T,
+    var renderer: Renderer = DefaultRenderer()
+)
 
 infix fun <T : FrontCommand> DeleteHandler<T>.with(newRenderer: Renderer) = this.apply { renderer = newRenderer }

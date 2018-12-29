@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.detekt
+
 buildscript {
 
     val kotlinVersion by extra { "1.3.11" }
@@ -19,7 +21,8 @@ plugins {
     base
     jacoco
     java
-    id("com.vanniktech.dependency.graph.generator").version("0.2.0")
+    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC12"
+    id("com.vanniktech.dependency.graph.generator") version "0.2.0"
 }
 
 allprojects {
@@ -32,6 +35,7 @@ allprojects {
         plugin("kotlin")
         plugin("jacoco")
         plugin("org.junit.platform.gradle.plugin")
+        plugin("io.gitlab.arturbosch.detekt")
     }
 
     repositories {
@@ -77,5 +81,11 @@ allprojects {
             additionalSourceDirs(files(sourceSets["main"].allSource.srcDirs))
             additionalClassDirs(files(sourceSets["main"].output))
         }
+    }
+
+    detekt {
+        input = files("src/main/kotlin")
+        filters = ".*/resources/.*,.*/build/.*"
+        config = files("${project.rootDir}/default-detekt-config.yml")
     }
 }

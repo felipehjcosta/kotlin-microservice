@@ -21,6 +21,9 @@ cache:
 
 jobs:
   include:
+    - stage: "Lint"
+      script:
+        - ./gradlew detekt --console=plain
     - stage: test
       script: ./gradlew test jacocoTestReport --console=plain
       after_success:

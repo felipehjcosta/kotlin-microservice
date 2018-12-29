@@ -13,7 +13,9 @@ class SpringBootRequestAdapter(private val mockHttpServletRequest: HttpServletRe
 
     override val url: String by lazy { mockHttpServletRequest.requestURL.toString() }
 
-    override val host: String by lazy { "${mockHttpServletRequest.scheme}://${mockHttpServletRequest.serverName}:${mockHttpServletRequest.serverPort}" }
+    override val host: String by lazy {
+        "${mockHttpServletRequest.scheme}://${mockHttpServletRequest.serverName}:${mockHttpServletRequest.serverPort}"
+    }
 
     override val userAgent: String by lazy { mockHttpServletRequest.getHeader("User-Agent") ?: "" }
 }
