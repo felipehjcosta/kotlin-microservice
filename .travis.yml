@@ -19,9 +19,15 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 
-script:
-- "./gradlew test jacocoJunit5TestReport jar acceptanceTest --console=plain"
-
-after_success:
-- bash <(curl -s https://codecov.io/bash)
-- test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
+jobs:
+  include:
+    - stage: test
+      script: ./gradlew test jacocoTestReport --console=plain
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
+    - stage: acceptance test
+      script: ./gradlew jar acceptanceTest --console=plain
+    - stage: deploy
+      script: ./gradlew jar --console=plain
+      after_success:
+        - test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
