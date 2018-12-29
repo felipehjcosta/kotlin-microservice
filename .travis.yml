@@ -8,16 +8,16 @@ services:
   - docker
 
 jdk:
-- oraclejdk8
+  - oraclejdk8
 
 before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
 
 jobs:
   include:
@@ -29,7 +29,7 @@ jobs:
       after_success:
         - bash <(curl -s https://codecov.io/bash)
     - stage: acceptance test
-      script: ./gradlew jar acceptanceTest --console=plain
+      script: ./gradlew acceptanceTest --console=plain
     - stage: deploy
       script: ./gradlew jar --console=plain
       after_success:

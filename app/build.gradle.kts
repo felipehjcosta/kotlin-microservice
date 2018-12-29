@@ -6,7 +6,7 @@ version = "0.2"
 
 plugins {
     id("org.unbroken-dome.test-sets").version("1.4.2")
-    id("com.avast.gradle.docker-compose").version("0.7.1")
+    id("com.avast.gradle.docker-compose").version("0.8.12")
 }
 
 val acceptanceTest = testSets.create("acceptanceTest")
@@ -34,18 +34,20 @@ dependencies {
 
 val jar: Jar by tasks
 
-val appJarDestinationPaths = arrayOf("$rootDir/docker/development",
-        "$rootDir/docker/production",
-        "$projectDir/src/acceptanceTest/resources/docker")
+val appJarDestinationPaths = arrayOf(
+    "$rootDir/docker/development",
+    "$rootDir/docker/production",
+    "$projectDir/src/acceptanceTest/resources/docker"
+)
 
 jar.apply {
     doLast {
         appJarDestinationPaths.forEach { dest ->
-        copy {
-            from(this@apply)
-            into("$dest/app")
+            copy {
+                from(this@apply)
+                into("$dest/app")
+            }
         }
-    }
     }
 
     manifest {
@@ -67,6 +69,9 @@ tasks {
                 delete("$dest/app")
             }
         }
+    }
+    "composeUp" {
+        dependsOn(jar)
     }
 }
 
