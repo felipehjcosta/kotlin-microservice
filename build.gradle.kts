@@ -2,7 +2,7 @@ import io.gitlab.arturbosch.detekt.detekt
 
 buildscript {
 
-    val kotlinVersion by extra { "1.3.11" }
+    val kotlinVersion by extra { "1.3.20" }
     val junitPlatformVersion by extra { "1.0.3" }
     val junitJupiterVersion by extra { "5.0.3" }
     val log4jVersion by extra { "2.9.0" }
