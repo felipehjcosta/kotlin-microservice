@@ -5,7 +5,7 @@ group = "com.felipecosta.microservice"
 version = "0.2"
 
 plugins {
-    id("org.unbroken-dome.test-sets").version("1.4.2")
+    id("org.unbroken-dome.test-sets").version("2.1.1")
     id("com.avast.gradle.docker-compose").version("0.8.12")
 }
 
